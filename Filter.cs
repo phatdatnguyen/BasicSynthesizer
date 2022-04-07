@@ -90,21 +90,26 @@ namespace BasicSynthesizer
                 case FilterMode.LowPass:
                     for (int i = 0; i < numberOfSamples; i++)
                         filteredSignal.Add(new DataPoint(i * interval, buffer2[i]));
-
-                    return filteredSignal;
+                    break;
                 case FilterMode.HighPass:
                     for (int i = 0; i < numberOfSamples; i++)
                         filteredSignal.Add(new DataPoint(i * interval, inputSignal[i].YValues[0] - buffer1[i]));
-
-                    return filteredSignal;
+                    break;
                 case FilterMode.BandPass:
                     for (int i = 0; i < numberOfSamples; i++)
                         filteredSignal.Add(new DataPoint(i * interval, buffer1[i] - buffer2[i]));
-
-                    return filteredSignal;
-                default:
-                    return null;
+                    break;
             }
+
+            for (int i = 0; i < numberOfSamples; i++)
+            {
+                if (filteredSignal[i].YValues[0] < -1f)
+                    filteredSignal[i].YValues[0] = -1f;
+                if (filteredSignal[i].YValues[0] > 1f)
+                    filteredSignal[i].YValues[0] = 1f;
+            }
+
+            return filteredSignal;
         }
     }
 }

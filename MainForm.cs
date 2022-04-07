@@ -52,6 +52,8 @@ namespace BasicSynthesizer
         public event SoundWaveCreatedEventHandler SoundWaveCreated;
         protected void OnSoundWaveCreated(object sender, SoundWaveCreatedEventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
+
             hasWaveData = true;
 
             if (workingWithOscillators)
@@ -70,11 +72,20 @@ namespace BasicSynthesizer
 
             UpdateControls();
 
-            UpdateTimeDomainChart(timeDomainData);
-
             frequencyDomainData = Program.FastFourierTransform(timeDomainData, samplingRate);
             maxFrequency = frequencyDomainData.Last().XValue;
+
+            if (filter != null || lfo != null || envelope != null)
+            {
+                SoundWaveModified(this, EventArgs.Empty);
+                this.Cursor = Cursors.Default;
+                return;
+            }
+
+            UpdateTimeDomainChart(timeDomainData);
             UpdateFrequencyDomainChart(frequencyDomainData);
+
+            this.Cursor = Cursors.Default;
         }
 
         public delegate void SoundWaveModifiedEventHandler(object sender, EventArgs e);
@@ -85,12 +96,10 @@ namespace BasicSynthesizer
 
             modifiedTimeDomainData = timeDomainData;
 
-            if (lfo != null)
-                modifiedTimeDomainData = lfo.Apply(modifiedTimeDomainData, samplingRate, duration);
-
             if (filter != null)
                 modifiedTimeDomainData = filter.Apply(modifiedTimeDomainData, samplingRate);
-
+            if (lfo != null)
+                modifiedTimeDomainData = lfo.Apply(modifiedTimeDomainData, samplingRate, duration);
             if (envelope != null)
                 modifiedTimeDomainData = envelope.Apply(modifiedTimeDomainData, samplingRate, duration);
 
@@ -372,7 +381,7 @@ namespace BasicSynthesizer
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, "Cannot play sound!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -431,6 +440,8 @@ namespace BasicSynthesizer
                     return;
                 }
             }
+            else
+                return;
 
             SoundWaveCleared(this, EventArgs.Empty);
 
