@@ -42,7 +42,7 @@ namespace BasicSynthesizer
                 buffer1[i] = buffer1[i - 1] + alpha * (inputSignal[i] - buffer1[i - 1] + feedbackAmount * (buffer1[i - 1] - buffer2[i - 1]));
                 buffer2[i] = buffer2[i - 1] + alpha * (buffer1[i] - buffer2[i - 1]);
             }
-                
+
             switch (Mode)
             {
                 case FilterMode.LowPass:
@@ -65,7 +65,7 @@ namespace BasicSynthesizer
             }
         }
 
-        public List<DataPoint> Apply(List<DataPoint> inputSignal, int samplingRate)
+        public List<(double, double)> Apply(List<(double, double)> inputSignal, int samplingRate)
         {
             int numberOfSamples = inputSignal.Count;
             float interval = 1f / samplingRate;
@@ -73,15 +73,15 @@ namespace BasicSynthesizer
             float alpha = interval / (rc + interval);
             float feedbackAmount = (Resonance + Resonance / (1f - alpha)) / 101f;
 
-            List<DataPoint> filteredSignal = new List<DataPoint>();
+            List<(double, double)> filteredSignal = new List<(double, double)>();
             float[] buffer1 = new float[numberOfSamples];
             float[] buffer2 = new float[numberOfSamples];
 
-            buffer1[0] = (float)(alpha * inputSignal[0].YValues[0]);
+            buffer1[0] = (float)(alpha * inputSignal[0].Item2);
             buffer2[0] = alpha * buffer1[0];
             for (int i = 1; i < numberOfSamples; i++)
             {
-                buffer1[i] = (float)(buffer1[i - 1] + alpha * (inputSignal[i].YValues[0] - buffer1[i - 1] + feedbackAmount * (buffer1[i - 1] - buffer2[i - 1])));
+                buffer1[i] = (float)(buffer1[i - 1] + alpha * (inputSignal[i].Item2 - buffer1[i - 1] + feedbackAmount * (buffer1[i - 1] - buffer2[i - 1])));
                 buffer2[i] = buffer2[i - 1] + alpha * (buffer1[i] - buffer2[i - 1]);
             }
 
@@ -89,24 +89,24 @@ namespace BasicSynthesizer
             {
                 case FilterMode.LowPass:
                     for (int i = 0; i < numberOfSamples; i++)
-                        filteredSignal.Add(new DataPoint(i * interval, buffer2[i]));
+                        filteredSignal.Add((i * interval, buffer2[i]));
                     break;
                 case FilterMode.HighPass:
                     for (int i = 0; i < numberOfSamples; i++)
-                        filteredSignal.Add(new DataPoint(i * interval, inputSignal[i].YValues[0] - buffer1[i]));
+                        filteredSignal.Add((i * interval, inputSignal[i].Item2 - buffer1[i]));
                     break;
                 case FilterMode.BandPass:
                     for (int i = 0; i < numberOfSamples; i++)
-                        filteredSignal.Add(new DataPoint(i * interval, buffer1[i] - buffer2[i]));
+                        filteredSignal.Add((i * interval, buffer1[i] - buffer2[i]));
                     break;
             }
 
             for (int i = 0; i < numberOfSamples; i++)
             {
-                if (filteredSignal[i].YValues[0] < -1f)
-                    filteredSignal[i].YValues[0] = -1f;
-                if (filteredSignal[i].YValues[0] > 1f)
-                    filteredSignal[i].YValues[0] = 1f;
+                if (filteredSignal[i].Item2 < -1f)
+                    filteredSignal[i] = (filteredSignal[i].Item1, - 1f);
+                if (filteredSignal[i].Item2 > 1f)
+                    filteredSignal[i] = (filteredSignal[i].Item1, 1f);
             }
 
             return filteredSignal;

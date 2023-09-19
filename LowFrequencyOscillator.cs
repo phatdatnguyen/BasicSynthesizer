@@ -24,15 +24,15 @@ namespace BasicSynthesizer
             return outputSignal;
         }
 
-        public List<DataPoint> Apply(List<DataPoint> inputSignal, int samplingRate, float duration)
+        public List<(double, double)> Apply(List<(double, double)> inputSignal, int samplingRate, float duration)
         {
             int numberOfSamples = inputSignal.Count;
             float interval = 1f / samplingRate; //s
-            List<DataPoint> outputSignal = new List<DataPoint>();
+            List<(double, double)> outputSignal = new List<(double, double)>();
             float[] lfoSignal = GenerateWaveDataPoints(samplingRate, duration);
 
             for (int i = 0; i < numberOfSamples; i++)
-                outputSignal.Add(new DataPoint(i * interval, inputSignal[i].YValues[0] * lfoSignal[i]));
+                outputSignal.Add((i * interval, inputSignal[i].Item2 * lfoSignal[i]));
 
             return outputSignal;
         }

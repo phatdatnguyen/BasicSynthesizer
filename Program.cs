@@ -25,20 +25,20 @@ namespace BasicSynthesizer
             Application.Run(mainForm);
         }
 
-        public static List<DataPoint> FastFourierTransform(List<DataPoint> timeDomainData, int samplingRate)
+        public static List<(double, double[])> FastFourierTransform(List<(double, double)> timeDomainData, int samplingRate)
         {
-            List<DataPoint> frequencyDomainData = new List<DataPoint>();
+            List<(double, double[])> frequencyDomainData = new List<(double, double[])>();
 
             int numberOfSamples = timeDomainData.Count;
             Complex[] complices = new Complex[numberOfSamples];
             for (int i = 0; i < numberOfSamples; i++)
-                complices[i] = new Complex(timeDomainData[i].YValues[0], 0);
+                complices[i] = new Complex(timeDomainData[i].Item2, 0);
             FourierTransform2.FFT(complices, Accord.Math.FourierTransform.Direction.Forward);
 
             double[] frequencyVector = FourierTransform2.GetFrequencyVector(numberOfSamples, samplingRate);
             double maxFrequency = Math.Min(frequencyVector.Max(), 4000);
             for (int i = 0; i < maxFrequency; i++)
-                frequencyDomainData.Add(new DataPoint(frequencyVector[i], new double[] { complices[i].Real, complices[i].Imaginary, complices[i].Magnitude }));
+                frequencyDomainData.Add((frequencyVector[i], new double[] { complices[i].Real, complices[i].Imaginary, complices[i].Magnitude }));
 
             return frequencyDomainData;
         }
@@ -142,11 +142,11 @@ namespace BasicSynthesizer
             return intensityList;
         }
 
-        public static List<DataPoint> GenerateWaveData(Signal signal, string channel)
+        public static List<(double, double)> GenerateWaveData(Signal signal, string channel)
         {
             float[] intensity = null;
             float interval = 1f / signal.SampleRate;
-            List<DataPoint> waveDataPoints = new List<DataPoint>();
+            List<(double, double)> waveDataPoints = new List<(double, double)>();
 
             switch (signal.SampleFormat)
             {
@@ -172,7 +172,7 @@ namespace BasicSynthesizer
             if (channel == "Mono")
             {
                 for (int i = 0; i < intensity.Length; i++)
-                    waveDataPoints.Add(new DataPoint(interval * i, intensity[i]));
+                    waveDataPoints.Add((interval * i, intensity[i]));
 
                 return waveDataPoints;
             }
@@ -187,9 +187,9 @@ namespace BasicSynthesizer
             for (int i = 0; i < signal.NumberOfFrames; i++)
             {
                 if (channel == "Left")
-                    waveDataPoints.Add(new DataPoint(interval * i, leftChannel[i]));
+                    waveDataPoints.Add((interval * i, leftChannel[i]));
                 else if (channel == "Right")
-                    waveDataPoints.Add(new DataPoint(interval * i, rightChannel[i]));
+                    waveDataPoints.Add((interval * i, rightChannel[i]));
             }
 
             return waveDataPoints;

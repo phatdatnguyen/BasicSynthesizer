@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms.DataVisualization.Charting;
 
 namespace BasicSynthesizer
 {
@@ -67,7 +66,7 @@ namespace BasicSynthesizer
             return data;
         }
 
-        public static List<DataPoint> MixOscillators(List<Oscillator> oscillators, int samplingRate, float duration)
+        public static List<(double, double)> MixOscillators(List<Oscillator> oscillators, int samplingRate, float duration)
         {
             int numberOfOscillators = oscillators.Count;
             int numberOfSamples = Convert.ToInt32(Math.Floor(duration * samplingRate));
@@ -78,7 +77,7 @@ namespace BasicSynthesizer
                 wavesData.Add(oscillator.GenerateWaveDataPoints(samplingRate, duration));
 
             float[] mixedWaveData = new float[numberOfSamples];
-            List<DataPoint> dataPoints = new List<DataPoint>();
+            List<(double, double)> dataPoints = new List<(double, double)>();
             for (int i = 0; i < numberOfSamples; i++)
             {
                 float totalWeight = 0;
@@ -89,7 +88,7 @@ namespace BasicSynthesizer
                 }
                 mixedWaveData[i] = mixedWaveData[i] / totalWeight;
 
-                dataPoints.Add(new DataPoint((double)(interval * i), (double)mixedWaveData[i]));
+                dataPoints.Add(((double)(interval * i), mixedWaveData[i]));
             }
 
             return dataPoints;

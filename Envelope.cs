@@ -58,10 +58,10 @@ namespace BasicSynthesizer
             return outputDataPoints;
         }
 
-        public List<DataPoint> Apply(List<DataPoint> inputDataPoints, int samplingRate, float duration)
+        public List<(double, double)> Apply(List<(double, double)> inputDataPoints, int samplingRate, float duration)
         {
             int numberOfSamples = inputDataPoints.Count;
-            List<DataPoint> outputDataPoints = new List<DataPoint>();
+            List<(double, double)> outputDataPoints = new List<(double, double)>();
 
             float[] envelopeDataPoints = new float[numberOfSamples];
             float interval = 1f / samplingRate;
@@ -72,22 +72,22 @@ namespace BasicSynthesizer
                 if (time < Attack) // attack phase
                 {
                     envelopeDataPoints[i] = time / Attack;
-                    outputDataPoints.Add(new DataPoint(time, inputDataPoints[i].YValues[0] * envelopeDataPoints[i]));
+                    outputDataPoints.Add((time, inputDataPoints[i].Item2 * envelopeDataPoints[i]));
                 }
                 else if (i * interval < Attack + Decay) // decay phase
                 {
                     envelopeDataPoints[i] = 1 - (1 - Sustain / 100) * (time - Attack) / Decay;
-                    outputDataPoints.Add(new DataPoint(time, inputDataPoints[i].YValues[0] * envelopeDataPoints[i]));
+                    outputDataPoints.Add((time, inputDataPoints[i].Item2 * envelopeDataPoints[i]));
                 }
                 else if (i * interval < duration - Release) // sustain phase
                 {
                     envelopeDataPoints[i] = Sustain / 100;
-                    outputDataPoints.Add(new DataPoint(time, inputDataPoints[i].YValues[0] * envelopeDataPoints[i]));
+                    outputDataPoints.Add((time, inputDataPoints[i].Item2 * envelopeDataPoints[i]));
                 }
                 else // release phase
                 {
                     envelopeDataPoints[i] = Sustain / 100 * (duration - time) / Release;
-                    outputDataPoints.Add(new DataPoint(time, inputDataPoints[i].YValues[0] * envelopeDataPoints[i]));
+                    outputDataPoints.Add((time, inputDataPoints[i].Item2 * envelopeDataPoints[i]));
                 }
             }
 

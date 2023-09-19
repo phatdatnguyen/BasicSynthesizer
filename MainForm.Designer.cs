@@ -29,23 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint3 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint4 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint5 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,19 +43,17 @@
             this.editButton = new System.Windows.Forms.Button();
             this.deleteButton = new System.Windows.Forms.Button();
             this.addButton = new System.Windows.Forms.Button();
+            this.deleteAudioButton = new System.Windows.Forms.Button();
             this.oscillatorsListView = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.importButton = new System.Windows.Forms.Button();
-            this.timeDomainChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.durationNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.samplingRateComboBox = new System.Windows.Forms.ComboBox();
             this.durationLabel = new System.Windows.Forms.Label();
             this.samplingRateLabel = new System.Windows.Forms.Label();
-            this.frequencyDomainChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.filterGroupBox = new System.Windows.Forms.GroupBox();
             this.bandPassRadioButton = new System.Windows.Forms.RadioButton();
             this.resonanceValueLabel = new System.Windows.Forms.Label();
@@ -111,32 +92,18 @@
             this.lfoApplyCheckBox = new System.Windows.Forms.CheckBox();
             this.waveformComboBox = new System.Windows.Forms.ComboBox();
             this.waveformLabel = new System.Windows.Forms.Label();
-            this.timeDomainPanValueLabel = new System.Windows.Forms.Label();
-            this.timeDomainPanLabel = new System.Windows.Forms.Label();
-            this.timeDomainPanTrackBar = new System.Windows.Forms.TrackBar();
-            this.timeDomainZoomValueLabel = new System.Windows.Forms.Label();
-            this.timeDomainZoomLabel = new System.Windows.Forms.Label();
-            this.timeDomainZoomTrackBar = new System.Windows.Forms.TrackBar();
-            this.frequencyDomainPanValueLabel = new System.Windows.Forms.Label();
-            this.frequencyDomainPanLabel = new System.Windows.Forms.Label();
-            this.frequencyDomainZoomValueLabel = new System.Windows.Forms.Label();
-            this.frequencyDomainZoomLabel = new System.Windows.Forms.Label();
-            this.frequencyDomainZoomTrackBar = new System.Windows.Forms.TrackBar();
-            this.frequencyDomainPanTrackBar = new System.Windows.Forms.TrackBar();
             this.plotComboBox = new System.Windows.Forms.ComboBox();
             this.plotLabel = new System.Windows.Forms.Label();
             this.playButton = new System.Windows.Forms.Button();
-            this.exportButton = new System.Windows.Forms.Button();
             this.mainToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.openAudioFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.deleteAudioButton = new System.Windows.Forms.Button();
             this.audioInfoLabel = new System.Windows.Forms.Label();
             this.saveAudioFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.timeDomainPlotView = new OxyPlot.WindowsForms.PlotView();
+            this.frequencyDomainPlotView = new OxyPlot.WindowsForms.PlotView();
             this.mainMenuStrip.SuspendLayout();
             this.oscillatorsGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.timeDomainChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.durationNumericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.frequencyDomainChart)).BeginInit();
             this.filterGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resonanceTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.filterFrequencyTrackBar)).BeginInit();
@@ -149,10 +116,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.phaseTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.amplitudeTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lfoFrequencyTrackBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.timeDomainPanTrackBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.timeDomainZoomTrackBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.frequencyDomainZoomTrackBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.frequencyDomainPanTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
             // mainMenuStrip
@@ -244,10 +207,11 @@
             this.oscillatorsGroupBox.Controls.Add(this.editButton);
             this.oscillatorsGroupBox.Controls.Add(this.deleteButton);
             this.oscillatorsGroupBox.Controls.Add(this.addButton);
+            this.oscillatorsGroupBox.Controls.Add(this.deleteAudioButton);
             this.oscillatorsGroupBox.Controls.Add(this.oscillatorsListView);
             this.oscillatorsGroupBox.Location = new System.Drawing.Point(12, 27);
             this.oscillatorsGroupBox.Name = "oscillatorsGroupBox";
-            this.oscillatorsGroupBox.Size = new System.Drawing.Size(416, 406);
+            this.oscillatorsGroupBox.Size = new System.Drawing.Size(416, 362);
             this.oscillatorsGroupBox.TabIndex = 1;
             this.oscillatorsGroupBox.TabStop = false;
             this.oscillatorsGroupBox.Text = "Oscillators";
@@ -264,7 +228,7 @@
             // 
             // deleteButton
             // 
-            this.deleteButton.Location = new System.Drawing.Point(335, 17);
+            this.deleteButton.Location = new System.Drawing.Point(254, 19);
             this.deleteButton.Name = "deleteButton";
             this.deleteButton.Size = new System.Drawing.Size(75, 23);
             this.deleteButton.TabIndex = 2;
@@ -282,6 +246,17 @@
             this.addButton.UseVisualStyleBackColor = true;
             this.addButton.Click += new System.EventHandler(this.addButton_Click);
             // 
+            // deleteAudioButton
+            // 
+            this.deleteAudioButton.Enabled = false;
+            this.deleteAudioButton.Location = new System.Drawing.Point(335, 19);
+            this.deleteAudioButton.Name = "deleteAudioButton";
+            this.deleteAudioButton.Size = new System.Drawing.Size(75, 23);
+            this.deleteAudioButton.TabIndex = 7;
+            this.deleteAudioButton.Text = "Delete all";
+            this.deleteAudioButton.UseVisualStyleBackColor = true;
+            this.deleteAudioButton.Click += new System.EventHandler(this.deleteAudioButton_Click);
+            // 
             // oscillatorsListView
             // 
             this.oscillatorsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -294,7 +269,7 @@
             this.oscillatorsListView.HideSelection = false;
             this.oscillatorsListView.Location = new System.Drawing.Point(6, 48);
             this.oscillatorsListView.Name = "oscillatorsListView";
-            this.oscillatorsListView.Size = new System.Drawing.Size(404, 352);
+            this.oscillatorsListView.Size = new System.Drawing.Size(404, 308);
             this.oscillatorsListView.TabIndex = 3;
             this.oscillatorsListView.UseCompatibleStateImageBehavior = false;
             this.oscillatorsListView.View = System.Windows.Forms.View.Details;
@@ -325,66 +300,6 @@
             // 
             this.columnHeader5.Text = "Ratio";
             // 
-            // importButton
-            // 
-            this.importButton.Location = new System.Drawing.Point(948, 46);
-            this.importButton.Name = "importButton";
-            this.importButton.Size = new System.Drawing.Size(120, 23);
-            this.importButton.TabIndex = 6;
-            this.importButton.Text = "Import audio (*.wav)";
-            this.importButton.UseVisualStyleBackColor = true;
-            this.importButton.Click += new System.EventHandler(this.importButton_Click);
-            // 
-            // timeDomainChart
-            // 
-            chartArea1.AxisX.LabelStyle.Format = "{0.000}";
-            chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea1.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea1.AxisX.Title = "Time (s)";
-            chartArea1.AxisY.LabelStyle.Format = "{0.00}";
-            chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea1.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea1.AxisY.Title = "Intensity";
-            chartArea1.Name = "ChartArea1";
-            this.timeDomainChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.timeDomainChart.Legends.Add(legend1);
-            this.timeDomainChart.Location = new System.Drawing.Point(433, 83);
-            this.timeDomainChart.Margin = new System.Windows.Forms.Padding(2);
-            this.timeDomainChart.Name = "timeDomainChart";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Color = System.Drawing.Color.Blue;
-            series1.Legend = "Legend1";
-            series1.Name = "Wave";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Color = System.Drawing.Color.Silver;
-            series2.Enabled = false;
-            series2.Legend = "Legend1";
-            series2.Name = "LFO";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Color = System.Drawing.Color.Red;
-            series3.Enabled = false;
-            series3.Legend = "Legend1";
-            series3.Name = "ADSR";
-            series3.Points.Add(dataPoint1);
-            series3.Points.Add(dataPoint2);
-            series3.Points.Add(dataPoint3);
-            series3.Points.Add(dataPoint4);
-            series3.Points.Add(dataPoint5);
-            this.timeDomainChart.Series.Add(series1);
-            this.timeDomainChart.Series.Add(series2);
-            this.timeDomainChart.Series.Add(series3);
-            this.timeDomainChart.Size = new System.Drawing.Size(500, 170);
-            this.timeDomainChart.TabIndex = 8;
-            this.timeDomainChart.TabStop = false;
-            this.timeDomainChart.Text = "Time Domain";
-            title1.Name = "Title1";
-            title1.Text = "Time Domain";
-            this.timeDomainChart.Titles.Add(title1);
-            // 
             // durationNumericUpDown
             // 
             this.durationNumericUpDown.DecimalPlaces = 2;
@@ -393,14 +308,14 @@
             0,
             0,
             131072});
-            this.durationNumericUpDown.Location = new System.Drawing.Point(744, 47);
+            this.durationNumericUpDown.Location = new System.Drawing.Point(763, 49);
             this.durationNumericUpDown.Maximum = new decimal(new int[] {
             2,
             0,
             0,
             0});
             this.durationNumericUpDown.Name = "durationNumericUpDown";
-            this.durationNumericUpDown.Size = new System.Drawing.Size(60, 20);
+            this.durationNumericUpDown.Size = new System.Drawing.Size(100, 20);
             this.durationNumericUpDown.TabIndex = 3;
             this.durationNumericUpDown.Value = new decimal(new int[] {
             1,
@@ -426,7 +341,7 @@
             // durationLabel
             // 
             this.durationLabel.AutoSize = true;
-            this.durationLabel.Location = new System.Drawing.Point(677, 49);
+            this.durationLabel.Location = new System.Drawing.Point(696, 51);
             this.durationLabel.Name = "durationLabel";
             this.durationLabel.Size = new System.Drawing.Size(61, 13);
             this.durationLabel.TabIndex = 0;
@@ -441,52 +356,6 @@
             this.samplingRateLabel.TabIndex = 0;
             this.samplingRateLabel.Text = "Sampling Rate (Hz)";
             // 
-            // frequencyDomainChart
-            // 
-            chartArea2.AxisX.LabelStyle.Format = "{0}";
-            chartArea2.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea2.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea2.AxisX.Title = "Frequency (Hz)";
-            chartArea2.AxisY.LabelStyle.Format = "{0.00}";
-            chartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea2.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea2.AxisY.Title = "Intensity";
-            chartArea2.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.False;
-            chartArea2.Name = "ChartArea1";
-            this.frequencyDomainChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.frequencyDomainChart.Legends.Add(legend2);
-            this.frequencyDomainChart.Location = new System.Drawing.Point(433, 257);
-            this.frequencyDomainChart.Margin = new System.Windows.Forms.Padding(2);
-            this.frequencyDomainChart.Name = "frequencyDomainChart";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Color = System.Drawing.Color.Blue;
-            series4.Legend = "Legend1";
-            series4.Name = "Magnitude";
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series5.Color = System.Drawing.Color.Blue;
-            series5.Enabled = false;
-            series5.Legend = "Legend1";
-            series5.Name = "Real";
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series6.Color = System.Drawing.Color.Blue;
-            series6.Enabled = false;
-            series6.Legend = "Legend1";
-            series6.Name = "Imaginary";
-            this.frequencyDomainChart.Series.Add(series4);
-            this.frequencyDomainChart.Series.Add(series5);
-            this.frequencyDomainChart.Series.Add(series6);
-            this.frequencyDomainChart.Size = new System.Drawing.Size(500, 170);
-            this.frequencyDomainChart.TabIndex = 11;
-            this.frequencyDomainChart.TabStop = false;
-            this.frequencyDomainChart.Text = "Frequency Domain";
-            title2.Name = "Title1";
-            title2.Text = "Frequency Domain";
-            this.frequencyDomainChart.Titles.Add(title2);
-            // 
             // filterGroupBox
             // 
             this.filterGroupBox.Controls.Add(this.bandPassRadioButton);
@@ -500,9 +369,9 @@
             this.filterGroupBox.Controls.Add(this.highPassRadioButton);
             this.filterGroupBox.Controls.Add(this.lowPassRadioButton);
             this.filterGroupBox.Enabled = false;
-            this.filterGroupBox.Location = new System.Drawing.Point(12, 439);
+            this.filterGroupBox.Location = new System.Drawing.Point(12, 395);
             this.filterGroupBox.Name = "filterGroupBox";
-            this.filterGroupBox.Size = new System.Drawing.Size(350, 250);
+            this.filterGroupBox.Size = new System.Drawing.Size(350, 234);
             this.filterGroupBox.TabIndex = 15;
             this.filterGroupBox.TabStop = false;
             this.filterGroupBox.Text = "Filter";
@@ -510,7 +379,7 @@
             // bandPassRadioButton
             // 
             this.bandPassRadioButton.AutoSize = true;
-            this.bandPassRadioButton.Location = new System.Drawing.Point(226, 85);
+            this.bandPassRadioButton.Location = new System.Drawing.Point(226, 79);
             this.bandPassRadioButton.Name = "bandPassRadioButton";
             this.bandPassRadioButton.Size = new System.Drawing.Size(75, 17);
             this.bandPassRadioButton.TabIndex = 3;
@@ -521,7 +390,7 @@
             // resonanceValueLabel
             // 
             this.resonanceValueLabel.AutoSize = true;
-            this.resonanceValueLabel.Location = new System.Drawing.Point(292, 189);
+            this.resonanceValueLabel.Location = new System.Drawing.Point(292, 183);
             this.resonanceValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.resonanceValueLabel.Name = "resonanceValueLabel";
             this.resonanceValueLabel.Size = new System.Drawing.Size(21, 13);
@@ -531,7 +400,7 @@
             // filterFrequencyValueLabel
             // 
             this.filterFrequencyValueLabel.AutoSize = true;
-            this.filterFrequencyValueLabel.Location = new System.Drawing.Point(292, 141);
+            this.filterFrequencyValueLabel.Location = new System.Drawing.Point(292, 135);
             this.filterFrequencyValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.filterFrequencyValueLabel.Name = "filterFrequencyValueLabel";
             this.filterFrequencyValueLabel.Size = new System.Drawing.Size(41, 13);
@@ -540,7 +409,7 @@
             // 
             // resonanceTrackBar
             // 
-            this.resonanceTrackBar.Location = new System.Drawing.Point(87, 189);
+            this.resonanceTrackBar.Location = new System.Drawing.Point(87, 183);
             this.resonanceTrackBar.Maximum = 100;
             this.resonanceTrackBar.Name = "resonanceTrackBar";
             this.resonanceTrackBar.Size = new System.Drawing.Size(200, 45);
@@ -550,7 +419,7 @@
             // 
             // filterFrequencyTrackBar
             // 
-            this.filterFrequencyTrackBar.Location = new System.Drawing.Point(87, 138);
+            this.filterFrequencyTrackBar.Location = new System.Drawing.Point(87, 132);
             this.filterFrequencyTrackBar.Maximum = 4000;
             this.filterFrequencyTrackBar.Minimum = 16;
             this.filterFrequencyTrackBar.Name = "filterFrequencyTrackBar";
@@ -563,7 +432,7 @@
             // resonanceLabel
             // 
             this.resonanceLabel.AutoSize = true;
-            this.resonanceLabel.Location = new System.Drawing.Point(25, 189);
+            this.resonanceLabel.Location = new System.Drawing.Point(25, 183);
             this.resonanceLabel.Name = "resonanceLabel";
             this.resonanceLabel.Size = new System.Drawing.Size(62, 13);
             this.resonanceLabel.TabIndex = 0;
@@ -572,7 +441,7 @@
             // filterFrequencyLabel
             // 
             this.filterFrequencyLabel.AutoSize = true;
-            this.filterFrequencyLabel.Location = new System.Drawing.Point(30, 141);
+            this.filterFrequencyLabel.Location = new System.Drawing.Point(30, 135);
             this.filterFrequencyLabel.Name = "filterFrequencyLabel";
             this.filterFrequencyLabel.Size = new System.Drawing.Size(57, 13);
             this.filterFrequencyLabel.TabIndex = 0;
@@ -581,7 +450,7 @@
             // filterApplyCheckBox
             // 
             this.filterApplyCheckBox.AutoSize = true;
-            this.filterApplyCheckBox.Location = new System.Drawing.Point(28, 35);
+            this.filterApplyCheckBox.Location = new System.Drawing.Point(28, 31);
             this.filterApplyCheckBox.Name = "filterApplyCheckBox";
             this.filterApplyCheckBox.Size = new System.Drawing.Size(52, 17);
             this.filterApplyCheckBox.TabIndex = 0;
@@ -592,7 +461,7 @@
             // highPassRadioButton
             // 
             this.highPassRadioButton.AutoSize = true;
-            this.highPassRadioButton.Location = new System.Drawing.Point(134, 85);
+            this.highPassRadioButton.Location = new System.Drawing.Point(134, 79);
             this.highPassRadioButton.Name = "highPassRadioButton";
             this.highPassRadioButton.Size = new System.Drawing.Size(72, 17);
             this.highPassRadioButton.TabIndex = 2;
@@ -604,7 +473,7 @@
             // 
             this.lowPassRadioButton.AutoSize = true;
             this.lowPassRadioButton.Checked = true;
-            this.lowPassRadioButton.Location = new System.Drawing.Point(44, 85);
+            this.lowPassRadioButton.Location = new System.Drawing.Point(44, 79);
             this.lowPassRadioButton.Name = "lowPassRadioButton";
             this.lowPassRadioButton.Size = new System.Drawing.Size(70, 17);
             this.lowPassRadioButton.TabIndex = 1;
@@ -629,9 +498,9 @@
             this.adsrGroupBox.Controls.Add(this.decayLabel);
             this.adsrGroupBox.Controls.Add(this.attackLabel);
             this.adsrGroupBox.Enabled = false;
-            this.adsrGroupBox.Location = new System.Drawing.Point(744, 439);
+            this.adsrGroupBox.Location = new System.Drawing.Point(744, 394);
             this.adsrGroupBox.Name = "adsrGroupBox";
-            this.adsrGroupBox.Size = new System.Drawing.Size(428, 250);
+            this.adsrGroupBox.Size = new System.Drawing.Size(428, 235);
             this.adsrGroupBox.TabIndex = 17;
             this.adsrGroupBox.TabStop = false;
             this.adsrGroupBox.Text = "Envelope (ADSR)";
@@ -639,7 +508,7 @@
             // releaseValueLabel
             // 
             this.releaseValueLabel.AutoSize = true;
-            this.releaseValueLabel.Location = new System.Drawing.Point(374, 189);
+            this.releaseValueLabel.Location = new System.Drawing.Point(367, 184);
             this.releaseValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.releaseValueLabel.Name = "releaseValueLabel";
             this.releaseValueLabel.Size = new System.Drawing.Size(30, 13);
@@ -649,7 +518,7 @@
             // sustainValueLabel
             // 
             this.sustainValueLabel.AutoSize = true;
-            this.sustainValueLabel.Location = new System.Drawing.Point(374, 141);
+            this.sustainValueLabel.Location = new System.Drawing.Point(367, 136);
             this.sustainValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.sustainValueLabel.Name = "sustainValueLabel";
             this.sustainValueLabel.Size = new System.Drawing.Size(27, 13);
@@ -659,7 +528,7 @@
             // decayValueLabel
             // 
             this.decayValueLabel.AutoSize = true;
-            this.decayValueLabel.Location = new System.Drawing.Point(374, 87);
+            this.decayValueLabel.Location = new System.Drawing.Point(367, 82);
             this.decayValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.decayValueLabel.Name = "decayValueLabel";
             this.decayValueLabel.Size = new System.Drawing.Size(30, 13);
@@ -669,7 +538,7 @@
             // attackValueLabel
             // 
             this.attackValueLabel.AutoSize = true;
-            this.attackValueLabel.Location = new System.Drawing.Point(374, 36);
+            this.attackValueLabel.Location = new System.Drawing.Point(367, 31);
             this.attackValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.attackValueLabel.Name = "attackValueLabel";
             this.attackValueLabel.Size = new System.Drawing.Size(30, 13);
@@ -678,7 +547,7 @@
             // 
             // attackTrackBar
             // 
-            this.attackTrackBar.Location = new System.Drawing.Point(169, 36);
+            this.attackTrackBar.Location = new System.Drawing.Point(162, 31);
             this.attackTrackBar.Maximum = 100;
             this.attackTrackBar.Name = "attackTrackBar";
             this.attackTrackBar.Size = new System.Drawing.Size(200, 45);
@@ -689,7 +558,7 @@
             // 
             // decayTrackBar
             // 
-            this.decayTrackBar.Location = new System.Drawing.Point(169, 87);
+            this.decayTrackBar.Location = new System.Drawing.Point(162, 82);
             this.decayTrackBar.Maximum = 100;
             this.decayTrackBar.Name = "decayTrackBar";
             this.decayTrackBar.Size = new System.Drawing.Size(200, 45);
@@ -700,7 +569,7 @@
             // 
             // sustainTrackBar
             // 
-            this.sustainTrackBar.Location = new System.Drawing.Point(169, 138);
+            this.sustainTrackBar.Location = new System.Drawing.Point(162, 133);
             this.sustainTrackBar.Maximum = 100;
             this.sustainTrackBar.Name = "sustainTrackBar";
             this.sustainTrackBar.Size = new System.Drawing.Size(200, 45);
@@ -711,7 +580,7 @@
             // 
             // releaseTrackBar
             // 
-            this.releaseTrackBar.Location = new System.Drawing.Point(169, 189);
+            this.releaseTrackBar.Location = new System.Drawing.Point(162, 184);
             this.releaseTrackBar.Maximum = 100;
             this.releaseTrackBar.Name = "releaseTrackBar";
             this.releaseTrackBar.Size = new System.Drawing.Size(200, 45);
@@ -723,7 +592,7 @@
             // adsrApplyCheckBox
             // 
             this.adsrApplyCheckBox.AutoSize = true;
-            this.adsrApplyCheckBox.Location = new System.Drawing.Point(28, 35);
+            this.adsrApplyCheckBox.Location = new System.Drawing.Point(21, 30);
             this.adsrApplyCheckBox.Name = "adsrApplyCheckBox";
             this.adsrApplyCheckBox.Size = new System.Drawing.Size(52, 17);
             this.adsrApplyCheckBox.TabIndex = 0;
@@ -734,7 +603,7 @@
             // releaseLabel
             // 
             this.releaseLabel.AutoSize = true;
-            this.releaseLabel.Location = new System.Drawing.Point(103, 189);
+            this.releaseLabel.Location = new System.Drawing.Point(96, 184);
             this.releaseLabel.Name = "releaseLabel";
             this.releaseLabel.Size = new System.Drawing.Size(60, 13);
             this.releaseLabel.TabIndex = 0;
@@ -743,7 +612,7 @@
             // sustainLabel
             // 
             this.sustainLabel.AutoSize = true;
-            this.sustainLabel.Location = new System.Drawing.Point(104, 138);
+            this.sustainLabel.Location = new System.Drawing.Point(97, 133);
             this.sustainLabel.Name = "sustainLabel";
             this.sustainLabel.Size = new System.Drawing.Size(59, 13);
             this.sustainLabel.TabIndex = 0;
@@ -752,7 +621,7 @@
             // decayLabel
             // 
             this.decayLabel.AutoSize = true;
-            this.decayLabel.Location = new System.Drawing.Point(111, 87);
+            this.decayLabel.Location = new System.Drawing.Point(104, 82);
             this.decayLabel.Name = "decayLabel";
             this.decayLabel.Size = new System.Drawing.Size(52, 13);
             this.decayLabel.TabIndex = 0;
@@ -761,7 +630,7 @@
             // attackLabel
             // 
             this.attackLabel.AutoSize = true;
-            this.attackLabel.Location = new System.Drawing.Point(111, 36);
+            this.attackLabel.Location = new System.Drawing.Point(104, 31);
             this.attackLabel.Name = "attackLabel";
             this.attackLabel.Size = new System.Drawing.Size(52, 13);
             this.attackLabel.TabIndex = 0;
@@ -782,9 +651,9 @@
             this.lfoGroupBox.Controls.Add(this.waveformComboBox);
             this.lfoGroupBox.Controls.Add(this.waveformLabel);
             this.lfoGroupBox.Enabled = false;
-            this.lfoGroupBox.Location = new System.Drawing.Point(368, 439);
+            this.lfoGroupBox.Location = new System.Drawing.Point(368, 395);
             this.lfoGroupBox.Name = "lfoGroupBox";
-            this.lfoGroupBox.Size = new System.Drawing.Size(370, 250);
+            this.lfoGroupBox.Size = new System.Drawing.Size(370, 234);
             this.lfoGroupBox.TabIndex = 16;
             this.lfoGroupBox.TabStop = false;
             this.lfoGroupBox.Text = "Low-frequency Oscillator (LFO)";
@@ -792,7 +661,7 @@
             // phaseValueLabel
             // 
             this.phaseValueLabel.AutoSize = true;
-            this.phaseValueLabel.Location = new System.Drawing.Point(307, 189);
+            this.phaseValueLabel.Location = new System.Drawing.Point(307, 183);
             this.phaseValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.phaseValueLabel.Name = "phaseValueLabel";
             this.phaseValueLabel.Size = new System.Drawing.Size(17, 13);
@@ -802,7 +671,7 @@
             // phaseLabel
             // 
             this.phaseLabel.AutoSize = true;
-            this.phaseLabel.Location = new System.Drawing.Point(59, 189);
+            this.phaseLabel.Location = new System.Drawing.Point(59, 183);
             this.phaseLabel.Name = "phaseLabel";
             this.phaseLabel.Size = new System.Drawing.Size(37, 13);
             this.phaseLabel.TabIndex = 0;
@@ -810,7 +679,7 @@
             // 
             // phaseTrackBar
             // 
-            this.phaseTrackBar.Location = new System.Drawing.Point(102, 189);
+            this.phaseTrackBar.Location = new System.Drawing.Point(102, 183);
             this.phaseTrackBar.Maximum = 360;
             this.phaseTrackBar.Name = "phaseTrackBar";
             this.phaseTrackBar.Size = new System.Drawing.Size(200, 45);
@@ -821,7 +690,7 @@
             // amplitudeValueLabel
             // 
             this.amplitudeValueLabel.AutoSize = true;
-            this.amplitudeValueLabel.Location = new System.Drawing.Point(307, 138);
+            this.amplitudeValueLabel.Location = new System.Drawing.Point(307, 132);
             this.amplitudeValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.amplitudeValueLabel.Name = "amplitudeValueLabel";
             this.amplitudeValueLabel.Size = new System.Drawing.Size(13, 13);
@@ -831,7 +700,7 @@
             // amplitudeLabel
             // 
             this.amplitudeLabel.AutoSize = true;
-            this.amplitudeLabel.Location = new System.Drawing.Point(43, 138);
+            this.amplitudeLabel.Location = new System.Drawing.Point(43, 132);
             this.amplitudeLabel.Name = "amplitudeLabel";
             this.amplitudeLabel.Size = new System.Drawing.Size(53, 13);
             this.amplitudeLabel.TabIndex = 0;
@@ -839,7 +708,7 @@
             // 
             // amplitudeTrackBar
             // 
-            this.amplitudeTrackBar.Location = new System.Drawing.Point(102, 138);
+            this.amplitudeTrackBar.Location = new System.Drawing.Point(102, 132);
             this.amplitudeTrackBar.Maximum = 100;
             this.amplitudeTrackBar.Name = "amplitudeTrackBar";
             this.amplitudeTrackBar.Size = new System.Drawing.Size(200, 45);
@@ -851,7 +720,7 @@
             // lfoFrequencyValueLabel
             // 
             this.lfoFrequencyValueLabel.AutoSize = true;
-            this.lfoFrequencyValueLabel.Location = new System.Drawing.Point(307, 87);
+            this.lfoFrequencyValueLabel.Location = new System.Drawing.Point(307, 81);
             this.lfoFrequencyValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lfoFrequencyValueLabel.Name = "lfoFrequencyValueLabel";
             this.lfoFrequencyValueLabel.Size = new System.Drawing.Size(35, 13);
@@ -861,7 +730,7 @@
             // lfoFrequencyLabel
             // 
             this.lfoFrequencyLabel.AutoSize = true;
-            this.lfoFrequencyLabel.Location = new System.Drawing.Point(17, 87);
+            this.lfoFrequencyLabel.Location = new System.Drawing.Point(17, 81);
             this.lfoFrequencyLabel.Name = "lfoFrequencyLabel";
             this.lfoFrequencyLabel.Size = new System.Drawing.Size(79, 13);
             this.lfoFrequencyLabel.TabIndex = 0;
@@ -869,7 +738,7 @@
             // 
             // lfoFrequencyTrackBar
             // 
-            this.lfoFrequencyTrackBar.Location = new System.Drawing.Point(102, 87);
+            this.lfoFrequencyTrackBar.Location = new System.Drawing.Point(102, 81);
             this.lfoFrequencyTrackBar.Maximum = 20;
             this.lfoFrequencyTrackBar.Minimum = 1;
             this.lfoFrequencyTrackBar.Name = "lfoFrequencyTrackBar";
@@ -882,7 +751,7 @@
             // lfoApplyCheckBox
             // 
             this.lfoApplyCheckBox.AutoSize = true;
-            this.lfoApplyCheckBox.Location = new System.Drawing.Point(29, 35);
+            this.lfoApplyCheckBox.Location = new System.Drawing.Point(29, 29);
             this.lfoApplyCheckBox.Name = "lfoApplyCheckBox";
             this.lfoApplyCheckBox.Size = new System.Drawing.Size(52, 17);
             this.lfoApplyCheckBox.TabIndex = 0;
@@ -899,143 +768,20 @@
             "Square",
             "Triangle",
             "Sawtooth"});
-            this.waveformComboBox.Location = new System.Drawing.Point(181, 33);
+            this.waveformComboBox.Location = new System.Drawing.Point(181, 27);
             this.waveformComboBox.Name = "waveformComboBox";
             this.waveformComboBox.Size = new System.Drawing.Size(121, 21);
             this.waveformComboBox.TabIndex = 1;
+            this.waveformComboBox.SelectedIndexChanged += new System.EventHandler(this.waveformComboBox_SelectedIndexChanged);
             // 
             // waveformLabel
             // 
             this.waveformLabel.AutoSize = true;
-            this.waveformLabel.Location = new System.Drawing.Point(119, 36);
+            this.waveformLabel.Location = new System.Drawing.Point(119, 30);
             this.waveformLabel.Name = "waveformLabel";
             this.waveformLabel.Size = new System.Drawing.Size(56, 13);
             this.waveformLabel.TabIndex = 0;
             this.waveformLabel.Text = "Waveform";
-            // 
-            // timeDomainPanValueLabel
-            // 
-            this.timeDomainPanValueLabel.AutoSize = true;
-            this.timeDomainPanValueLabel.Location = new System.Drawing.Point(1140, 199);
-            this.timeDomainPanValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.timeDomainPanValueLabel.Name = "timeDomainPanValueLabel";
-            this.timeDomainPanValueLabel.Size = new System.Drawing.Size(21, 13);
-            this.timeDomainPanValueLabel.TabIndex = 0;
-            this.timeDomainPanValueLabel.Text = "0%";
-            // 
-            // timeDomainPanLabel
-            // 
-            this.timeDomainPanLabel.AutoSize = true;
-            this.timeDomainPanLabel.Location = new System.Drawing.Point(953, 199);
-            this.timeDomainPanLabel.Name = "timeDomainPanLabel";
-            this.timeDomainPanLabel.Size = new System.Drawing.Size(26, 13);
-            this.timeDomainPanLabel.TabIndex = 0;
-            this.timeDomainPanLabel.Text = "Pan";
-            // 
-            // timeDomainPanTrackBar
-            // 
-            this.timeDomainPanTrackBar.Enabled = false;
-            this.timeDomainPanTrackBar.Location = new System.Drawing.Point(985, 199);
-            this.timeDomainPanTrackBar.Maximum = 0;
-            this.timeDomainPanTrackBar.Name = "timeDomainPanTrackBar";
-            this.timeDomainPanTrackBar.Size = new System.Drawing.Size(150, 45);
-            this.timeDomainPanTrackBar.TabIndex = 10;
-            this.timeDomainPanTrackBar.TickFrequency = 10;
-            this.timeDomainPanTrackBar.Scroll += new System.EventHandler(this.timeDomainPanTrackBar_Scroll);
-            // 
-            // timeDomainZoomValueLabel
-            // 
-            this.timeDomainZoomValueLabel.AutoSize = true;
-            this.timeDomainZoomValueLabel.Location = new System.Drawing.Point(1139, 148);
-            this.timeDomainZoomValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.timeDomainZoomValueLabel.Name = "timeDomainZoomValueLabel";
-            this.timeDomainZoomValueLabel.Size = new System.Drawing.Size(33, 13);
-            this.timeDomainZoomValueLabel.TabIndex = 0;
-            this.timeDomainZoomValueLabel.Text = "100%";
-            // 
-            // timeDomainZoomLabel
-            // 
-            this.timeDomainZoomLabel.AutoSize = true;
-            this.timeDomainZoomLabel.Location = new System.Drawing.Point(945, 148);
-            this.timeDomainZoomLabel.Name = "timeDomainZoomLabel";
-            this.timeDomainZoomLabel.Size = new System.Drawing.Size(34, 13);
-            this.timeDomainZoomLabel.TabIndex = 0;
-            this.timeDomainZoomLabel.Text = "Zoom";
-            // 
-            // timeDomainZoomTrackBar
-            // 
-            this.timeDomainZoomTrackBar.Enabled = false;
-            this.timeDomainZoomTrackBar.Location = new System.Drawing.Point(985, 148);
-            this.timeDomainZoomTrackBar.Maximum = 100;
-            this.timeDomainZoomTrackBar.Minimum = 1;
-            this.timeDomainZoomTrackBar.Name = "timeDomainZoomTrackBar";
-            this.timeDomainZoomTrackBar.Size = new System.Drawing.Size(150, 45);
-            this.timeDomainZoomTrackBar.TabIndex = 9;
-            this.timeDomainZoomTrackBar.TickFrequency = 10;
-            this.timeDomainZoomTrackBar.Value = 100;
-            this.timeDomainZoomTrackBar.Scroll += new System.EventHandler(this.timeDomainZoomTrackBar_Scroll);
-            // 
-            // frequencyDomainPanValueLabel
-            // 
-            this.frequencyDomainPanValueLabel.AutoSize = true;
-            this.frequencyDomainPanValueLabel.Location = new System.Drawing.Point(1140, 376);
-            this.frequencyDomainPanValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.frequencyDomainPanValueLabel.Name = "frequencyDomainPanValueLabel";
-            this.frequencyDomainPanValueLabel.Size = new System.Drawing.Size(21, 13);
-            this.frequencyDomainPanValueLabel.TabIndex = 0;
-            this.frequencyDomainPanValueLabel.Text = "0%";
-            // 
-            // frequencyDomainPanLabel
-            // 
-            this.frequencyDomainPanLabel.AutoSize = true;
-            this.frequencyDomainPanLabel.Location = new System.Drawing.Point(953, 376);
-            this.frequencyDomainPanLabel.Name = "frequencyDomainPanLabel";
-            this.frequencyDomainPanLabel.Size = new System.Drawing.Size(26, 13);
-            this.frequencyDomainPanLabel.TabIndex = 0;
-            this.frequencyDomainPanLabel.Text = "Pan";
-            // 
-            // frequencyDomainZoomValueLabel
-            // 
-            this.frequencyDomainZoomValueLabel.AutoSize = true;
-            this.frequencyDomainZoomValueLabel.Location = new System.Drawing.Point(1139, 325);
-            this.frequencyDomainZoomValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.frequencyDomainZoomValueLabel.Name = "frequencyDomainZoomValueLabel";
-            this.frequencyDomainZoomValueLabel.Size = new System.Drawing.Size(33, 13);
-            this.frequencyDomainZoomValueLabel.TabIndex = 0;
-            this.frequencyDomainZoomValueLabel.Text = "100%";
-            // 
-            // frequencyDomainZoomLabel
-            // 
-            this.frequencyDomainZoomLabel.AutoSize = true;
-            this.frequencyDomainZoomLabel.Location = new System.Drawing.Point(945, 325);
-            this.frequencyDomainZoomLabel.Name = "frequencyDomainZoomLabel";
-            this.frequencyDomainZoomLabel.Size = new System.Drawing.Size(34, 13);
-            this.frequencyDomainZoomLabel.TabIndex = 0;
-            this.frequencyDomainZoomLabel.Text = "Zoom";
-            // 
-            // frequencyDomainZoomTrackBar
-            // 
-            this.frequencyDomainZoomTrackBar.Enabled = false;
-            this.frequencyDomainZoomTrackBar.Location = new System.Drawing.Point(985, 325);
-            this.frequencyDomainZoomTrackBar.Maximum = 100;
-            this.frequencyDomainZoomTrackBar.Minimum = 1;
-            this.frequencyDomainZoomTrackBar.Name = "frequencyDomainZoomTrackBar";
-            this.frequencyDomainZoomTrackBar.Size = new System.Drawing.Size(150, 45);
-            this.frequencyDomainZoomTrackBar.TabIndex = 13;
-            this.frequencyDomainZoomTrackBar.TickFrequency = 10;
-            this.frequencyDomainZoomTrackBar.Value = 100;
-            this.frequencyDomainZoomTrackBar.Scroll += new System.EventHandler(this.frequencyDomainZoomTrackBar_Scroll);
-            // 
-            // frequencyDomainPanTrackBar
-            // 
-            this.frequencyDomainPanTrackBar.Enabled = false;
-            this.frequencyDomainPanTrackBar.Location = new System.Drawing.Point(985, 376);
-            this.frequencyDomainPanTrackBar.Maximum = 0;
-            this.frequencyDomainPanTrackBar.Name = "frequencyDomainPanTrackBar";
-            this.frequencyDomainPanTrackBar.Size = new System.Drawing.Size(150, 45);
-            this.frequencyDomainPanTrackBar.TabIndex = 17;
-            this.frequencyDomainPanTrackBar.TickFrequency = 10;
-            this.frequencyDomainPanTrackBar.Scroll += new System.EventHandler(this.frequencyDomainPanTrackBar_Scroll);
             // 
             // plotComboBox
             // 
@@ -1046,28 +792,28 @@
             "Magnitude",
             "Real",
             "Imaginary"});
-            this.plotComboBox.Location = new System.Drawing.Point(985, 267);
+            this.plotComboBox.Location = new System.Drawing.Point(1073, 48);
             this.plotComboBox.Margin = new System.Windows.Forms.Padding(2);
             this.plotComboBox.Name = "plotComboBox";
-            this.plotComboBox.Size = new System.Drawing.Size(121, 21);
+            this.plotComboBox.Size = new System.Drawing.Size(100, 21);
             this.plotComboBox.TabIndex = 12;
             this.plotComboBox.SelectedIndexChanged += new System.EventHandler(this.plotComboBox_SelectedIndexChanged);
             // 
             // plotLabel
             // 
             this.plotLabel.AutoSize = true;
-            this.plotLabel.Location = new System.Drawing.Point(954, 270);
+            this.plotLabel.Location = new System.Drawing.Point(954, 51);
             this.plotLabel.Name = "plotLabel";
-            this.plotLabel.Size = new System.Drawing.Size(25, 13);
+            this.plotLabel.Size = new System.Drawing.Size(114, 13);
             this.plotLabel.TabIndex = 0;
-            this.plotLabel.Text = "Plot";
+            this.plotLabel.Text = "Frequency domain plot";
             // 
             // playButton
             // 
             this.playButton.Enabled = false;
             this.playButton.Image = global::BasicSynthesizer.Properties.Resources.Audio_16x;
             this.playButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.playButton.Location = new System.Drawing.Point(815, 46);
+            this.playButton.Location = new System.Drawing.Point(897, 46);
             this.playButton.Margin = new System.Windows.Forms.Padding(2);
             this.playButton.Name = "playButton";
             this.playButton.Size = new System.Drawing.Size(23, 23);
@@ -1077,31 +823,9 @@
             this.playButton.UseVisualStyleBackColor = true;
             this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
-            // exportButton
-            // 
-            this.exportButton.Enabled = false;
-            this.exportButton.Location = new System.Drawing.Point(843, 46);
-            this.exportButton.Name = "exportButton";
-            this.exportButton.Size = new System.Drawing.Size(90, 23);
-            this.exportButton.TabIndex = 5;
-            this.exportButton.Text = "Export (*.wav)";
-            this.exportButton.UseVisualStyleBackColor = true;
-            this.exportButton.Click += new System.EventHandler(this.exportButton_Click);
-            // 
             // openAudioFileDialog
             // 
             this.openAudioFileDialog.Filter = "WAV file (*.wav)|*.wav";
-            // 
-            // deleteAudioButton
-            // 
-            this.deleteAudioButton.Enabled = false;
-            this.deleteAudioButton.Location = new System.Drawing.Point(1074, 46);
-            this.deleteAudioButton.Name = "deleteAudioButton";
-            this.deleteAudioButton.Size = new System.Drawing.Size(98, 23);
-            this.deleteAudioButton.TabIndex = 7;
-            this.deleteAudioButton.Text = "Delete audio";
-            this.deleteAudioButton.UseVisualStyleBackColor = true;
-            this.deleteAudioButton.Click += new System.EventHandler(this.deleteAudioButton_Click);
             // 
             // audioInfoLabel
             // 
@@ -1115,39 +839,50 @@
             // 
             this.saveAudioFileDialog.Filter = "WAV file (*.wav)|*.wav";
             // 
+            // timeDomainPlotView
+            // 
+            this.timeDomainPlotView.Enabled = false;
+            this.timeDomainPlotView.Location = new System.Drawing.Point(434, 83);
+            this.timeDomainPlotView.Name = "timeDomainPlotView";
+            this.timeDomainPlotView.PanCursor = System.Windows.Forms.Cursors.Hand;
+            this.timeDomainPlotView.Size = new System.Drawing.Size(738, 150);
+            this.timeDomainPlotView.TabIndex = 19;
+            this.timeDomainPlotView.Text = "plotView1";
+            this.timeDomainPlotView.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
+            this.timeDomainPlotView.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
+            this.timeDomainPlotView.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
+            // 
+            // frequencyDomainPlotView
+            // 
+            this.frequencyDomainPlotView.Enabled = false;
+            this.frequencyDomainPlotView.Location = new System.Drawing.Point(434, 239);
+            this.frequencyDomainPlotView.Name = "frequencyDomainPlotView";
+            this.frequencyDomainPlotView.PanCursor = System.Windows.Forms.Cursors.Hand;
+            this.frequencyDomainPlotView.Size = new System.Drawing.Size(738, 150);
+            this.frequencyDomainPlotView.TabIndex = 20;
+            this.frequencyDomainPlotView.Text = "plotView1";
+            this.frequencyDomainPlotView.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
+            this.frequencyDomainPlotView.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
+            this.frequencyDomainPlotView.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1184, 701);
+            this.ClientSize = new System.Drawing.Size(1184, 641);
+            this.Controls.Add(this.frequencyDomainPlotView);
+            this.Controls.Add(this.timeDomainPlotView);
             this.Controls.Add(this.audioInfoLabel);
-            this.Controls.Add(this.deleteAudioButton);
-            this.Controls.Add(this.exportButton);
-            this.Controls.Add(this.importButton);
+            this.Controls.Add(this.lfoGroupBox);
             this.Controls.Add(this.plotLabel);
             this.Controls.Add(this.plotComboBox);
-            this.Controls.Add(this.frequencyDomainPanTrackBar);
-            this.Controls.Add(this.frequencyDomainPanValueLabel);
-            this.Controls.Add(this.frequencyDomainPanLabel);
-            this.Controls.Add(this.frequencyDomainZoomValueLabel);
-            this.Controls.Add(this.frequencyDomainZoomLabel);
-            this.Controls.Add(this.frequencyDomainZoomTrackBar);
-            this.Controls.Add(this.timeDomainPanValueLabel);
-            this.Controls.Add(this.timeDomainPanLabel);
-            this.Controls.Add(this.timeDomainPanTrackBar);
-            this.Controls.Add(this.timeDomainZoomValueLabel);
-            this.Controls.Add(this.timeDomainZoomLabel);
-            this.Controls.Add(this.timeDomainZoomTrackBar);
-            this.Controls.Add(this.lfoGroupBox);
             this.Controls.Add(this.adsrGroupBox);
             this.Controls.Add(this.filterGroupBox);
             this.Controls.Add(this.playButton);
-            this.Controls.Add(this.frequencyDomainChart);
             this.Controls.Add(this.durationNumericUpDown);
             this.Controls.Add(this.samplingRateComboBox);
             this.Controls.Add(this.durationLabel);
             this.Controls.Add(this.samplingRateLabel);
-            this.Controls.Add(this.timeDomainChart);
             this.Controls.Add(this.oscillatorsGroupBox);
             this.Controls.Add(this.mainMenuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -1155,14 +890,11 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Basic Synthesizer";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.mainMenuStrip.ResumeLayout(false);
             this.mainMenuStrip.PerformLayout();
             this.oscillatorsGroupBox.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.timeDomainChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.durationNumericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.frequencyDomainChart)).EndInit();
             this.filterGroupBox.ResumeLayout(false);
             this.filterGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resonanceTrackBar)).EndInit();
@@ -1178,10 +910,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.phaseTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.amplitudeTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lfoFrequencyTrackBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.timeDomainPanTrackBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.timeDomainZoomTrackBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.frequencyDomainZoomTrackBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.frequencyDomainPanTrackBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1202,12 +930,10 @@
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
-        private System.Windows.Forms.DataVisualization.Charting.Chart timeDomainChart;
         private System.Windows.Forms.NumericUpDown durationNumericUpDown;
         private System.Windows.Forms.ComboBox samplingRateComboBox;
         private System.Windows.Forms.Label durationLabel;
         private System.Windows.Forms.Label samplingRateLabel;
-        private System.Windows.Forms.DataVisualization.Charting.Chart frequencyDomainChart;
         private System.Windows.Forms.Button playButton;
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.GroupBox filterGroupBox;
@@ -1241,22 +967,8 @@
         private System.Windows.Forms.Label decayValueLabel;
         private System.Windows.Forms.Label attackValueLabel;
         private System.Windows.Forms.Label lfoFrequencyValueLabel;
-        private System.Windows.Forms.Label timeDomainPanValueLabel;
-        private System.Windows.Forms.Label timeDomainPanLabel;
-        private System.Windows.Forms.TrackBar timeDomainPanTrackBar;
-        private System.Windows.Forms.Label timeDomainZoomValueLabel;
-        private System.Windows.Forms.Label timeDomainZoomLabel;
-        private System.Windows.Forms.TrackBar timeDomainZoomTrackBar;
-        private System.Windows.Forms.Label frequencyDomainPanValueLabel;
-        private System.Windows.Forms.Label frequencyDomainPanLabel;
-        private System.Windows.Forms.Label frequencyDomainZoomValueLabel;
-        private System.Windows.Forms.Label frequencyDomainZoomLabel;
-        private System.Windows.Forms.TrackBar frequencyDomainZoomTrackBar;
-        private System.Windows.Forms.TrackBar frequencyDomainPanTrackBar;
         private System.Windows.Forms.ComboBox plotComboBox;
         private System.Windows.Forms.Label plotLabel;
-        private System.Windows.Forms.Button importButton;
-        private System.Windows.Forms.Button exportButton;
         private System.Windows.Forms.RadioButton bandPassRadioButton;
         private System.Windows.Forms.ToolTip mainToolTip;
         private System.Windows.Forms.Label amplitudeValueLabel;
@@ -1275,6 +987,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
+        private OxyPlot.WindowsForms.PlotView timeDomainPlotView;
+        private OxyPlot.WindowsForms.PlotView frequencyDomainPlotView;
     }
 }
 
