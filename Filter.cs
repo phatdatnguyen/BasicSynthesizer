@@ -1,39 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms.DataVisualization.Charting;
-
-namespace BasicSynthesizer
+﻿namespace BasicSynthesizer
 {
     public class Filter
     {
-        // Enumerations
+        #region Enum
         public enum FilterMode { LowPass, HighPass, BandPass }
+        #endregion
 
-        // Properties
-        public Single CutoffFrequency { get; set; }
-        public Single Resonance { get; set; }
+        #region Properties
+        public double CutoffFrequency { get; set; }
+        public double Resonance { get; set; }
         public FilterMode Mode { get; set; }
+        #endregion
 
-        // Contructors
-        public Filter(FilterMode filterMode, float cutoffFrequency, float resonance)
+        #region Contructor
+        public Filter(FilterMode filterMode, double cutoffFrequency, double resonance)
         {
             Mode = filterMode;
             CutoffFrequency = cutoffFrequency;
             Resonance = resonance;
         }
+        #endregion
 
-        // Methods
-        public float[] Apply(float[] inputSignal, int samplingRate)
+        #region Methods
+        public double[] Apply(double[] inputSignal, int samplingRate)
         {
             int numberOfSamples = inputSignal.Length;
-            float interval = 1f / samplingRate;
-            float rc = Convert.ToSingle(1f / (Math.PI * 2 * CutoffFrequency));
-            float alpha = interval / (rc + interval);
-            float feedbackAmount = (Resonance + Resonance / (1f - alpha)) / 101f;
+            double interval = 1f / samplingRate;
+            double rc = Convert.ToDouble(1f / (Math.PI * 2 * CutoffFrequency));
+            double alpha = interval / (rc + interval);
+            double feedbackAmount = (Resonance + Resonance / (1f - alpha)) / 101f;
 
-            float[] filteredSignal = new float[numberOfSamples];
-            float[] buffer1 = new float[numberOfSamples];
-            float[] buffer2 = new float[numberOfSamples];
+            double[] filteredSignal = new double[numberOfSamples];
+            double[] buffer1 = new double[numberOfSamples];
+            double[] buffer2 = new double[numberOfSamples];
 
             buffer1[0] = alpha * inputSignal[0];
             buffer2[0] = alpha * buffer1[0];
@@ -61,27 +60,27 @@ namespace BasicSynthesizer
 
                     return filteredSignal;
                 default:
-                    return null;
+                    return inputSignal;
             }
         }
 
         public List<(double, double)> Apply(List<(double, double)> inputSignal, int samplingRate)
         {
             int numberOfSamples = inputSignal.Count;
-            float interval = 1f / samplingRate;
-            float rc = Convert.ToSingle(1f / (Math.PI * 2 * CutoffFrequency));
-            float alpha = interval / (rc + interval);
-            float feedbackAmount = (Resonance + Resonance / (1f - alpha)) / 101f;
+            double interval = 1f / samplingRate;
+            double rc = Convert.ToDouble(1f / (Math.PI * 2 * CutoffFrequency));
+            double alpha = interval / (rc + interval);
+            double feedbackAmount = (Resonance + Resonance / (1f - alpha)) / 101f;
 
-            List<(double, double)> filteredSignal = new List<(double, double)>();
-            float[] buffer1 = new float[numberOfSamples];
-            float[] buffer2 = new float[numberOfSamples];
+            List<(double, double)> filteredSignal = new();
+            double[] buffer1 = new double[numberOfSamples];
+            double[] buffer2 = new double[numberOfSamples];
 
-            buffer1[0] = (float)(alpha * inputSignal[0].Item2);
+            buffer1[0] = (alpha * inputSignal[0].Item2);
             buffer2[0] = alpha * buffer1[0];
             for (int i = 1; i < numberOfSamples; i++)
             {
-                buffer1[i] = (float)(buffer1[i - 1] + alpha * (inputSignal[i].Item2 - buffer1[i - 1] + feedbackAmount * (buffer1[i - 1] - buffer2[i - 1])));
+                buffer1[i] = (buffer1[i - 1] + alpha * (inputSignal[i].Item2 - buffer1[i - 1] + feedbackAmount * (buffer1[i - 1] - buffer2[i - 1])));
                 buffer2[i] = buffer2[i - 1] + alpha * (buffer1[i] - buffer2[i - 1]);
             }
 
@@ -99,6 +98,10 @@ namespace BasicSynthesizer
                     for (int i = 0; i < numberOfSamples; i++)
                         filteredSignal.Add((i * interval, buffer1[i] - buffer2[i]));
                     break;
+                default:
+                    for (int i = 0; i < numberOfSamples; i++)
+                        filteredSignal.Add((i * interval, inputSignal[i].Item2));
+                    break;
             }
 
             for (int i = 0; i < numberOfSamples; i++)
@@ -111,5 +114,6 @@ namespace BasicSynthesizer
 
             return filteredSignal;
         }
+        #endregion
     }
 }

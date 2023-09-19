@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms.DataVisualization.Charting;
-
-namespace BasicSynthesizer
+﻿namespace BasicSynthesizer
 {
     public class LowFrequencyOscillator : Oscillator
     {
-        // Constructors
-        public LowFrequencyOscillator(OscillatorWaveform waveform, float frequency, float amplitude, float phase) : base(waveform, frequency, amplitude, phase, 1)
+        #region Constructor
+        public LowFrequencyOscillator(OscillatorWaveform waveform, double frequency, double amplitude, double phase) : base(waveform, frequency, amplitude, phase, 1)
         {
         }
+        #endregion
 
-        // Methods
-        public float[] Apply(float[] inputSignal, int samplingRate, float duration)
+        #region Methods
+        public double[] Apply(double[] inputSignal, int samplingRate, double duration)
         {
             int numberOfSamples = inputSignal.Length;
-            float[] outputSignal = new float[numberOfSamples];
-            float[] lfoSignal = GenerateWaveDataPoints(samplingRate, duration);
+            double[] outputSignal = new double[numberOfSamples];
+            double[] lfoSignal = GenerateWaveDataPoints(samplingRate, duration);
 
             for (int i = 0; i < numberOfSamples; i++)
                 outputSignal[i] = inputSignal[i] * lfoSignal[i];
@@ -24,17 +21,18 @@ namespace BasicSynthesizer
             return outputSignal;
         }
 
-        public List<(double, double)> Apply(List<(double, double)> inputSignal, int samplingRate, float duration)
+        public List<(double, double)> Apply(List<(double, double)> inputSignal, int samplingRate, double duration)
         {
             int numberOfSamples = inputSignal.Count;
-            float interval = 1f / samplingRate; //s
-            List<(double, double)> outputSignal = new List<(double, double)>();
-            float[] lfoSignal = GenerateWaveDataPoints(samplingRate, duration);
+            double interval = 1f / samplingRate; //s
+            List<(double, double)> outputSignal = new();
+            double[] lfoSignal = GenerateWaveDataPoints(samplingRate, duration);
 
             for (int i = 0; i < numberOfSamples; i++)
                 outputSignal.Add((i * interval, inputSignal[i].Item2 * lfoSignal[i]));
 
             return outputSignal;
         }
+        #endregion
     }
 }

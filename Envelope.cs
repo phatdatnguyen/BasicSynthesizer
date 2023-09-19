@@ -1,38 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms.DataVisualization.Charting;
-
-namespace BasicSynthesizer
+﻿namespace BasicSynthesizer
 {
     public class Envelope
     {
-        // Properties
-        public Single Attack { get; set; }
-        public Single Decay { get; set; }
-        public Single Sustain { get; set; }
-        public Single Release { get; set; }
+        #region Properties
+        public double Attack { get; set; }
+        public double Decay { get; set; }
+        public double Sustain { get; set; }
+        public double Release { get; set; }
+        #endregion
 
-        // Constructors
-        public Envelope(float attack, float decay, float sustain, float release)
+        #region Constructor
+        public Envelope(double attack, double decay, double sustain, double release)
         {
             Attack = attack;
             Decay = decay;
             Sustain = sustain;
             Release = release;
         }
+        #endregion
 
-        // Method
-        public float[] Apply(float[] inputDataPoints, int samplingRate, float duration)
+        #region Methods
+        public double[] Apply(double[] inputDataPoints, int samplingRate, double duration)
         {
             int numberOfSamples = inputDataPoints.Length;
-            float[] outputDataPoints = new float[numberOfSamples];
+            double[] outputDataPoints = new double[numberOfSamples];
 
-            float[] envelopeDataPoints = new float[numberOfSamples];
-            float interval = 1f / samplingRate;
+            double[] envelopeDataPoints = new double[numberOfSamples];
+            double interval = 1f / samplingRate;
 
             for (int i = 0; i < numberOfSamples; i++)
             {
-                float time = i * interval;
+                double time = i * interval;
                 if (time < Attack) // attack phase
                 {
                     envelopeDataPoints[i] = time / Attack;
@@ -58,17 +56,17 @@ namespace BasicSynthesizer
             return outputDataPoints;
         }
 
-        public List<(double, double)> Apply(List<(double, double)> inputDataPoints, int samplingRate, float duration)
+        public List<(double, double)> Apply(List<(double, double)> inputDataPoints, int samplingRate, double duration)
         {
             int numberOfSamples = inputDataPoints.Count;
-            List<(double, double)> outputDataPoints = new List<(double, double)>();
+            List<(double, double)> outputDataPoints = new();
 
-            float[] envelopeDataPoints = new float[numberOfSamples];
-            float interval = 1f / samplingRate;
+            double[] envelopeDataPoints = new double[numberOfSamples];
+            double interval = 1f / samplingRate;
 
             for (int i = 0; i < numberOfSamples; i++)
             {
-                float time = i * interval;
+                double time = i * interval;
                 if (time < Attack) // attack phase
                 {
                     envelopeDataPoints[i] = time / Attack;
@@ -93,5 +91,6 @@ namespace BasicSynthesizer
 
             return outputDataPoints;
         }
+        #endregion
     }
 }

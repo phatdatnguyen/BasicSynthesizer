@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace BasicSynthesizer
+﻿namespace BasicSynthesizer
 {
     public partial class OscillatorForm : Form
     {
-        private readonly Dictionary<string, float> notes = new Dictionary<string, float>() {
+        #region Field
+        private readonly Dictionary<string, double> notes = new() {
             { "C0", 16.35f },
             { "C#0/Db0", 17.32f },
             { "D0", 18.35f },
@@ -117,9 +108,13 @@ namespace BasicSynthesizer
             { "A#7/Bb7", 3729.31f },
             { "B7", 3951.07f }
         };
+        #endregion
 
+        #region Property
         public Oscillator Oscillator { get; set; }
+        #endregion
 
+        #region Constructors
         public OscillatorForm()
         {
             InitializeComponent();
@@ -156,9 +151,9 @@ namespace BasicSynthesizer
             {
                 notesComboBox.Items.Add(noteName);
             }
-            foreach (float noteFrequency in notes.Values)
+            foreach (double noteFrequency in notes.Values)
             {
-                if (noteFrequency == (float)frequencyNumericUpDown.Value)
+                if (noteFrequency == (double)frequencyNumericUpDown.Value)
                 {
                     notesComboBox.SelectedIndex = notes.Values.ToList().IndexOf(noteFrequency) + 1;
                     return;
@@ -166,7 +161,9 @@ namespace BasicSynthesizer
             }
             notesComboBox.SelectedIndex = 0;
         }
+        #endregion
 
+        #region Methods
         private void OscillatorForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (DialogResult == DialogResult.OK)
@@ -179,10 +176,10 @@ namespace BasicSynthesizer
                     case 3: Oscillator.Waveform = Oscillator.OscillatorWaveform.Sawtooth; break;
                     default: break;
                 }
-                Oscillator.Frequency = (Single)frequencyNumericUpDown.Value;
-                Oscillator.Amplitude = (Single)amplitudeNumericUpDown.Value;
-                Oscillator.Phase = (Single)phaseNumericUpDown.Value;
-                Oscillator.Ratio = (Single)ratioNumericUpDown.Value;
+                Oscillator.Frequency = (double)Math.Round(frequencyNumericUpDown.Value, 2);
+                Oscillator.Amplitude = (double)Math.Round(amplitudeNumericUpDown.Value, 2);
+                Oscillator.Phase = (double)Math.Round(phaseNumericUpDown.Value, 2);
+                Oscillator.Ratio = (double)Math.Round(ratioNumericUpDown.Value, 2);
             }
         }
 
@@ -191,7 +188,7 @@ namespace BasicSynthesizer
             if (notesComboBox.SelectedIndex <= 1)
                 return;
 
-            foreach (KeyValuePair<string, float> note in notes)
+            foreach (KeyValuePair<string, double> note in notes)
             {
                 if (note.Key == notesComboBox.SelectedItem.ToString() && frequencyNumericUpDown.Value != (decimal)note.Value)
                 {
@@ -200,5 +197,6 @@ namespace BasicSynthesizer
                 }
             }
         }
+        #endregion
     }
 }

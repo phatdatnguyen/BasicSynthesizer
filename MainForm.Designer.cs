@@ -28,967 +28,994 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.audioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.oscillatorsGroupBox = new System.Windows.Forms.GroupBox();
-            this.editButton = new System.Windows.Forms.Button();
-            this.deleteButton = new System.Windows.Forms.Button();
-            this.addButton = new System.Windows.Forms.Button();
-            this.deleteAudioButton = new System.Windows.Forms.Button();
-            this.oscillatorsListView = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.durationNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.samplingRateComboBox = new System.Windows.Forms.ComboBox();
-            this.durationLabel = new System.Windows.Forms.Label();
-            this.samplingRateLabel = new System.Windows.Forms.Label();
-            this.filterGroupBox = new System.Windows.Forms.GroupBox();
-            this.bandPassRadioButton = new System.Windows.Forms.RadioButton();
-            this.resonanceValueLabel = new System.Windows.Forms.Label();
-            this.filterFrequencyValueLabel = new System.Windows.Forms.Label();
-            this.resonanceTrackBar = new System.Windows.Forms.TrackBar();
-            this.filterFrequencyTrackBar = new System.Windows.Forms.TrackBar();
-            this.resonanceLabel = new System.Windows.Forms.Label();
-            this.filterFrequencyLabel = new System.Windows.Forms.Label();
-            this.filterApplyCheckBox = new System.Windows.Forms.CheckBox();
-            this.highPassRadioButton = new System.Windows.Forms.RadioButton();
-            this.lowPassRadioButton = new System.Windows.Forms.RadioButton();
-            this.adsrGroupBox = new System.Windows.Forms.GroupBox();
-            this.releaseValueLabel = new System.Windows.Forms.Label();
-            this.sustainValueLabel = new System.Windows.Forms.Label();
-            this.decayValueLabel = new System.Windows.Forms.Label();
-            this.attackValueLabel = new System.Windows.Forms.Label();
-            this.attackTrackBar = new System.Windows.Forms.TrackBar();
-            this.decayTrackBar = new System.Windows.Forms.TrackBar();
-            this.sustainTrackBar = new System.Windows.Forms.TrackBar();
-            this.releaseTrackBar = new System.Windows.Forms.TrackBar();
-            this.adsrApplyCheckBox = new System.Windows.Forms.CheckBox();
-            this.releaseLabel = new System.Windows.Forms.Label();
-            this.sustainLabel = new System.Windows.Forms.Label();
-            this.decayLabel = new System.Windows.Forms.Label();
-            this.attackLabel = new System.Windows.Forms.Label();
-            this.lfoGroupBox = new System.Windows.Forms.GroupBox();
-            this.phaseValueLabel = new System.Windows.Forms.Label();
-            this.phaseLabel = new System.Windows.Forms.Label();
-            this.phaseTrackBar = new System.Windows.Forms.TrackBar();
-            this.amplitudeValueLabel = new System.Windows.Forms.Label();
-            this.amplitudeLabel = new System.Windows.Forms.Label();
-            this.amplitudeTrackBar = new System.Windows.Forms.TrackBar();
-            this.lfoFrequencyValueLabel = new System.Windows.Forms.Label();
-            this.lfoFrequencyLabel = new System.Windows.Forms.Label();
-            this.lfoFrequencyTrackBar = new System.Windows.Forms.TrackBar();
-            this.lfoApplyCheckBox = new System.Windows.Forms.CheckBox();
-            this.waveformComboBox = new System.Windows.Forms.ComboBox();
-            this.waveformLabel = new System.Windows.Forms.Label();
-            this.plotComboBox = new System.Windows.Forms.ComboBox();
-            this.plotLabel = new System.Windows.Forms.Label();
-            this.playButton = new System.Windows.Forms.Button();
-            this.mainToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.openAudioFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.audioInfoLabel = new System.Windows.Forms.Label();
-            this.saveAudioFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.timeDomainPlotView = new OxyPlot.WindowsForms.PlotView();
-            this.frequencyDomainPlotView = new OxyPlot.WindowsForms.PlotView();
-            this.mainMenuStrip.SuspendLayout();
-            this.oscillatorsGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.durationNumericUpDown)).BeginInit();
-            this.filterGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.resonanceTrackBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.filterFrequencyTrackBar)).BeginInit();
-            this.adsrGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.attackTrackBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.decayTrackBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sustainTrackBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.releaseTrackBar)).BeginInit();
-            this.lfoGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.phaseTrackBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.amplitudeTrackBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lfoFrequencyTrackBar)).BeginInit();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            mainMenuStrip = new MenuStrip();
+            fileToolStripMenuItem = new ToolStripMenuItem();
+            exitToolStripMenuItem = new ToolStripMenuItem();
+            audioToolStripMenuItem = new ToolStripMenuItem();
+            playToolStripMenuItem = new ToolStripMenuItem();
+            toolStripMenuItem2 = new ToolStripSeparator();
+            exportToolStripMenuItem = new ToolStripMenuItem();
+            importToolStripMenuItem = new ToolStripMenuItem();
+            helpToolStripMenuItem = new ToolStripMenuItem();
+            aboutToolStripMenuItem = new ToolStripMenuItem();
+            oscillatorsGroupBox = new GroupBox();
+            editButton = new Button();
+            deleteButton = new Button();
+            addButton = new Button();
+            deleteAudioButton = new Button();
+            oscillatorsListView = new ListView();
+            columnHeader1 = new ColumnHeader();
+            columnHeader2 = new ColumnHeader();
+            columnHeader3 = new ColumnHeader();
+            columnHeader4 = new ColumnHeader();
+            columnHeader5 = new ColumnHeader();
+            durationNumericUpDown = new NumericUpDown();
+            samplingRateComboBox = new ComboBox();
+            durationLabel = new Label();
+            samplingRateLabel = new Label();
+            filterGroupBox = new GroupBox();
+            bandPassRadioButton = new RadioButton();
+            resonanceValueLabel = new Label();
+            filterFrequencyValueLabel = new Label();
+            resonanceTrackBar = new TrackBar();
+            filterFrequencyTrackBar = new TrackBar();
+            resonanceLabel = new Label();
+            filterFrequencyLabel = new Label();
+            filterApplyCheckBox = new CheckBox();
+            highPassRadioButton = new RadioButton();
+            lowPassRadioButton = new RadioButton();
+            adsrGroupBox = new GroupBox();
+            releaseValueLabel = new Label();
+            sustainValueLabel = new Label();
+            decayValueLabel = new Label();
+            attackValueLabel = new Label();
+            attackTrackBar = new TrackBar();
+            decayTrackBar = new TrackBar();
+            sustainTrackBar = new TrackBar();
+            releaseTrackBar = new TrackBar();
+            adsrApplyCheckBox = new CheckBox();
+            releaseLabel = new Label();
+            sustainLabel = new Label();
+            decayLabel = new Label();
+            attackLabel = new Label();
+            lfoGroupBox = new GroupBox();
+            phaseValueLabel = new Label();
+            phaseLabel = new Label();
+            phaseTrackBar = new TrackBar();
+            amplitudeValueLabel = new Label();
+            amplitudeLabel = new Label();
+            amplitudeTrackBar = new TrackBar();
+            lfoFrequencyValueLabel = new Label();
+            lfoFrequencyLabel = new Label();
+            lfoFrequencyTrackBar = new TrackBar();
+            lfoApplyCheckBox = new CheckBox();
+            waveformComboBox = new ComboBox();
+            waveformLabel = new Label();
+            plotComboBox = new ComboBox();
+            plotLabel = new Label();
+            playButton = new Button();
+            mainToolTip = new ToolTip(components);
+            openAudioFileDialog = new OpenFileDialog();
+            audioInfoLabel = new Label();
+            saveAudioFileDialog = new SaveFileDialog();
+            timeDomainPlotView = new OxyPlot.WindowsForms.PlotView();
+            frequencyDomainPlotView = new OxyPlot.WindowsForms.PlotView();
+            soundSignalGroupBox = new GroupBox();
+            mainMenuStrip.SuspendLayout();
+            oscillatorsGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)durationNumericUpDown).BeginInit();
+            filterGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)resonanceTrackBar).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)filterFrequencyTrackBar).BeginInit();
+            adsrGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)attackTrackBar).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)decayTrackBar).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)sustainTrackBar).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)releaseTrackBar).BeginInit();
+            lfoGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)phaseTrackBar).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)amplitudeTrackBar).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)lfoFrequencyTrackBar).BeginInit();
+            soundSignalGroupBox.SuspendLayout();
+            SuspendLayout();
             // 
             // mainMenuStrip
             // 
-            this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.audioToolStripMenuItem,
-            this.helpToolStripMenuItem});
-            this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
-            this.mainMenuStrip.Name = "mainMenuStrip";
-            this.mainMenuStrip.Size = new System.Drawing.Size(1184, 24);
-            this.mainMenuStrip.TabIndex = 0;
-            this.mainMenuStrip.Text = "menuStrip1";
+            mainMenuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, audioToolStripMenuItem, helpToolStripMenuItem });
+            mainMenuStrip.Location = new Point(0, 0);
+            mainMenuStrip.Name = "mainMenuStrip";
+            mainMenuStrip.Padding = new Padding(7, 2, 0, 2);
+            mainMenuStrip.Size = new Size(1184, 24);
+            mainMenuStrip.TabIndex = 0;
+            mainMenuStrip.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exitToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "&File";
+            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { exitToolStripMenuItem });
+            fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            fileToolStripMenuItem.Size = new Size(37, 20);
+            fileToolStripMenuItem.Text = "&File";
             // 
             // exitToolStripMenuItem
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
-            this.exitToolStripMenuItem.Text = "E&xit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            exitToolStripMenuItem.ShortcutKeys = Keys.Alt | Keys.F4;
+            exitToolStripMenuItem.Size = new Size(135, 22);
+            exitToolStripMenuItem.Text = "E&xit";
+            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
             // audioToolStripMenuItem
             // 
-            this.audioToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.playToolStripMenuItem,
-            this.toolStripMenuItem2,
-            this.exportToolStripMenuItem,
-            this.importToolStripMenuItem});
-            this.audioToolStripMenuItem.Name = "audioToolStripMenuItem";
-            this.audioToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
-            this.audioToolStripMenuItem.Text = "&Audio";
+            audioToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { playToolStripMenuItem, toolStripMenuItem2, exportToolStripMenuItem, importToolStripMenuItem });
+            audioToolStripMenuItem.Name = "audioToolStripMenuItem";
+            audioToolStripMenuItem.Size = new Size(51, 20);
+            audioToolStripMenuItem.Text = "&Audio";
             // 
             // playToolStripMenuItem
             // 
-            this.playToolStripMenuItem.Name = "playToolStripMenuItem";
-            this.playToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.playToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.playToolStripMenuItem.Text = "&Play";
-            this.playToolStripMenuItem.Click += new System.EventHandler(this.playToolStripMenuItem_Click);
+            playToolStripMenuItem.Name = "playToolStripMenuItem";
+            playToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.P;
+            playToolStripMenuItem.Size = new Size(157, 22);
+            playToolStripMenuItem.Text = "&Play";
+            playToolStripMenuItem.Click += playToolStripMenuItem_Click;
             // 
             // toolStripMenuItem2
             // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(154, 6);
+            toolStripMenuItem2.Name = "toolStripMenuItem2";
+            toolStripMenuItem2.Size = new Size(154, 6);
             // 
             // exportToolStripMenuItem
             // 
-            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.exportToolStripMenuItem.Text = "&Export...";
-            this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
+            exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            exportToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.E;
+            exportToolStripMenuItem.Size = new Size(157, 22);
+            exportToolStripMenuItem.Text = "&Export...";
+            exportToolStripMenuItem.Click += exportToolStripMenuItem_Click;
             // 
             // importToolStripMenuItem
             // 
-            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.importToolStripMenuItem.Text = "&Import...";
-            this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
+            importToolStripMenuItem.Name = "importToolStripMenuItem";
+            importToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.I;
+            importToolStripMenuItem.Size = new Size(157, 22);
+            importToolStripMenuItem.Text = "&Import...";
+            importToolStripMenuItem.Click += importToolStripMenuItem_Click;
             // 
             // helpToolStripMenuItem
             // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "&Help";
+            helpToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { aboutToolStripMenuItem });
+            helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            helpToolStripMenuItem.Size = new Size(44, 20);
+            helpToolStripMenuItem.Text = "&Help";
             // 
             // aboutToolStripMenuItem
             // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(227, 22);
-            this.aboutToolStripMenuItem.Text = "&About Basic Synthesizer...";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            aboutToolStripMenuItem.ShortcutKeys = Keys.F1;
+            aboutToolStripMenuItem.Size = new Size(227, 22);
+            aboutToolStripMenuItem.Text = "&About Basic Synthesizer...";
+            aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
             // oscillatorsGroupBox
             // 
-            this.oscillatorsGroupBox.Controls.Add(this.editButton);
-            this.oscillatorsGroupBox.Controls.Add(this.deleteButton);
-            this.oscillatorsGroupBox.Controls.Add(this.addButton);
-            this.oscillatorsGroupBox.Controls.Add(this.deleteAudioButton);
-            this.oscillatorsGroupBox.Controls.Add(this.oscillatorsListView);
-            this.oscillatorsGroupBox.Location = new System.Drawing.Point(12, 27);
-            this.oscillatorsGroupBox.Name = "oscillatorsGroupBox";
-            this.oscillatorsGroupBox.Size = new System.Drawing.Size(416, 362);
-            this.oscillatorsGroupBox.TabIndex = 1;
-            this.oscillatorsGroupBox.TabStop = false;
-            this.oscillatorsGroupBox.Text = "Oscillators";
+            oscillatorsGroupBox.Controls.Add(editButton);
+            oscillatorsGroupBox.Controls.Add(deleteButton);
+            oscillatorsGroupBox.Controls.Add(addButton);
+            oscillatorsGroupBox.Controls.Add(deleteAudioButton);
+            oscillatorsGroupBox.Controls.Add(oscillatorsListView);
+            oscillatorsGroupBox.Location = new Point(14, 31);
+            oscillatorsGroupBox.Margin = new Padding(4, 3, 4, 3);
+            oscillatorsGroupBox.Name = "oscillatorsGroupBox";
+            oscillatorsGroupBox.Padding = new Padding(4, 3, 4, 3);
+            oscillatorsGroupBox.Size = new Size(407, 341);
+            oscillatorsGroupBox.TabIndex = 1;
+            oscillatorsGroupBox.TabStop = false;
+            oscillatorsGroupBox.Text = "Oscillators";
             // 
             // editButton
             // 
-            this.editButton.Location = new System.Drawing.Point(87, 19);
-            this.editButton.Name = "editButton";
-            this.editButton.Size = new System.Drawing.Size(75, 23);
-            this.editButton.TabIndex = 1;
-            this.editButton.Text = "Edit";
-            this.editButton.UseVisualStyleBackColor = true;
-            this.editButton.Click += new System.EventHandler(this.editButton_Click);
+            editButton.Location = new Point(102, 22);
+            editButton.Margin = new Padding(4, 3, 4, 3);
+            editButton.Name = "editButton";
+            editButton.Size = new Size(75, 23);
+            editButton.TabIndex = 1;
+            editButton.Text = "Edit";
+            editButton.UseVisualStyleBackColor = true;
+            editButton.Click += editButton_Click;
             // 
             // deleteButton
             // 
-            this.deleteButton.Location = new System.Drawing.Point(254, 19);
-            this.deleteButton.Name = "deleteButton";
-            this.deleteButton.Size = new System.Drawing.Size(75, 23);
-            this.deleteButton.TabIndex = 2;
-            this.deleteButton.Text = "Delete";
-            this.deleteButton.UseVisualStyleBackColor = true;
-            this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
+            deleteButton.Location = new Point(231, 22);
+            deleteButton.Margin = new Padding(4, 3, 4, 3);
+            deleteButton.Name = "deleteButton";
+            deleteButton.Size = new Size(75, 23);
+            deleteButton.TabIndex = 2;
+            deleteButton.Text = "Delete";
+            deleteButton.UseVisualStyleBackColor = true;
+            deleteButton.Click += deleteButton_Click;
             // 
             // addButton
             // 
-            this.addButton.Location = new System.Drawing.Point(6, 19);
-            this.addButton.Name = "addButton";
-            this.addButton.Size = new System.Drawing.Size(75, 23);
-            this.addButton.TabIndex = 0;
-            this.addButton.Text = "Add";
-            this.addButton.UseVisualStyleBackColor = true;
-            this.addButton.Click += new System.EventHandler(this.addButton_Click);
+            addButton.Location = new Point(7, 22);
+            addButton.Margin = new Padding(4, 3, 4, 3);
+            addButton.Name = "addButton";
+            addButton.Size = new Size(75, 23);
+            addButton.TabIndex = 0;
+            addButton.Text = "Add";
+            addButton.UseVisualStyleBackColor = true;
+            addButton.Click += addButton_Click;
             // 
             // deleteAudioButton
             // 
-            this.deleteAudioButton.Enabled = false;
-            this.deleteAudioButton.Location = new System.Drawing.Point(335, 19);
-            this.deleteAudioButton.Name = "deleteAudioButton";
-            this.deleteAudioButton.Size = new System.Drawing.Size(75, 23);
-            this.deleteAudioButton.TabIndex = 7;
-            this.deleteAudioButton.Text = "Delete all";
-            this.deleteAudioButton.UseVisualStyleBackColor = true;
-            this.deleteAudioButton.Click += new System.EventHandler(this.deleteAudioButton_Click);
+            deleteAudioButton.Enabled = false;
+            deleteAudioButton.Location = new Point(326, 22);
+            deleteAudioButton.Margin = new Padding(4, 3, 4, 3);
+            deleteAudioButton.Name = "deleteAudioButton";
+            deleteAudioButton.Size = new Size(75, 23);
+            deleteAudioButton.TabIndex = 7;
+            deleteAudioButton.Text = "Delete all";
+            deleteAudioButton.UseVisualStyleBackColor = true;
+            deleteAudioButton.Click += deleteAudioButton_Click;
             // 
             // oscillatorsListView
             // 
-            this.oscillatorsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4,
-            this.columnHeader5});
-            this.oscillatorsListView.FullRowSelect = true;
-            this.oscillatorsListView.HideSelection = false;
-            this.oscillatorsListView.Location = new System.Drawing.Point(6, 48);
-            this.oscillatorsListView.Name = "oscillatorsListView";
-            this.oscillatorsListView.Size = new System.Drawing.Size(404, 308);
-            this.oscillatorsListView.TabIndex = 3;
-            this.oscillatorsListView.UseCompatibleStateImageBehavior = false;
-            this.oscillatorsListView.View = System.Windows.Forms.View.Details;
-            this.oscillatorsListView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.oscillatorsListView_KeyUp);
-            this.oscillatorsListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.oscillatorsListView_MouseDoubleClick);
+            oscillatorsListView.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5 });
+            oscillatorsListView.Dock = DockStyle.Bottom;
+            oscillatorsListView.FullRowSelect = true;
+            oscillatorsListView.Location = new Point(4, 51);
+            oscillatorsListView.Margin = new Padding(4, 3, 4, 3);
+            oscillatorsListView.Name = "oscillatorsListView";
+            oscillatorsListView.Size = new Size(399, 287);
+            oscillatorsListView.TabIndex = 3;
+            oscillatorsListView.UseCompatibleStateImageBehavior = false;
+            oscillatorsListView.View = View.Details;
+            oscillatorsListView.KeyUp += oscillatorsListView_KeyUp;
+            oscillatorsListView.MouseDoubleClick += oscillatorsListView_MouseDoubleClick;
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Text = "Waveform";
-            this.columnHeader1.Width = 70;
+            columnHeader1.Text = "Waveform";
+            columnHeader1.Width = 70;
             // 
             // columnHeader2
             // 
-            this.columnHeader2.Text = "Frequency (Hz)";
-            this.columnHeader2.Width = 100;
+            columnHeader2.Text = "Frequency (Hz)";
+            columnHeader2.Width = 100;
             // 
             // columnHeader3
             // 
-            this.columnHeader3.Text = "Amplitude";
-            this.columnHeader3.Width = 70;
+            columnHeader3.Text = "Amplitude";
+            columnHeader3.Width = 70;
             // 
             // columnHeader4
             // 
-            this.columnHeader4.Text = "Phase (°)";
-            this.columnHeader4.Width = 70;
+            columnHeader4.Text = "Phase (°)";
+            columnHeader4.Width = 70;
             // 
             // columnHeader5
             // 
-            this.columnHeader5.Text = "Ratio";
+            columnHeader5.Text = "Ratio";
             // 
             // durationNumericUpDown
             // 
-            this.durationNumericUpDown.DecimalPlaces = 2;
-            this.durationNumericUpDown.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.durationNumericUpDown.Location = new System.Drawing.Point(763, 49);
-            this.durationNumericUpDown.Maximum = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.durationNumericUpDown.Name = "durationNumericUpDown";
-            this.durationNumericUpDown.Size = new System.Drawing.Size(100, 20);
-            this.durationNumericUpDown.TabIndex = 3;
-            this.durationNumericUpDown.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.durationNumericUpDown.ValueChanged += new System.EventHandler(this.durationNumericUpDown_ValueChanged);
+            durationNumericUpDown.DecimalPlaces = 2;
+            durationNumericUpDown.Increment = new decimal(new int[] { 1, 0, 0, 131072 });
+            durationNumericUpDown.Location = new Point(339, 25);
+            durationNumericUpDown.Margin = new Padding(4, 3, 4, 3);
+            durationNumericUpDown.Maximum = new decimal(new int[] { 2, 0, 0, 0 });
+            durationNumericUpDown.Name = "durationNumericUpDown";
+            durationNumericUpDown.Size = new Size(100, 23);
+            durationNumericUpDown.TabIndex = 3;
+            durationNumericUpDown.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            durationNumericUpDown.ValueChanged += durationNumericUpDown_ValueChanged;
             // 
             // samplingRateComboBox
             // 
-            this.samplingRateComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.samplingRateComboBox.FormattingEnabled = true;
-            this.samplingRateComboBox.Items.AddRange(new object[] {
-            "22050",
-            "44100",
-            "88200"});
-            this.samplingRateComboBox.Location = new System.Drawing.Point(543, 46);
-            this.samplingRateComboBox.Name = "samplingRateComboBox";
-            this.samplingRateComboBox.Size = new System.Drawing.Size(121, 21);
-            this.samplingRateComboBox.TabIndex = 2;
-            this.samplingRateComboBox.SelectedIndexChanged += new System.EventHandler(this.samplingRateComboBox_SelectedIndexChanged);
+            samplingRateComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            samplingRateComboBox.FormattingEnabled = true;
+            samplingRateComboBox.Items.AddRange(new object[] { "22050", "44100", "88200" });
+            samplingRateComboBox.Location = new Point(129, 23);
+            samplingRateComboBox.Margin = new Padding(4, 3, 4, 3);
+            samplingRateComboBox.Name = "samplingRateComboBox";
+            samplingRateComboBox.Size = new Size(100, 23);
+            samplingRateComboBox.TabIndex = 2;
+            samplingRateComboBox.SelectedIndexChanged += samplingRateComboBox_SelectedIndexChanged;
             // 
             // durationLabel
             // 
-            this.durationLabel.AutoSize = true;
-            this.durationLabel.Location = new System.Drawing.Point(696, 51);
-            this.durationLabel.Name = "durationLabel";
-            this.durationLabel.Size = new System.Drawing.Size(61, 13);
-            this.durationLabel.TabIndex = 0;
-            this.durationLabel.Text = "Duration (s)";
+            durationLabel.AutoSize = true;
+            durationLabel.Location = new Point(262, 29);
+            durationLabel.Margin = new Padding(4, 0, 4, 0);
+            durationLabel.Name = "durationLabel";
+            durationLabel.Size = new Size(69, 15);
+            durationLabel.TabIndex = 0;
+            durationLabel.Text = "Duration (s)";
             // 
             // samplingRateLabel
             // 
-            this.samplingRateLabel.AutoSize = true;
-            this.samplingRateLabel.Location = new System.Drawing.Point(434, 49);
-            this.samplingRateLabel.Name = "samplingRateLabel";
-            this.samplingRateLabel.Size = new System.Drawing.Size(98, 13);
-            this.samplingRateLabel.TabIndex = 0;
-            this.samplingRateLabel.Text = "Sampling Rate (Hz)";
+            samplingRateLabel.AutoSize = true;
+            samplingRateLabel.Location = new Point(13, 27);
+            samplingRateLabel.Margin = new Padding(4, 0, 4, 0);
+            samplingRateLabel.Name = "samplingRateLabel";
+            samplingRateLabel.Size = new Size(105, 15);
+            samplingRateLabel.TabIndex = 0;
+            samplingRateLabel.Text = "Sampling rate (Hz)";
             // 
             // filterGroupBox
             // 
-            this.filterGroupBox.Controls.Add(this.bandPassRadioButton);
-            this.filterGroupBox.Controls.Add(this.resonanceValueLabel);
-            this.filterGroupBox.Controls.Add(this.filterFrequencyValueLabel);
-            this.filterGroupBox.Controls.Add(this.resonanceTrackBar);
-            this.filterGroupBox.Controls.Add(this.filterFrequencyTrackBar);
-            this.filterGroupBox.Controls.Add(this.resonanceLabel);
-            this.filterGroupBox.Controls.Add(this.filterFrequencyLabel);
-            this.filterGroupBox.Controls.Add(this.filterApplyCheckBox);
-            this.filterGroupBox.Controls.Add(this.highPassRadioButton);
-            this.filterGroupBox.Controls.Add(this.lowPassRadioButton);
-            this.filterGroupBox.Enabled = false;
-            this.filterGroupBox.Location = new System.Drawing.Point(12, 395);
-            this.filterGroupBox.Name = "filterGroupBox";
-            this.filterGroupBox.Size = new System.Drawing.Size(350, 234);
-            this.filterGroupBox.TabIndex = 15;
-            this.filterGroupBox.TabStop = false;
-            this.filterGroupBox.Text = "Filter";
+            filterGroupBox.Controls.Add(bandPassRadioButton);
+            filterGroupBox.Controls.Add(resonanceValueLabel);
+            filterGroupBox.Controls.Add(filterFrequencyValueLabel);
+            filterGroupBox.Controls.Add(resonanceTrackBar);
+            filterGroupBox.Controls.Add(filterFrequencyTrackBar);
+            filterGroupBox.Controls.Add(resonanceLabel);
+            filterGroupBox.Controls.Add(filterFrequencyLabel);
+            filterGroupBox.Controls.Add(filterApplyCheckBox);
+            filterGroupBox.Controls.Add(highPassRadioButton);
+            filterGroupBox.Controls.Add(lowPassRadioButton);
+            filterGroupBox.Enabled = false;
+            filterGroupBox.Location = new Point(13, 378);
+            filterGroupBox.Margin = new Padding(4, 3, 4, 3);
+            filterGroupBox.Name = "filterGroupBox";
+            filterGroupBox.Padding = new Padding(4, 3, 4, 3);
+            filterGroupBox.Size = new Size(408, 251);
+            filterGroupBox.TabIndex = 15;
+            filterGroupBox.TabStop = false;
+            filterGroupBox.Text = "Filter";
             // 
             // bandPassRadioButton
             // 
-            this.bandPassRadioButton.AutoSize = true;
-            this.bandPassRadioButton.Location = new System.Drawing.Point(226, 79);
-            this.bandPassRadioButton.Name = "bandPassRadioButton";
-            this.bandPassRadioButton.Size = new System.Drawing.Size(75, 17);
-            this.bandPassRadioButton.TabIndex = 3;
-            this.bandPassRadioButton.Text = "Band-pass";
-            this.bandPassRadioButton.UseVisualStyleBackColor = true;
-            this.bandPassRadioButton.CheckedChanged += new System.EventHandler(this.filterModeRadioButton_CheckedChanged);
+            bandPassRadioButton.AutoSize = true;
+            bandPassRadioButton.Location = new Point(252, 66);
+            bandPassRadioButton.Margin = new Padding(4, 3, 4, 3);
+            bandPassRadioButton.Name = "bandPassRadioButton";
+            bandPassRadioButton.Size = new Size(80, 19);
+            bandPassRadioButton.TabIndex = 3;
+            bandPassRadioButton.Text = "Band-pass";
+            bandPassRadioButton.UseVisualStyleBackColor = true;
+            bandPassRadioButton.CheckedChanged += filterModeRadioButton_CheckedChanged;
             // 
             // resonanceValueLabel
             // 
-            this.resonanceValueLabel.AutoSize = true;
-            this.resonanceValueLabel.Location = new System.Drawing.Point(292, 183);
-            this.resonanceValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.resonanceValueLabel.Name = "resonanceValueLabel";
-            this.resonanceValueLabel.Size = new System.Drawing.Size(21, 13);
-            this.resonanceValueLabel.TabIndex = 0;
-            this.resonanceValueLabel.Text = "0%";
+            resonanceValueLabel.AutoSize = true;
+            resonanceValueLabel.Location = new Point(279, 180);
+            resonanceValueLabel.Margin = new Padding(2, 0, 2, 0);
+            resonanceValueLabel.Name = "resonanceValueLabel";
+            resonanceValueLabel.Size = new Size(23, 15);
+            resonanceValueLabel.TabIndex = 0;
+            resonanceValueLabel.Text = "0%";
             // 
             // filterFrequencyValueLabel
             // 
-            this.filterFrequencyValueLabel.AutoSize = true;
-            this.filterFrequencyValueLabel.Location = new System.Drawing.Point(292, 135);
-            this.filterFrequencyValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.filterFrequencyValueLabel.Name = "filterFrequencyValueLabel";
-            this.filterFrequencyValueLabel.Size = new System.Drawing.Size(41, 13);
-            this.filterFrequencyValueLabel.TabIndex = 0;
-            this.filterFrequencyValueLabel.Text = "500 Hz";
+            filterFrequencyValueLabel.AutoSize = true;
+            filterFrequencyValueLabel.Location = new Point(279, 125);
+            filterFrequencyValueLabel.Margin = new Padding(2, 0, 2, 0);
+            filterFrequencyValueLabel.Name = "filterFrequencyValueLabel";
+            filterFrequencyValueLabel.Size = new Size(42, 15);
+            filterFrequencyValueLabel.TabIndex = 0;
+            filterFrequencyValueLabel.Text = "500 Hz";
             // 
             // resonanceTrackBar
             // 
-            this.resonanceTrackBar.Location = new System.Drawing.Point(87, 183);
-            this.resonanceTrackBar.Maximum = 100;
-            this.resonanceTrackBar.Name = "resonanceTrackBar";
-            this.resonanceTrackBar.Size = new System.Drawing.Size(200, 45);
-            this.resonanceTrackBar.TabIndex = 5;
-            this.resonanceTrackBar.TickFrequency = 10;
-            this.resonanceTrackBar.Scroll += new System.EventHandler(this.resonanceTrackBar_Scroll);
+            resonanceTrackBar.Location = new Point(123, 180);
+            resonanceTrackBar.Margin = new Padding(4, 3, 4, 3);
+            resonanceTrackBar.Maximum = 100;
+            resonanceTrackBar.Name = "resonanceTrackBar";
+            resonanceTrackBar.Size = new Size(150, 45);
+            resonanceTrackBar.TabIndex = 5;
+            resonanceTrackBar.TickFrequency = 10;
+            resonanceTrackBar.Scroll += resonanceTrackBar_Scroll;
             // 
             // filterFrequencyTrackBar
             // 
-            this.filterFrequencyTrackBar.Location = new System.Drawing.Point(87, 132);
-            this.filterFrequencyTrackBar.Maximum = 4000;
-            this.filterFrequencyTrackBar.Minimum = 16;
-            this.filterFrequencyTrackBar.Name = "filterFrequencyTrackBar";
-            this.filterFrequencyTrackBar.Size = new System.Drawing.Size(200, 45);
-            this.filterFrequencyTrackBar.TabIndex = 4;
-            this.filterFrequencyTrackBar.TickFrequency = 400;
-            this.filterFrequencyTrackBar.Value = 500;
-            this.filterFrequencyTrackBar.Scroll += new System.EventHandler(this.filterFrequencyTrackBar_Scroll);
+            filterFrequencyTrackBar.Location = new Point(123, 121);
+            filterFrequencyTrackBar.Margin = new Padding(4, 3, 4, 3);
+            filterFrequencyTrackBar.Maximum = 4000;
+            filterFrequencyTrackBar.Minimum = 16;
+            filterFrequencyTrackBar.Name = "filterFrequencyTrackBar";
+            filterFrequencyTrackBar.Size = new Size(150, 45);
+            filterFrequencyTrackBar.TabIndex = 4;
+            filterFrequencyTrackBar.TickFrequency = 400;
+            filterFrequencyTrackBar.Value = 500;
+            filterFrequencyTrackBar.Scroll += filterFrequencyTrackBar_Scroll;
             // 
             // resonanceLabel
             // 
-            this.resonanceLabel.AutoSize = true;
-            this.resonanceLabel.Location = new System.Drawing.Point(25, 183);
-            this.resonanceLabel.Name = "resonanceLabel";
-            this.resonanceLabel.Size = new System.Drawing.Size(62, 13);
-            this.resonanceLabel.TabIndex = 0;
-            this.resonanceLabel.Text = "Resonance";
+            resonanceLabel.AutoSize = true;
+            resonanceLabel.Location = new Point(50, 180);
+            resonanceLabel.Margin = new Padding(4, 0, 4, 0);
+            resonanceLabel.Name = "resonanceLabel";
+            resonanceLabel.Size = new Size(64, 15);
+            resonanceLabel.TabIndex = 0;
+            resonanceLabel.Text = "Resonance";
             // 
             // filterFrequencyLabel
             // 
-            this.filterFrequencyLabel.AutoSize = true;
-            this.filterFrequencyLabel.Location = new System.Drawing.Point(30, 135);
-            this.filterFrequencyLabel.Name = "filterFrequencyLabel";
-            this.filterFrequencyLabel.Size = new System.Drawing.Size(57, 13);
-            this.filterFrequencyLabel.TabIndex = 0;
-            this.filterFrequencyLabel.Text = "Frequency";
+            filterFrequencyLabel.AutoSize = true;
+            filterFrequencyLabel.Location = new Point(56, 125);
+            filterFrequencyLabel.Margin = new Padding(4, 0, 4, 0);
+            filterFrequencyLabel.Name = "filterFrequencyLabel";
+            filterFrequencyLabel.Size = new Size(62, 15);
+            filterFrequencyLabel.TabIndex = 0;
+            filterFrequencyLabel.Text = "Frequency";
             // 
             // filterApplyCheckBox
             // 
-            this.filterApplyCheckBox.AutoSize = true;
-            this.filterApplyCheckBox.Location = new System.Drawing.Point(28, 31);
-            this.filterApplyCheckBox.Name = "filterApplyCheckBox";
-            this.filterApplyCheckBox.Size = new System.Drawing.Size(52, 17);
-            this.filterApplyCheckBox.TabIndex = 0;
-            this.filterApplyCheckBox.Text = "Apply";
-            this.filterApplyCheckBox.UseVisualStyleBackColor = true;
-            this.filterApplyCheckBox.CheckedChanged += new System.EventHandler(this.filterApplyCheckBox_CheckedChanged);
+            filterApplyCheckBox.AutoSize = true;
+            filterApplyCheckBox.Location = new Point(13, 27);
+            filterApplyCheckBox.Margin = new Padding(4, 3, 4, 3);
+            filterApplyCheckBox.Name = "filterApplyCheckBox";
+            filterApplyCheckBox.Size = new Size(57, 19);
+            filterApplyCheckBox.TabIndex = 0;
+            filterApplyCheckBox.Text = "Apply";
+            filterApplyCheckBox.UseVisualStyleBackColor = true;
+            filterApplyCheckBox.CheckedChanged += filterApplyCheckBox_CheckedChanged;
             // 
             // highPassRadioButton
             // 
-            this.highPassRadioButton.AutoSize = true;
-            this.highPassRadioButton.Location = new System.Drawing.Point(134, 79);
-            this.highPassRadioButton.Name = "highPassRadioButton";
-            this.highPassRadioButton.Size = new System.Drawing.Size(72, 17);
-            this.highPassRadioButton.TabIndex = 2;
-            this.highPassRadioButton.Text = "High-pass";
-            this.highPassRadioButton.UseVisualStyleBackColor = true;
-            this.highPassRadioButton.CheckedChanged += new System.EventHandler(this.filterModeRadioButton_CheckedChanged);
+            highPassRadioButton.AutoSize = true;
+            highPassRadioButton.Location = new Point(144, 66);
+            highPassRadioButton.Margin = new Padding(4, 3, 4, 3);
+            highPassRadioButton.Name = "highPassRadioButton";
+            highPassRadioButton.Size = new Size(79, 19);
+            highPassRadioButton.TabIndex = 2;
+            highPassRadioButton.Text = "High-pass";
+            highPassRadioButton.UseVisualStyleBackColor = true;
+            highPassRadioButton.CheckedChanged += filterModeRadioButton_CheckedChanged;
             // 
             // lowPassRadioButton
             // 
-            this.lowPassRadioButton.AutoSize = true;
-            this.lowPassRadioButton.Checked = true;
-            this.lowPassRadioButton.Location = new System.Drawing.Point(44, 79);
-            this.lowPassRadioButton.Name = "lowPassRadioButton";
-            this.lowPassRadioButton.Size = new System.Drawing.Size(70, 17);
-            this.lowPassRadioButton.TabIndex = 1;
-            this.lowPassRadioButton.TabStop = true;
-            this.lowPassRadioButton.Text = "Low-pass";
-            this.lowPassRadioButton.UseVisualStyleBackColor = true;
-            this.lowPassRadioButton.CheckedChanged += new System.EventHandler(this.filterModeRadioButton_CheckedChanged);
+            lowPassRadioButton.AutoSize = true;
+            lowPassRadioButton.Checked = true;
+            lowPassRadioButton.Location = new Point(39, 66);
+            lowPassRadioButton.Margin = new Padding(4, 3, 4, 3);
+            lowPassRadioButton.Name = "lowPassRadioButton";
+            lowPassRadioButton.Size = new Size(75, 19);
+            lowPassRadioButton.TabIndex = 1;
+            lowPassRadioButton.TabStop = true;
+            lowPassRadioButton.Text = "Low-pass";
+            lowPassRadioButton.UseVisualStyleBackColor = true;
+            lowPassRadioButton.CheckedChanged += filterModeRadioButton_CheckedChanged;
             // 
             // adsrGroupBox
             // 
-            this.adsrGroupBox.Controls.Add(this.releaseValueLabel);
-            this.adsrGroupBox.Controls.Add(this.sustainValueLabel);
-            this.adsrGroupBox.Controls.Add(this.decayValueLabel);
-            this.adsrGroupBox.Controls.Add(this.attackValueLabel);
-            this.adsrGroupBox.Controls.Add(this.attackTrackBar);
-            this.adsrGroupBox.Controls.Add(this.decayTrackBar);
-            this.adsrGroupBox.Controls.Add(this.sustainTrackBar);
-            this.adsrGroupBox.Controls.Add(this.releaseTrackBar);
-            this.adsrGroupBox.Controls.Add(this.adsrApplyCheckBox);
-            this.adsrGroupBox.Controls.Add(this.releaseLabel);
-            this.adsrGroupBox.Controls.Add(this.sustainLabel);
-            this.adsrGroupBox.Controls.Add(this.decayLabel);
-            this.adsrGroupBox.Controls.Add(this.attackLabel);
-            this.adsrGroupBox.Enabled = false;
-            this.adsrGroupBox.Location = new System.Drawing.Point(744, 394);
-            this.adsrGroupBox.Name = "adsrGroupBox";
-            this.adsrGroupBox.Size = new System.Drawing.Size(428, 235);
-            this.adsrGroupBox.TabIndex = 17;
-            this.adsrGroupBox.TabStop = false;
-            this.adsrGroupBox.Text = "Envelope (ADSR)";
+            adsrGroupBox.Controls.Add(releaseValueLabel);
+            adsrGroupBox.Controls.Add(sustainValueLabel);
+            adsrGroupBox.Controls.Add(decayValueLabel);
+            adsrGroupBox.Controls.Add(attackValueLabel);
+            adsrGroupBox.Controls.Add(attackTrackBar);
+            adsrGroupBox.Controls.Add(decayTrackBar);
+            adsrGroupBox.Controls.Add(sustainTrackBar);
+            adsrGroupBox.Controls.Add(releaseTrackBar);
+            adsrGroupBox.Controls.Add(adsrApplyCheckBox);
+            adsrGroupBox.Controls.Add(releaseLabel);
+            adsrGroupBox.Controls.Add(sustainLabel);
+            adsrGroupBox.Controls.Add(decayLabel);
+            adsrGroupBox.Controls.Add(attackLabel);
+            adsrGroupBox.Enabled = false;
+            adsrGroupBox.Location = new Point(777, 378);
+            adsrGroupBox.Margin = new Padding(4, 3, 4, 3);
+            adsrGroupBox.Name = "adsrGroupBox";
+            adsrGroupBox.Padding = new Padding(4, 3, 4, 3);
+            adsrGroupBox.Size = new Size(400, 251);
+            adsrGroupBox.TabIndex = 17;
+            adsrGroupBox.TabStop = false;
+            adsrGroupBox.Text = "Envelope (ADSR)";
             // 
             // releaseValueLabel
             // 
-            this.releaseValueLabel.AutoSize = true;
-            this.releaseValueLabel.Location = new System.Drawing.Point(367, 184);
-            this.releaseValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.releaseValueLabel.Name = "releaseValueLabel";
-            this.releaseValueLabel.Size = new System.Drawing.Size(30, 13);
-            this.releaseValueLabel.TabIndex = 0;
-            this.releaseValueLabel.Text = "0.4 s";
+            releaseValueLabel.AutoSize = true;
+            releaseValueLabel.Location = new Point(335, 204);
+            releaseValueLabel.Margin = new Padding(2, 0, 2, 0);
+            releaseValueLabel.Name = "releaseValueLabel";
+            releaseValueLabel.Size = new Size(30, 15);
+            releaseValueLabel.TabIndex = 0;
+            releaseValueLabel.Text = "0.4 s";
             // 
             // sustainValueLabel
             // 
-            this.sustainValueLabel.AutoSize = true;
-            this.sustainValueLabel.Location = new System.Drawing.Point(367, 136);
-            this.sustainValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.sustainValueLabel.Name = "sustainValueLabel";
-            this.sustainValueLabel.Size = new System.Drawing.Size(27, 13);
-            this.sustainValueLabel.TabIndex = 0;
-            this.sustainValueLabel.Text = "80%";
+            sustainValueLabel.AutoSize = true;
+            sustainValueLabel.Location = new Point(335, 149);
+            sustainValueLabel.Margin = new Padding(2, 0, 2, 0);
+            sustainValueLabel.Name = "sustainValueLabel";
+            sustainValueLabel.Size = new Size(29, 15);
+            sustainValueLabel.TabIndex = 0;
+            sustainValueLabel.Text = "80%";
             // 
             // decayValueLabel
             // 
-            this.decayValueLabel.AutoSize = true;
-            this.decayValueLabel.Location = new System.Drawing.Point(367, 82);
-            this.decayValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.decayValueLabel.Name = "decayValueLabel";
-            this.decayValueLabel.Size = new System.Drawing.Size(30, 13);
-            this.decayValueLabel.TabIndex = 0;
-            this.decayValueLabel.Text = "0.2 s";
+            decayValueLabel.AutoSize = true;
+            decayValueLabel.Location = new Point(335, 87);
+            decayValueLabel.Margin = new Padding(2, 0, 2, 0);
+            decayValueLabel.Name = "decayValueLabel";
+            decayValueLabel.Size = new Size(30, 15);
+            decayValueLabel.TabIndex = 0;
+            decayValueLabel.Text = "0.2 s";
             // 
             // attackValueLabel
             // 
-            this.attackValueLabel.AutoSize = true;
-            this.attackValueLabel.Location = new System.Drawing.Point(367, 31);
-            this.attackValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.attackValueLabel.Name = "attackValueLabel";
-            this.attackValueLabel.Size = new System.Drawing.Size(30, 13);
-            this.attackValueLabel.TabIndex = 0;
-            this.attackValueLabel.Text = "0.2 s";
+            attackValueLabel.AutoSize = true;
+            attackValueLabel.Location = new Point(335, 28);
+            attackValueLabel.Margin = new Padding(2, 0, 2, 0);
+            attackValueLabel.Name = "attackValueLabel";
+            attackValueLabel.Size = new Size(30, 15);
+            attackValueLabel.TabIndex = 0;
+            attackValueLabel.Text = "0.2 s";
             // 
             // attackTrackBar
             // 
-            this.attackTrackBar.Location = new System.Drawing.Point(162, 31);
-            this.attackTrackBar.Maximum = 100;
-            this.attackTrackBar.Name = "attackTrackBar";
-            this.attackTrackBar.Size = new System.Drawing.Size(200, 45);
-            this.attackTrackBar.TabIndex = 1;
-            this.attackTrackBar.TickFrequency = 10;
-            this.attackTrackBar.Value = 20;
-            this.attackTrackBar.Scroll += new System.EventHandler(this.attackTrackBar_Scroll);
+            attackTrackBar.Location = new Point(179, 24);
+            attackTrackBar.Margin = new Padding(4, 3, 4, 3);
+            attackTrackBar.Maximum = 100;
+            attackTrackBar.Name = "attackTrackBar";
+            attackTrackBar.Size = new Size(150, 45);
+            attackTrackBar.TabIndex = 1;
+            attackTrackBar.TickFrequency = 10;
+            attackTrackBar.Value = 20;
+            attackTrackBar.Scroll += attackTrackBar_Scroll;
             // 
             // decayTrackBar
             // 
-            this.decayTrackBar.Location = new System.Drawing.Point(162, 82);
-            this.decayTrackBar.Maximum = 100;
-            this.decayTrackBar.Name = "decayTrackBar";
-            this.decayTrackBar.Size = new System.Drawing.Size(200, 45);
-            this.decayTrackBar.TabIndex = 2;
-            this.decayTrackBar.TickFrequency = 10;
-            this.decayTrackBar.Value = 20;
-            this.decayTrackBar.Scroll += new System.EventHandler(this.decayTrackBar_Scroll);
+            decayTrackBar.Location = new Point(179, 83);
+            decayTrackBar.Margin = new Padding(4, 3, 4, 3);
+            decayTrackBar.Maximum = 100;
+            decayTrackBar.Name = "decayTrackBar";
+            decayTrackBar.Size = new Size(150, 45);
+            decayTrackBar.TabIndex = 2;
+            decayTrackBar.TickFrequency = 10;
+            decayTrackBar.Value = 20;
+            decayTrackBar.Scroll += decayTrackBar_Scroll;
             // 
             // sustainTrackBar
             // 
-            this.sustainTrackBar.Location = new System.Drawing.Point(162, 133);
-            this.sustainTrackBar.Maximum = 100;
-            this.sustainTrackBar.Name = "sustainTrackBar";
-            this.sustainTrackBar.Size = new System.Drawing.Size(200, 45);
-            this.sustainTrackBar.TabIndex = 3;
-            this.sustainTrackBar.TickFrequency = 10;
-            this.sustainTrackBar.Value = 80;
-            this.sustainTrackBar.Scroll += new System.EventHandler(this.sustainTrackBar_Scroll);
+            sustainTrackBar.Location = new Point(179, 141);
+            sustainTrackBar.Margin = new Padding(4, 3, 4, 3);
+            sustainTrackBar.Maximum = 100;
+            sustainTrackBar.Name = "sustainTrackBar";
+            sustainTrackBar.Size = new Size(150, 45);
+            sustainTrackBar.TabIndex = 3;
+            sustainTrackBar.TickFrequency = 10;
+            sustainTrackBar.Value = 80;
+            sustainTrackBar.Scroll += sustainTrackBar_Scroll;
             // 
             // releaseTrackBar
             // 
-            this.releaseTrackBar.Location = new System.Drawing.Point(162, 184);
-            this.releaseTrackBar.Maximum = 100;
-            this.releaseTrackBar.Name = "releaseTrackBar";
-            this.releaseTrackBar.Size = new System.Drawing.Size(200, 45);
-            this.releaseTrackBar.TabIndex = 4;
-            this.releaseTrackBar.TickFrequency = 10;
-            this.releaseTrackBar.Value = 40;
-            this.releaseTrackBar.Scroll += new System.EventHandler(this.releaseTrackBar_Scroll);
+            releaseTrackBar.Location = new Point(179, 200);
+            releaseTrackBar.Margin = new Padding(4, 3, 4, 3);
+            releaseTrackBar.Maximum = 100;
+            releaseTrackBar.Name = "releaseTrackBar";
+            releaseTrackBar.Size = new Size(150, 45);
+            releaseTrackBar.TabIndex = 4;
+            releaseTrackBar.TickFrequency = 10;
+            releaseTrackBar.Value = 40;
+            releaseTrackBar.Scroll += releaseTrackBar_Scroll;
             // 
             // adsrApplyCheckBox
             // 
-            this.adsrApplyCheckBox.AutoSize = true;
-            this.adsrApplyCheckBox.Location = new System.Drawing.Point(21, 30);
-            this.adsrApplyCheckBox.Name = "adsrApplyCheckBox";
-            this.adsrApplyCheckBox.Size = new System.Drawing.Size(52, 17);
-            this.adsrApplyCheckBox.TabIndex = 0;
-            this.adsrApplyCheckBox.Text = "Apply";
-            this.adsrApplyCheckBox.UseVisualStyleBackColor = true;
-            this.adsrApplyCheckBox.CheckedChanged += new System.EventHandler(this.adsrApplyCheckBox_CheckedChanged);
+            adsrApplyCheckBox.AutoSize = true;
+            adsrApplyCheckBox.Location = new Point(13, 27);
+            adsrApplyCheckBox.Margin = new Padding(4, 3, 4, 3);
+            adsrApplyCheckBox.Name = "adsrApplyCheckBox";
+            adsrApplyCheckBox.Size = new Size(57, 19);
+            adsrApplyCheckBox.TabIndex = 0;
+            adsrApplyCheckBox.Text = "Apply";
+            adsrApplyCheckBox.UseVisualStyleBackColor = true;
+            adsrApplyCheckBox.CheckedChanged += adsrApplyCheckBox_CheckedChanged;
             // 
             // releaseLabel
             // 
-            this.releaseLabel.AutoSize = true;
-            this.releaseLabel.Location = new System.Drawing.Point(96, 184);
-            this.releaseLabel.Name = "releaseLabel";
-            this.releaseLabel.Size = new System.Drawing.Size(60, 13);
-            this.releaseLabel.TabIndex = 0;
-            this.releaseLabel.Text = "Release (s)";
+            releaseLabel.AutoSize = true;
+            releaseLabel.Location = new Point(102, 200);
+            releaseLabel.Margin = new Padding(4, 0, 4, 0);
+            releaseLabel.Name = "releaseLabel";
+            releaseLabel.Size = new Size(62, 15);
+            releaseLabel.TabIndex = 0;
+            releaseLabel.Text = "Release (s)";
             // 
             // sustainLabel
             // 
-            this.sustainLabel.AutoSize = true;
-            this.sustainLabel.Location = new System.Drawing.Point(97, 133);
-            this.sustainLabel.Name = "sustainLabel";
-            this.sustainLabel.Size = new System.Drawing.Size(59, 13);
-            this.sustainLabel.TabIndex = 0;
-            this.sustainLabel.Text = "Sustain (%)";
+            sustainLabel.AutoSize = true;
+            sustainLabel.Location = new Point(103, 141);
+            sustainLabel.Margin = new Padding(4, 0, 4, 0);
+            sustainLabel.Name = "sustainLabel";
+            sustainLabel.Size = new Size(66, 15);
+            sustainLabel.TabIndex = 0;
+            sustainLabel.Text = "Sustain (%)";
             // 
             // decayLabel
             // 
-            this.decayLabel.AutoSize = true;
-            this.decayLabel.Location = new System.Drawing.Point(104, 82);
-            this.decayLabel.Name = "decayLabel";
-            this.decayLabel.Size = new System.Drawing.Size(52, 13);
-            this.decayLabel.TabIndex = 0;
-            this.decayLabel.Text = "Decay (s)";
+            decayLabel.AutoSize = true;
+            decayLabel.Location = new Point(111, 83);
+            decayLabel.Margin = new Padding(4, 0, 4, 0);
+            decayLabel.Name = "decayLabel";
+            decayLabel.Size = new Size(55, 15);
+            decayLabel.TabIndex = 0;
+            decayLabel.Text = "Decay (s)";
             // 
             // attackLabel
             // 
-            this.attackLabel.AutoSize = true;
-            this.attackLabel.Location = new System.Drawing.Point(104, 31);
-            this.attackLabel.Name = "attackLabel";
-            this.attackLabel.Size = new System.Drawing.Size(52, 13);
-            this.attackLabel.TabIndex = 0;
-            this.attackLabel.Text = "Attack (s)";
+            attackLabel.AutoSize = true;
+            attackLabel.Location = new Point(111, 24);
+            attackLabel.Margin = new Padding(4, 0, 4, 0);
+            attackLabel.Name = "attackLabel";
+            attackLabel.Size = new Size(57, 15);
+            attackLabel.TabIndex = 0;
+            attackLabel.Text = "Attack (s)";
             // 
             // lfoGroupBox
             // 
-            this.lfoGroupBox.Controls.Add(this.phaseValueLabel);
-            this.lfoGroupBox.Controls.Add(this.phaseLabel);
-            this.lfoGroupBox.Controls.Add(this.phaseTrackBar);
-            this.lfoGroupBox.Controls.Add(this.amplitudeValueLabel);
-            this.lfoGroupBox.Controls.Add(this.amplitudeLabel);
-            this.lfoGroupBox.Controls.Add(this.amplitudeTrackBar);
-            this.lfoGroupBox.Controls.Add(this.lfoFrequencyValueLabel);
-            this.lfoGroupBox.Controls.Add(this.lfoFrequencyLabel);
-            this.lfoGroupBox.Controls.Add(this.lfoFrequencyTrackBar);
-            this.lfoGroupBox.Controls.Add(this.lfoApplyCheckBox);
-            this.lfoGroupBox.Controls.Add(this.waveformComboBox);
-            this.lfoGroupBox.Controls.Add(this.waveformLabel);
-            this.lfoGroupBox.Enabled = false;
-            this.lfoGroupBox.Location = new System.Drawing.Point(368, 395);
-            this.lfoGroupBox.Name = "lfoGroupBox";
-            this.lfoGroupBox.Size = new System.Drawing.Size(370, 234);
-            this.lfoGroupBox.TabIndex = 16;
-            this.lfoGroupBox.TabStop = false;
-            this.lfoGroupBox.Text = "Low-frequency Oscillator (LFO)";
+            lfoGroupBox.Controls.Add(phaseValueLabel);
+            lfoGroupBox.Controls.Add(phaseLabel);
+            lfoGroupBox.Controls.Add(phaseTrackBar);
+            lfoGroupBox.Controls.Add(amplitudeValueLabel);
+            lfoGroupBox.Controls.Add(amplitudeLabel);
+            lfoGroupBox.Controls.Add(amplitudeTrackBar);
+            lfoGroupBox.Controls.Add(lfoFrequencyValueLabel);
+            lfoGroupBox.Controls.Add(lfoFrequencyLabel);
+            lfoGroupBox.Controls.Add(lfoFrequencyTrackBar);
+            lfoGroupBox.Controls.Add(lfoApplyCheckBox);
+            lfoGroupBox.Controls.Add(waveformComboBox);
+            lfoGroupBox.Controls.Add(waveformLabel);
+            lfoGroupBox.Enabled = false;
+            lfoGroupBox.Location = new Point(429, 378);
+            lfoGroupBox.Margin = new Padding(4, 3, 4, 3);
+            lfoGroupBox.Name = "lfoGroupBox";
+            lfoGroupBox.Padding = new Padding(4, 3, 4, 3);
+            lfoGroupBox.Size = new Size(340, 251);
+            lfoGroupBox.TabIndex = 16;
+            lfoGroupBox.TabStop = false;
+            lfoGroupBox.Text = "Low-frequency oscillator (LFO)";
             // 
             // phaseValueLabel
             // 
-            this.phaseValueLabel.AutoSize = true;
-            this.phaseValueLabel.Location = new System.Drawing.Point(307, 183);
-            this.phaseValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.phaseValueLabel.Name = "phaseValueLabel";
-            this.phaseValueLabel.Size = new System.Drawing.Size(17, 13);
-            this.phaseValueLabel.TabIndex = 0;
-            this.phaseValueLabel.Text = "0°";
+            phaseValueLabel.AutoSize = true;
+            phaseValueLabel.Location = new Point(275, 194);
+            phaseValueLabel.Margin = new Padding(2, 0, 2, 0);
+            phaseValueLabel.Name = "phaseValueLabel";
+            phaseValueLabel.Size = new Size(18, 15);
+            phaseValueLabel.TabIndex = 0;
+            phaseValueLabel.Text = "0°";
             // 
             // phaseLabel
             // 
-            this.phaseLabel.AutoSize = true;
-            this.phaseLabel.Location = new System.Drawing.Point(59, 183);
-            this.phaseLabel.Name = "phaseLabel";
-            this.phaseLabel.Size = new System.Drawing.Size(37, 13);
-            this.phaseLabel.TabIndex = 0;
-            this.phaseLabel.Text = "Phase";
+            phaseLabel.AutoSize = true;
+            phaseLabel.Location = new Point(69, 192);
+            phaseLabel.Margin = new Padding(4, 0, 4, 0);
+            phaseLabel.Name = "phaseLabel";
+            phaseLabel.Size = new Size(38, 15);
+            phaseLabel.TabIndex = 0;
+            phaseLabel.Text = "Phase";
             // 
             // phaseTrackBar
             // 
-            this.phaseTrackBar.Location = new System.Drawing.Point(102, 183);
-            this.phaseTrackBar.Maximum = 360;
-            this.phaseTrackBar.Name = "phaseTrackBar";
-            this.phaseTrackBar.Size = new System.Drawing.Size(200, 45);
-            this.phaseTrackBar.TabIndex = 4;
-            this.phaseTrackBar.TickFrequency = 36;
-            this.phaseTrackBar.Scroll += new System.EventHandler(this.phaseTrackBar_Scroll);
+            phaseTrackBar.Location = new Point(119, 192);
+            phaseTrackBar.Margin = new Padding(4, 3, 4, 3);
+            phaseTrackBar.Maximum = 360;
+            phaseTrackBar.Name = "phaseTrackBar";
+            phaseTrackBar.Size = new Size(150, 45);
+            phaseTrackBar.TabIndex = 4;
+            phaseTrackBar.TickFrequency = 36;
+            phaseTrackBar.Scroll += phaseTrackBar_Scroll;
             // 
             // amplitudeValueLabel
             // 
-            this.amplitudeValueLabel.AutoSize = true;
-            this.amplitudeValueLabel.Location = new System.Drawing.Point(307, 132);
-            this.amplitudeValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.amplitudeValueLabel.Name = "amplitudeValueLabel";
-            this.amplitudeValueLabel.Size = new System.Drawing.Size(13, 13);
-            this.amplitudeValueLabel.TabIndex = 0;
-            this.amplitudeValueLabel.Text = "1";
+            amplitudeValueLabel.AutoSize = true;
+            amplitudeValueLabel.Location = new Point(275, 135);
+            amplitudeValueLabel.Margin = new Padding(2, 0, 2, 0);
+            amplitudeValueLabel.Name = "amplitudeValueLabel";
+            amplitudeValueLabel.Size = new Size(13, 15);
+            amplitudeValueLabel.TabIndex = 0;
+            amplitudeValueLabel.Text = "1";
             // 
             // amplitudeLabel
             // 
-            this.amplitudeLabel.AutoSize = true;
-            this.amplitudeLabel.Location = new System.Drawing.Point(43, 132);
-            this.amplitudeLabel.Name = "amplitudeLabel";
-            this.amplitudeLabel.Size = new System.Drawing.Size(53, 13);
-            this.amplitudeLabel.TabIndex = 0;
-            this.amplitudeLabel.Text = "Amplitude";
+            amplitudeLabel.AutoSize = true;
+            amplitudeLabel.Location = new Point(50, 133);
+            amplitudeLabel.Margin = new Padding(4, 0, 4, 0);
+            amplitudeLabel.Name = "amplitudeLabel";
+            amplitudeLabel.Size = new Size(63, 15);
+            amplitudeLabel.TabIndex = 0;
+            amplitudeLabel.Text = "Amplitude";
             // 
             // amplitudeTrackBar
             // 
-            this.amplitudeTrackBar.Location = new System.Drawing.Point(102, 132);
-            this.amplitudeTrackBar.Maximum = 100;
-            this.amplitudeTrackBar.Name = "amplitudeTrackBar";
-            this.amplitudeTrackBar.Size = new System.Drawing.Size(200, 45);
-            this.amplitudeTrackBar.TabIndex = 3;
-            this.amplitudeTrackBar.TickFrequency = 10;
-            this.amplitudeTrackBar.Value = 100;
-            this.amplitudeTrackBar.Scroll += new System.EventHandler(this.amplitudeTrackBar_Scroll);
+            amplitudeTrackBar.Location = new Point(119, 133);
+            amplitudeTrackBar.Margin = new Padding(4, 3, 4, 3);
+            amplitudeTrackBar.Maximum = 100;
+            amplitudeTrackBar.Name = "amplitudeTrackBar";
+            amplitudeTrackBar.Size = new Size(150, 45);
+            amplitudeTrackBar.TabIndex = 3;
+            amplitudeTrackBar.TickFrequency = 10;
+            amplitudeTrackBar.Value = 100;
+            amplitudeTrackBar.Scroll += amplitudeTrackBar_Scroll;
             // 
             // lfoFrequencyValueLabel
             // 
-            this.lfoFrequencyValueLabel.AutoSize = true;
-            this.lfoFrequencyValueLabel.Location = new System.Drawing.Point(307, 81);
-            this.lfoFrequencyValueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lfoFrequencyValueLabel.Name = "lfoFrequencyValueLabel";
-            this.lfoFrequencyValueLabel.Size = new System.Drawing.Size(35, 13);
-            this.lfoFrequencyValueLabel.TabIndex = 0;
-            this.lfoFrequencyValueLabel.Text = "10 Hz";
+            lfoFrequencyValueLabel.AutoSize = true;
+            lfoFrequencyValueLabel.Location = new Point(275, 82);
+            lfoFrequencyValueLabel.Margin = new Padding(2, 0, 2, 0);
+            lfoFrequencyValueLabel.Name = "lfoFrequencyValueLabel";
+            lfoFrequencyValueLabel.Size = new Size(36, 15);
+            lfoFrequencyValueLabel.TabIndex = 0;
+            lfoFrequencyValueLabel.Text = "10 Hz";
             // 
             // lfoFrequencyLabel
             // 
-            this.lfoFrequencyLabel.AutoSize = true;
-            this.lfoFrequencyLabel.Location = new System.Drawing.Point(17, 81);
-            this.lfoFrequencyLabel.Name = "lfoFrequencyLabel";
-            this.lfoFrequencyLabel.Size = new System.Drawing.Size(79, 13);
-            this.lfoFrequencyLabel.TabIndex = 0;
-            this.lfoFrequencyLabel.Text = "Frequency (Hz)";
+            lfoFrequencyLabel.AutoSize = true;
+            lfoFrequencyLabel.Location = new Point(20, 80);
+            lfoFrequencyLabel.Margin = new Padding(4, 0, 4, 0);
+            lfoFrequencyLabel.Name = "lfoFrequencyLabel";
+            lfoFrequencyLabel.Size = new Size(87, 15);
+            lfoFrequencyLabel.TabIndex = 0;
+            lfoFrequencyLabel.Text = "Frequency (Hz)";
             // 
             // lfoFrequencyTrackBar
             // 
-            this.lfoFrequencyTrackBar.Location = new System.Drawing.Point(102, 81);
-            this.lfoFrequencyTrackBar.Maximum = 20;
-            this.lfoFrequencyTrackBar.Minimum = 1;
-            this.lfoFrequencyTrackBar.Name = "lfoFrequencyTrackBar";
-            this.lfoFrequencyTrackBar.Size = new System.Drawing.Size(200, 45);
-            this.lfoFrequencyTrackBar.TabIndex = 2;
-            this.lfoFrequencyTrackBar.TickFrequency = 2;
-            this.lfoFrequencyTrackBar.Value = 10;
-            this.lfoFrequencyTrackBar.Scroll += new System.EventHandler(this.lfoFrequencyTrackBar_Scroll);
+            lfoFrequencyTrackBar.Location = new Point(119, 80);
+            lfoFrequencyTrackBar.Margin = new Padding(4, 3, 4, 3);
+            lfoFrequencyTrackBar.Maximum = 20;
+            lfoFrequencyTrackBar.Minimum = 1;
+            lfoFrequencyTrackBar.Name = "lfoFrequencyTrackBar";
+            lfoFrequencyTrackBar.Size = new Size(150, 45);
+            lfoFrequencyTrackBar.TabIndex = 2;
+            lfoFrequencyTrackBar.TickFrequency = 2;
+            lfoFrequencyTrackBar.Value = 10;
+            lfoFrequencyTrackBar.Scroll += lfoFrequencyTrackBar_Scroll;
             // 
             // lfoApplyCheckBox
             // 
-            this.lfoApplyCheckBox.AutoSize = true;
-            this.lfoApplyCheckBox.Location = new System.Drawing.Point(29, 29);
-            this.lfoApplyCheckBox.Name = "lfoApplyCheckBox";
-            this.lfoApplyCheckBox.Size = new System.Drawing.Size(52, 17);
-            this.lfoApplyCheckBox.TabIndex = 0;
-            this.lfoApplyCheckBox.Text = "Apply";
-            this.lfoApplyCheckBox.UseVisualStyleBackColor = true;
-            this.lfoApplyCheckBox.CheckedChanged += new System.EventHandler(this.lfoApplyCheckBox_CheckedChanged);
+            lfoApplyCheckBox.AutoSize = true;
+            lfoApplyCheckBox.Location = new Point(13, 27);
+            lfoApplyCheckBox.Margin = new Padding(4, 3, 4, 3);
+            lfoApplyCheckBox.Name = "lfoApplyCheckBox";
+            lfoApplyCheckBox.Size = new Size(57, 19);
+            lfoApplyCheckBox.TabIndex = 0;
+            lfoApplyCheckBox.Text = "Apply";
+            lfoApplyCheckBox.UseVisualStyleBackColor = true;
+            lfoApplyCheckBox.CheckedChanged += lfoApplyCheckBox_CheckedChanged;
             // 
             // waveformComboBox
             // 
-            this.waveformComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.waveformComboBox.FormattingEnabled = true;
-            this.waveformComboBox.Items.AddRange(new object[] {
-            "Sine",
-            "Square",
-            "Triangle",
-            "Sawtooth"});
-            this.waveformComboBox.Location = new System.Drawing.Point(181, 27);
-            this.waveformComboBox.Name = "waveformComboBox";
-            this.waveformComboBox.Size = new System.Drawing.Size(121, 21);
-            this.waveformComboBox.TabIndex = 1;
-            this.waveformComboBox.SelectedIndexChanged += new System.EventHandler(this.waveformComboBox_SelectedIndexChanged);
+            waveformComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            waveformComboBox.FormattingEnabled = true;
+            waveformComboBox.Items.AddRange(new object[] { "Sine", "Square", "Triangle", "Sawtooth" });
+            waveformComboBox.Location = new Point(171, 25);
+            waveformComboBox.Margin = new Padding(4, 3, 4, 3);
+            waveformComboBox.Name = "waveformComboBox";
+            waveformComboBox.Size = new Size(140, 23);
+            waveformComboBox.TabIndex = 1;
+            waveformComboBox.SelectedIndexChanged += waveformComboBox_SelectedIndexChanged;
             // 
             // waveformLabel
             // 
-            this.waveformLabel.AutoSize = true;
-            this.waveformLabel.Location = new System.Drawing.Point(119, 30);
-            this.waveformLabel.Name = "waveformLabel";
-            this.waveformLabel.Size = new System.Drawing.Size(56, 13);
-            this.waveformLabel.TabIndex = 0;
-            this.waveformLabel.Text = "Waveform";
+            waveformLabel.AutoSize = true;
+            waveformLabel.Location = new Point(99, 29);
+            waveformLabel.Margin = new Padding(4, 0, 4, 0);
+            waveformLabel.Name = "waveformLabel";
+            waveformLabel.Size = new Size(62, 15);
+            waveformLabel.TabIndex = 0;
+            waveformLabel.Text = "Waveform";
             // 
             // plotComboBox
             // 
-            this.plotComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.plotComboBox.Enabled = false;
-            this.plotComboBox.FormattingEnabled = true;
-            this.plotComboBox.Items.AddRange(new object[] {
-            "Magnitude",
-            "Real",
-            "Imaginary"});
-            this.plotComboBox.Location = new System.Drawing.Point(1073, 48);
-            this.plotComboBox.Margin = new System.Windows.Forms.Padding(2);
-            this.plotComboBox.Name = "plotComboBox";
-            this.plotComboBox.Size = new System.Drawing.Size(100, 21);
-            this.plotComboBox.TabIndex = 12;
-            this.plotComboBox.SelectedIndexChanged += new System.EventHandler(this.plotComboBox_SelectedIndexChanged);
+            plotComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            plotComboBox.Enabled = false;
+            plotComboBox.FormattingEnabled = true;
+            plotComboBox.Items.AddRange(new object[] { "Magnitude", "Real", "Imaginary" });
+            plotComboBox.Location = new Point(639, 23);
+            plotComboBox.Margin = new Padding(2);
+            plotComboBox.Name = "plotComboBox";
+            plotComboBox.Size = new Size(100, 23);
+            plotComboBox.TabIndex = 12;
+            plotComboBox.SelectedIndexChanged += plotComboBox_SelectedIndexChanged;
             // 
             // plotLabel
             // 
-            this.plotLabel.AutoSize = true;
-            this.plotLabel.Location = new System.Drawing.Point(954, 51);
-            this.plotLabel.Name = "plotLabel";
-            this.plotLabel.Size = new System.Drawing.Size(114, 13);
-            this.plotLabel.TabIndex = 0;
-            this.plotLabel.Text = "Frequency domain plot";
+            plotLabel.AutoSize = true;
+            plotLabel.Location = new Point(503, 27);
+            plotLabel.Margin = new Padding(4, 0, 4, 0);
+            plotLabel.Name = "plotLabel";
+            plotLabel.Size = new Size(130, 15);
+            plotLabel.TabIndex = 0;
+            plotLabel.Text = "Frequency domain plot";
             // 
             // playButton
             // 
-            this.playButton.Enabled = false;
-            this.playButton.Image = global::BasicSynthesizer.Properties.Resources.Audio_16x;
-            this.playButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.playButton.Location = new System.Drawing.Point(897, 46);
-            this.playButton.Margin = new System.Windows.Forms.Padding(2);
-            this.playButton.Name = "playButton";
-            this.playButton.Size = new System.Drawing.Size(23, 23);
-            this.playButton.TabIndex = 4;
-            this.playButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.mainToolTip.SetToolTip(this.playButton, "Some frequencies may not be supported by your audio device. ");
-            this.playButton.UseVisualStyleBackColor = true;
-            this.playButton.Click += new System.EventHandler(this.playButton_Click);
+            playButton.Enabled = false;
+            playButton.Image = Properties.Resources.Audio_16x;
+            playButton.ImageAlign = ContentAlignment.MiddleLeft;
+            playButton.Location = new Point(460, 23);
+            playButton.Margin = new Padding(2);
+            playButton.Name = "playButton";
+            playButton.Size = new Size(27, 27);
+            playButton.TabIndex = 4;
+            playButton.TextAlign = ContentAlignment.MiddleRight;
+            mainToolTip.SetToolTip(playButton, "Some frequencies may not be supported by your audio device. ");
+            playButton.UseVisualStyleBackColor = true;
+            playButton.Click += playButton_Click;
             // 
             // openAudioFileDialog
             // 
-            this.openAudioFileDialog.Filter = "WAV file (*.wav)|*.wav";
+            openAudioFileDialog.Filter = "WAV file (*.wav)|*.wav";
             // 
             // audioInfoLabel
             // 
-            this.audioInfoLabel.AutoSize = true;
-            this.audioInfoLabel.Location = new System.Drawing.Point(948, 83);
-            this.audioInfoLabel.Name = "audioInfoLabel";
-            this.audioInfoLabel.Size = new System.Drawing.Size(0, 13);
-            this.audioInfoLabel.TabIndex = 18;
+            audioInfoLabel.AutoSize = true;
+            audioInfoLabel.Location = new Point(1106, 96);
+            audioInfoLabel.Margin = new Padding(4, 0, 4, 0);
+            audioInfoLabel.Name = "audioInfoLabel";
+            audioInfoLabel.Size = new Size(0, 15);
+            audioInfoLabel.TabIndex = 18;
             // 
             // saveAudioFileDialog
             // 
-            this.saveAudioFileDialog.Filter = "WAV file (*.wav)|*.wav";
+            saveAudioFileDialog.Filter = "WAV file (*.wav)|*.wav";
             // 
             // timeDomainPlotView
             // 
-            this.timeDomainPlotView.Enabled = false;
-            this.timeDomainPlotView.Location = new System.Drawing.Point(434, 83);
-            this.timeDomainPlotView.Name = "timeDomainPlotView";
-            this.timeDomainPlotView.PanCursor = System.Windows.Forms.Cursors.Hand;
-            this.timeDomainPlotView.Size = new System.Drawing.Size(738, 150);
-            this.timeDomainPlotView.TabIndex = 19;
-            this.timeDomainPlotView.Text = "plotView1";
-            this.timeDomainPlotView.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
-            this.timeDomainPlotView.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
-            this.timeDomainPlotView.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
+            timeDomainPlotView.Enabled = false;
+            timeDomainPlotView.Location = new Point(7, 59);
+            timeDomainPlotView.Margin = new Padding(4, 3, 4, 3);
+            timeDomainPlotView.Name = "timeDomainPlotView";
+            timeDomainPlotView.PanCursor = Cursors.Hand;
+            timeDomainPlotView.Size = new Size(730, 135);
+            timeDomainPlotView.TabIndex = 19;
+            timeDomainPlotView.Text = "plotView1";
+            timeDomainPlotView.ZoomHorizontalCursor = Cursors.SizeWE;
+            timeDomainPlotView.ZoomRectangleCursor = Cursors.SizeNWSE;
+            timeDomainPlotView.ZoomVerticalCursor = Cursors.SizeNS;
             // 
             // frequencyDomainPlotView
             // 
-            this.frequencyDomainPlotView.Enabled = false;
-            this.frequencyDomainPlotView.Location = new System.Drawing.Point(434, 239);
-            this.frequencyDomainPlotView.Name = "frequencyDomainPlotView";
-            this.frequencyDomainPlotView.PanCursor = System.Windows.Forms.Cursors.Hand;
-            this.frequencyDomainPlotView.Size = new System.Drawing.Size(738, 150);
-            this.frequencyDomainPlotView.TabIndex = 20;
-            this.frequencyDomainPlotView.Text = "plotView1";
-            this.frequencyDomainPlotView.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
-            this.frequencyDomainPlotView.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
-            this.frequencyDomainPlotView.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
+            frequencyDomainPlotView.Enabled = false;
+            frequencyDomainPlotView.Location = new Point(7, 200);
+            frequencyDomainPlotView.Margin = new Padding(4, 3, 4, 3);
+            frequencyDomainPlotView.Name = "frequencyDomainPlotView";
+            frequencyDomainPlotView.PanCursor = Cursors.Hand;
+            frequencyDomainPlotView.Size = new Size(730, 135);
+            frequencyDomainPlotView.TabIndex = 20;
+            frequencyDomainPlotView.Text = "plotView1";
+            frequencyDomainPlotView.ZoomHorizontalCursor = Cursors.SizeWE;
+            frequencyDomainPlotView.ZoomRectangleCursor = Cursors.SizeNWSE;
+            frequencyDomainPlotView.ZoomVerticalCursor = Cursors.SizeNS;
+            // 
+            // soundSignalGroupBox
+            // 
+            soundSignalGroupBox.Controls.Add(samplingRateLabel);
+            soundSignalGroupBox.Controls.Add(frequencyDomainPlotView);
+            soundSignalGroupBox.Controls.Add(durationLabel);
+            soundSignalGroupBox.Controls.Add(timeDomainPlotView);
+            soundSignalGroupBox.Controls.Add(samplingRateComboBox);
+            soundSignalGroupBox.Controls.Add(durationNumericUpDown);
+            soundSignalGroupBox.Controls.Add(playButton);
+            soundSignalGroupBox.Controls.Add(plotLabel);
+            soundSignalGroupBox.Controls.Add(plotComboBox);
+            soundSignalGroupBox.Location = new Point(428, 31);
+            soundSignalGroupBox.Name = "soundSignalGroupBox";
+            soundSignalGroupBox.Size = new Size(744, 341);
+            soundSignalGroupBox.TabIndex = 21;
+            soundSignalGroupBox.TabStop = false;
+            soundSignalGroupBox.Text = "Sound signal";
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1184, 641);
-            this.Controls.Add(this.frequencyDomainPlotView);
-            this.Controls.Add(this.timeDomainPlotView);
-            this.Controls.Add(this.audioInfoLabel);
-            this.Controls.Add(this.lfoGroupBox);
-            this.Controls.Add(this.plotLabel);
-            this.Controls.Add(this.plotComboBox);
-            this.Controls.Add(this.adsrGroupBox);
-            this.Controls.Add(this.filterGroupBox);
-            this.Controls.Add(this.playButton);
-            this.Controls.Add(this.durationNumericUpDown);
-            this.Controls.Add(this.samplingRateComboBox);
-            this.Controls.Add(this.durationLabel);
-            this.Controls.Add(this.samplingRateLabel);
-            this.Controls.Add(this.oscillatorsGroupBox);
-            this.Controls.Add(this.mainMenuStrip);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MainMenuStrip = this.mainMenuStrip;
-            this.MaximizeBox = false;
-            this.Name = "MainForm";
-            this.Text = "Basic Synthesizer";
-            this.Load += new System.EventHandler(this.MainForm_Load);
-            this.mainMenuStrip.ResumeLayout(false);
-            this.mainMenuStrip.PerformLayout();
-            this.oscillatorsGroupBox.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.durationNumericUpDown)).EndInit();
-            this.filterGroupBox.ResumeLayout(false);
-            this.filterGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.resonanceTrackBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.filterFrequencyTrackBar)).EndInit();
-            this.adsrGroupBox.ResumeLayout(false);
-            this.adsrGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.attackTrackBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.decayTrackBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sustainTrackBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.releaseTrackBar)).EndInit();
-            this.lfoGroupBox.ResumeLayout(false);
-            this.lfoGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.phaseTrackBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.amplitudeTrackBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lfoFrequencyTrackBar)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1184, 641);
+            Controls.Add(soundSignalGroupBox);
+            Controls.Add(audioInfoLabel);
+            Controls.Add(lfoGroupBox);
+            Controls.Add(adsrGroupBox);
+            Controls.Add(filterGroupBox);
+            Controls.Add(oscillatorsGroupBox);
+            Controls.Add(mainMenuStrip);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MainMenuStrip = mainMenuStrip;
+            Margin = new Padding(4, 3, 4, 3);
+            MaximizeBox = false;
+            Name = "MainForm";
+            Text = "Basic Synthesizer";
+            Load += MainForm_Load;
+            mainMenuStrip.ResumeLayout(false);
+            mainMenuStrip.PerformLayout();
+            oscillatorsGroupBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)durationNumericUpDown).EndInit();
+            filterGroupBox.ResumeLayout(false);
+            filterGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)resonanceTrackBar).EndInit();
+            ((System.ComponentModel.ISupportInitialize)filterFrequencyTrackBar).EndInit();
+            adsrGroupBox.ResumeLayout(false);
+            adsrGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)attackTrackBar).EndInit();
+            ((System.ComponentModel.ISupportInitialize)decayTrackBar).EndInit();
+            ((System.ComponentModel.ISupportInitialize)sustainTrackBar).EndInit();
+            ((System.ComponentModel.ISupportInitialize)releaseTrackBar).EndInit();
+            lfoGroupBox.ResumeLayout(false);
+            lfoGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)phaseTrackBar).EndInit();
+            ((System.ComponentModel.ISupportInitialize)amplitudeTrackBar).EndInit();
+            ((System.ComponentModel.ISupportInitialize)lfoFrequencyTrackBar).EndInit();
+            soundSignalGroupBox.ResumeLayout(false);
+            soundSignalGroupBox.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip mainMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.GroupBox oscillatorsGroupBox;
-        private System.Windows.Forms.Button deleteButton;
-        private System.Windows.Forms.Button addButton;
-        private System.Windows.Forms.ListView oscillatorsListView;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
-        private System.Windows.Forms.NumericUpDown durationNumericUpDown;
-        private System.Windows.Forms.ComboBox samplingRateComboBox;
-        private System.Windows.Forms.Label durationLabel;
-        private System.Windows.Forms.Label samplingRateLabel;
-        private System.Windows.Forms.Button playButton;
-        private System.Windows.Forms.ColumnHeader columnHeader5;
-        private System.Windows.Forms.GroupBox filterGroupBox;
-        private System.Windows.Forms.Label resonanceLabel;
-        private System.Windows.Forms.Label filterFrequencyLabel;
-        private System.Windows.Forms.CheckBox filterApplyCheckBox;
-        private System.Windows.Forms.RadioButton highPassRadioButton;
-        private System.Windows.Forms.RadioButton lowPassRadioButton;
-        private System.Windows.Forms.GroupBox adsrGroupBox;
-        private System.Windows.Forms.CheckBox adsrApplyCheckBox;
-        private System.Windows.Forms.Label releaseLabel;
-        private System.Windows.Forms.Label sustainLabel;
-        private System.Windows.Forms.Label decayLabel;
-        private System.Windows.Forms.Label attackLabel;
-        private System.Windows.Forms.GroupBox lfoGroupBox;
-        private System.Windows.Forms.CheckBox lfoApplyCheckBox;
-        private System.Windows.Forms.ComboBox waveformComboBox;
-        private System.Windows.Forms.Label waveformLabel;
-        private System.Windows.Forms.TrackBar resonanceTrackBar;
-        private System.Windows.Forms.TrackBar filterFrequencyTrackBar;
-        private System.Windows.Forms.TrackBar attackTrackBar;
-        private System.Windows.Forms.TrackBar decayTrackBar;
-        private System.Windows.Forms.TrackBar sustainTrackBar;
-        private System.Windows.Forms.TrackBar releaseTrackBar;
-        private System.Windows.Forms.Label lfoFrequencyLabel;
-        private System.Windows.Forms.TrackBar lfoFrequencyTrackBar;
-        private System.Windows.Forms.Label resonanceValueLabel;
-        private System.Windows.Forms.Label filterFrequencyValueLabel;
-        private System.Windows.Forms.Label releaseValueLabel;
-        private System.Windows.Forms.Label sustainValueLabel;
-        private System.Windows.Forms.Label decayValueLabel;
-        private System.Windows.Forms.Label attackValueLabel;
-        private System.Windows.Forms.Label lfoFrequencyValueLabel;
-        private System.Windows.Forms.ComboBox plotComboBox;
-        private System.Windows.Forms.Label plotLabel;
-        private System.Windows.Forms.RadioButton bandPassRadioButton;
-        private System.Windows.Forms.ToolTip mainToolTip;
-        private System.Windows.Forms.Label amplitudeValueLabel;
-        private System.Windows.Forms.Label amplitudeLabel;
-        private System.Windows.Forms.TrackBar amplitudeTrackBar;
-        private System.Windows.Forms.Label phaseValueLabel;
-        private System.Windows.Forms.Label phaseLabel;
-        private System.Windows.Forms.TrackBar phaseTrackBar;
-        private System.Windows.Forms.OpenFileDialog openAudioFileDialog;
-        private System.Windows.Forms.Button editButton;
-        private System.Windows.Forms.Button deleteAudioButton;
-        private System.Windows.Forms.Label audioInfoLabel;
-        private System.Windows.Forms.SaveFileDialog saveAudioFileDialog;
-        private System.Windows.Forms.ToolStripMenuItem audioToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem playToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
+        private MenuStrip mainMenuStrip;
+        private ToolStripMenuItem fileToolStripMenuItem;
+        private ToolStripMenuItem helpToolStripMenuItem;
+        private ToolStripMenuItem aboutToolStripMenuItem;
+        private ToolStripMenuItem exitToolStripMenuItem;
+        private GroupBox oscillatorsGroupBox;
+        private Button deleteButton;
+        private Button addButton;
+        private ListView oscillatorsListView;
+        private ColumnHeader columnHeader1;
+        private ColumnHeader columnHeader2;
+        private ColumnHeader columnHeader3;
+        private ColumnHeader columnHeader4;
+        private NumericUpDown durationNumericUpDown;
+        private ComboBox samplingRateComboBox;
+        private Label durationLabel;
+        private Label samplingRateLabel;
+        private Button playButton;
+        private ColumnHeader columnHeader5;
+        private GroupBox filterGroupBox;
+        private Label resonanceLabel;
+        private Label filterFrequencyLabel;
+        private CheckBox filterApplyCheckBox;
+        private RadioButton highPassRadioButton;
+        private RadioButton lowPassRadioButton;
+        private GroupBox adsrGroupBox;
+        private CheckBox adsrApplyCheckBox;
+        private Label releaseLabel;
+        private Label sustainLabel;
+        private Label decayLabel;
+        private Label attackLabel;
+        private GroupBox lfoGroupBox;
+        private CheckBox lfoApplyCheckBox;
+        private ComboBox waveformComboBox;
+        private Label waveformLabel;
+        private TrackBar resonanceTrackBar;
+        private TrackBar filterFrequencyTrackBar;
+        private TrackBar attackTrackBar;
+        private TrackBar decayTrackBar;
+        private TrackBar sustainTrackBar;
+        private TrackBar releaseTrackBar;
+        private Label lfoFrequencyLabel;
+        private TrackBar lfoFrequencyTrackBar;
+        private Label resonanceValueLabel;
+        private Label filterFrequencyValueLabel;
+        private Label releaseValueLabel;
+        private Label sustainValueLabel;
+        private Label decayValueLabel;
+        private Label attackValueLabel;
+        private Label lfoFrequencyValueLabel;
+        private ComboBox plotComboBox;
+        private Label plotLabel;
+        private RadioButton bandPassRadioButton;
+        private ToolTip mainToolTip;
+        private Label amplitudeValueLabel;
+        private Label amplitudeLabel;
+        private TrackBar amplitudeTrackBar;
+        private Label phaseValueLabel;
+        private Label phaseLabel;
+        private TrackBar phaseTrackBar;
+        private OpenFileDialog openAudioFileDialog;
+        private Button editButton;
+        private Button deleteAudioButton;
+        private Label audioInfoLabel;
+        private SaveFileDialog saveAudioFileDialog;
+        private ToolStripMenuItem audioToolStripMenuItem;
+        private ToolStripMenuItem playToolStripMenuItem;
+        private ToolStripSeparator toolStripMenuItem2;
+        private ToolStripMenuItem exportToolStripMenuItem;
+        private ToolStripMenuItem importToolStripMenuItem;
         private OxyPlot.WindowsForms.PlotView timeDomainPlotView;
         private OxyPlot.WindowsForms.PlotView frequencyDomainPlotView;
+        private GroupBox soundSignalGroupBox;
     }
 }
 

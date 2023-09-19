@@ -5,25 +5,28 @@ namespace BasicSynthesizer
 {
     public class Oscillator
     {
-        // Fields
-        private float phase;
+        #region Field
+        private double phase;
+        #endregion
 
-        // Enumerations
+        #region Enum
         public enum OscillatorWaveform { Sine, Square, Triangle, Sawtooth };
+        #endregion
 
-        // Properties
+        #region Properties
         public OscillatorWaveform Waveform { get; set; }
-        public Single Frequency { get; set; }
-        public Single Amplitude { get; set; }
-        public Single Phase
+        public double Frequency { get; set; }
+        public double Amplitude { get; set; }
+        public double Phase
         {
             get { return phase; }
             set { if (value == 360) phase = 0; else phase = value; }
         }
-        public Single Ratio { get; set; }
+        public double Ratio { get; set; }
+        #endregion
 
-        // Constructors
-        public Oscillator(OscillatorWaveform waveform, float frequency, float amplitude, float phase, float ratio)
+        #region Constructor
+        public Oscillator(OscillatorWaveform waveform, double frequency, double amplitude, double phase, double ratio)
         {
             Waveform = waveform;
             Frequency = frequency;
@@ -31,32 +34,33 @@ namespace BasicSynthesizer
             Phase = phase;
             Ratio = ratio;
         }
+        #endregion
 
-        // Methods
-        public float[] GenerateWaveDataPoints(int samplingRate, float duration)
+        #region Methods
+        public double[] GenerateWaveDataPoints(int samplingRate, double duration)
         {
             int numberOfSamples = Convert.ToInt32(Math.Floor(duration * samplingRate));
-            float[] data = new float[numberOfSamples];
-            float interval = 1f / samplingRate; //s
-            float period = 1f / Frequency;
-            float phaseShift = Phase / 360f / Frequency;
+            double[] data = new double[numberOfSamples];
+            double interval = 1f / samplingRate; //s
+            double period = 1f / Frequency;
+            double phaseShift = Phase / 360f / Frequency;
 
             for (int i = 0; i < numberOfSamples; i++)
             {
-                float t = i * interval + phaseShift;
+                double t = i * interval + phaseShift;
                 switch (Waveform)
                 {
                     case OscillatorWaveform.Sine:
-                        data[i] = Convert.ToSingle(Amplitude * Math.Sin(Math.PI * 2f * Frequency * t));
+                        data[i] = Convert.ToDouble(Amplitude * Math.Sin(Math.PI * 2f * Frequency * t));
                         break;
                     case OscillatorWaveform.Square:
-                        data[i] = Convert.ToSingle(Amplitude * Math.Sign(Math.Sin(Math.PI * 2f * Frequency * t)));
+                        data[i] = Convert.ToDouble(Amplitude * Math.Sign(Math.Sin(Math.PI * 2f * Frequency * t)));
                         break;
                     case OscillatorWaveform.Triangle:
-                        data[i] = Convert.ToSingle(Amplitude * 2f * Math.Abs(2f * (t / period - Math.Floor(0.5f + t / period))) - 1f);
+                        data[i] = Convert.ToDouble(Amplitude * 2f * Math.Abs(2f * (t / period - Math.Floor(0.5f + t / period))) - 1f);
                         break;
                     case OscillatorWaveform.Sawtooth:
-                        data[i] = Convert.ToSingle(Amplitude * 2f * (t / period - Math.Floor(0.5f + t / period)));
+                        data[i] = Convert.ToDouble(Amplitude * 2f * (t / period - Math.Floor(0.5f + t / period)));
                         break;
                     default:
                         break;
@@ -66,21 +70,21 @@ namespace BasicSynthesizer
             return data;
         }
 
-        public static List<(double, double)> MixOscillators(List<Oscillator> oscillators, int samplingRate, float duration)
+        public static List<(double, double)> MixOscillators(List<Oscillator> oscillators, int samplingRate, double duration)
         {
             int numberOfOscillators = oscillators.Count;
             int numberOfSamples = Convert.ToInt32(Math.Floor(duration * samplingRate));
-            float interval = 1f / samplingRate; //s
+            double interval = 1f / samplingRate; //s
 
-            List<float[]> wavesData = new List<float[]>();
+            List<double[]> wavesData = new();
             foreach (Oscillator oscillator in oscillators)
                 wavesData.Add(oscillator.GenerateWaveDataPoints(samplingRate, duration));
 
-            float[] mixedWaveData = new float[numberOfSamples];
-            List<(double, double)> dataPoints = new List<(double, double)>();
+            double[] mixedWaveData = new double[numberOfSamples];
+            List<(double, double)> dataPoints = new();
             for (int i = 0; i < numberOfSamples; i++)
             {
-                float totalWeight = 0;
+                double totalWeight = 0;
                 for (int j = 0; j < numberOfOscillators; j++)
                 {
                     mixedWaveData[i] += wavesData[j][i] * oscillators[j].Ratio;
@@ -93,5 +97,6 @@ namespace BasicSynthesizer
 
             return dataPoints;
         }
+        #endregion
     }
 }
