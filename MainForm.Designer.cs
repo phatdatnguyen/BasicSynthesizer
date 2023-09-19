@@ -214,7 +214,7 @@
             // 
             // editButton
             // 
-            editButton.Location = new Point(102, 22);
+            editButton.Location = new Point(90, 22);
             editButton.Margin = new Padding(4, 3, 4, 3);
             editButton.Name = "editButton";
             editButton.Size = new Size(75, 23);
@@ -225,7 +225,7 @@
             // 
             // deleteButton
             // 
-            deleteButton.Location = new Point(231, 22);
+            deleteButton.Location = new Point(241, 22);
             deleteButton.Margin = new Padding(4, 3, 4, 3);
             deleteButton.Name = "deleteButton";
             deleteButton.Size = new Size(75, 23);
@@ -248,7 +248,7 @@
             // deleteAudioButton
             // 
             deleteAudioButton.Enabled = false;
-            deleteAudioButton.Location = new Point(326, 22);
+            deleteAudioButton.Location = new Point(324, 22);
             deleteAudioButton.Margin = new Padding(4, 3, 4, 3);
             deleteAudioButton.Name = "deleteAudioButton";
             deleteAudioButton.Size = new Size(75, 23);
