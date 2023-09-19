@@ -6,4 +6,4 @@ A simple GUI software with basic components of a synthesizer.
 - Low-frequency oscillator
 - Envelope
 
-![Main window](/Images/MainWindow.png)
+![Main window](/Images/MainInterface.png)
