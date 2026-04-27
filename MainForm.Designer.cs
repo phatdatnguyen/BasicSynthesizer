@@ -916,6 +916,7 @@
             Name = "MainForm";
             Text = "Basic Synthesizer";
             Load += MainForm_Load;
+            FormClosing += MainForm_FormClosing;
             mainMenuStrip.ResumeLayout(false);
             mainMenuStrip.PerformLayout();
             oscillatorsGroupBox.ResumeLayout(false);

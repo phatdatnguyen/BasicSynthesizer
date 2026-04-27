@@ -111,6 +111,7 @@
         #endregion
 
         #region Property
+        [System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public Oscillator Oscillator { get; set; }
         #endregion
 

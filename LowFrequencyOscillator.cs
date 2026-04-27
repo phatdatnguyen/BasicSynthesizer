@@ -16,7 +16,7 @@
             double[] lfoSignal = GenerateWaveDataPoints(samplingRate, duration);
 
             for (int i = 0; i < numberOfSamples; i++)
-                outputSignal[i] = inputSignal[i] * lfoSignal[i];
+                outputSignal[i] = inputSignal[i] * ((lfoSignal[i] + 1.0) / 2.0);
 
             return outputSignal;
         }
@@ -29,7 +29,7 @@
             double[] lfoSignal = GenerateWaveDataPoints(samplingRate, duration);
 
             for (int i = 0; i < numberOfSamples; i++)
-                outputSignal.Add((i * interval, inputSignal[i].Item2 * lfoSignal[i]));
+                outputSignal.Add((i * interval, inputSignal[i].Item2 * ((lfoSignal[i] + 1.0) / 2.0)));
 
             return outputSignal;
         }

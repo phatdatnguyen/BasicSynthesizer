@@ -36,12 +36,12 @@
                     envelopeDataPoints[i] = time / Attack;
                     outputDataPoints[i] = inputDataPoints[i] * envelopeDataPoints[i];
                 }
-                else if (i * interval < Attack + Decay) // decay phase
+                else if (time < Attack + Decay) // decay phase
                 {
                     envelopeDataPoints[i] = 1 - (1 - Sustain / 100) * (time - Attack) / Decay;
                     outputDataPoints[i] = inputDataPoints[i] * envelopeDataPoints[i];
                 }
-                else if (i * interval < duration - Release) // sustain phase
+                else if (time < duration - Release) // sustain phase
                 {
                     envelopeDataPoints[i] = Sustain / 100;
                     outputDataPoints[i] = inputDataPoints[i] * envelopeDataPoints[i]; ;
@@ -72,12 +72,12 @@
                     envelopeDataPoints[i] = time / Attack;
                     outputDataPoints.Add((time, inputDataPoints[i].Item2 * envelopeDataPoints[i]));
                 }
-                else if (i * interval < Attack + Decay) // decay phase
+                else if (time < Attack + Decay) // decay phase
                 {
                     envelopeDataPoints[i] = 1 - (1 - Sustain / 100) * (time - Attack) / Decay;
                     outputDataPoints.Add((time, inputDataPoints[i].Item2 * envelopeDataPoints[i]));
                 }
-                else if (i * interval < duration - Release) // sustain phase
+                else if (time < duration - Release) // sustain phase
                 {
                     envelopeDataPoints[i] = Sustain / 100;
                     outputDataPoints.Add((time, inputDataPoints[i].Item2 * envelopeDataPoints[i]));

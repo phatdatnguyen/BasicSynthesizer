@@ -28,6 +28,7 @@
             double interval = 1f / samplingRate;
             double rc = Convert.ToDouble(1f / (Math.PI * 2 * CutoffFrequency));
             double alpha = interval / (rc + interval);
+            if (alpha >= 1.0) alpha = 0.9999;
             double feedbackAmount = (Resonance + Resonance / (1f - alpha)) / 101f;
 
             double[] filteredSignal = new double[numberOfSamples];
@@ -70,6 +71,7 @@
             double interval = 1f / samplingRate;
             double rc = Convert.ToDouble(1f / (Math.PI * 2 * CutoffFrequency));
             double alpha = interval / (rc + interval);
+            if (alpha >= 1.0) alpha = 0.9999;
             double feedbackAmount = (Resonance + Resonance / (1f - alpha)) / 101f;
 
             List<(double, double)> filteredSignal = new();

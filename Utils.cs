@@ -18,8 +18,7 @@ namespace BasicSynthesizer
             FourierTransform2.FFT(complices, Accord.Math.FourierTransform.Direction.Forward);
 
             double[] frequencyVector = FourierTransform2.GetFrequencyVector(numberOfSamples, samplingRate);
-            double maxFrequency = Math.Min(frequencyVector.Max(), 4000);
-            for (int i = 0; i < maxFrequency; i++)
+            for (int i = 0; i < frequencyVector.Length && frequencyVector[i] <= 4000; i++)
                 frequencyDomainData.Add((frequencyVector[i], new double[] { complices[i].Real, complices[i].Imaginary, complices[i].Magnitude }));
 
             return frequencyDomainData;
@@ -27,8 +26,8 @@ namespace BasicSynthesizer
 
         public static Signal LoadWavFile(string fileName)
         {
-            FileStream fileStream = File.Open(fileName, FileMode.Open);
-            BinaryReader binaryReader = new(fileStream);
+            using FileStream fileStream = File.Open(fileName, FileMode.Open);
+            using BinaryReader binaryReader = new(fileStream);
             int chunkID = binaryReader.ReadInt32();
             int fileSize = binaryReader.ReadInt32();
             int riffType = binaryReader.ReadInt32();
@@ -98,7 +97,7 @@ namespace BasicSynthesizer
         {
             sbyte[] intensityList = new sbyte[signalData.Length];
             for (int i = 0; i < signalData.Length; i++)
-                intensityList[i] = Convert.ToSByte(sbyte.MaxValue * signalData[i]);
+                intensityList[i] = Convert.ToSByte(sbyte.MaxValue * Math.Clamp(signalData[i], -1.0, 1.0));
 
             return intensityList;
         }
@@ -107,7 +106,7 @@ namespace BasicSynthesizer
         {
             short[] intensityList = new short[signalData.Length];
             for (int i = 0; i < signalData.Length; i++)
-                intensityList[i] = Convert.ToInt16(short.MaxValue * signalData[i]);
+                intensityList[i] = Convert.ToInt16(short.MaxValue * Math.Clamp(signalData[i], -1.0, 1.0));
 
             return intensityList;
         }
@@ -117,7 +116,7 @@ namespace BasicSynthesizer
             int[] intensityList = new int[signalData.Length];
 
             for (int i = 0; i < signalData.Length; i++)
-                intensityList[i] = Convert.ToInt32(int.MaxValue * signalData[i]);
+                intensityList[i] = Convert.ToInt32(int.MaxValue * Math.Clamp(signalData[i], -1.0, 1.0));
 
             return intensityList;
         }
@@ -175,8 +174,8 @@ namespace BasicSynthesizer
 
         public static void ExportWavFile(Signal signal, string fileName)
         {
-            MemoryStream memoryStream = new();
-            BinaryWriter binaryWriter = new(memoryStream);
+            using MemoryStream memoryStream = new();
+            using BinaryWriter binaryWriter = new(memoryStream, System.Text.Encoding.Default, leaveOpen: true);
             short bitDepth = 16;
             switch (signal.SampleFormat)
             {
@@ -209,10 +208,8 @@ namespace BasicSynthesizer
             binaryWriter.Write((byte[])signal.InnerData);
             memoryStream.Position = 0;
 
-            FileStream fileStream = new(fileName, FileMode.Create);
+            using FileStream fileStream = new(fileName, FileMode.Create);
             memoryStream.WriteTo(fileStream);
-            fileStream.Close();
-            memoryStream.Close();
         }
         #endregion
     }

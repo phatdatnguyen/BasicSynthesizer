@@ -24,6 +24,7 @@ namespace BasicSynthesizer
         private Filter? filter;
         private LowFrequencyOscillator? lfo;
         private Envelope? envelope;
+        private AudioOutputDevice? audioOutputDevice;
         #endregion
 
         #region Events
@@ -345,6 +346,7 @@ namespace BasicSynthesizer
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
                 MessageBox.Show(this, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -395,10 +397,9 @@ namespace BasicSynthesizer
             }
 
             string wavFileChannel = "Mono";
-            if (signal.NumberOfChannels == 2) //mono
-            //stereo
+            if (signal.NumberOfChannels == 2) //stereo
             {
-                ChooseChannelDialog chooseChannelDialog = new();
+                using ChooseChannelDialog chooseChannelDialog = new();
                 if (chooseChannelDialog.ShowDialog(this) == DialogResult.OK)
                 {
                     if (chooseChannelDialog.ChannelName == "Left")
@@ -441,7 +442,7 @@ namespace BasicSynthesizer
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AboutBox aboutBox = new();
+            using AboutBox aboutBox = new();
             aboutBox.ShowDialog(this);
         }
 
@@ -453,9 +454,32 @@ namespace BasicSynthesizer
             waveformComboBox.SelectedIndex = 0;
         }
 
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            audioOutputDevice?.Stop();
+            audioOutputDevice?.Dispose();
+            audioOutputDevice = null;
+        }
+
+        private bool TryApplyEnvelope()
+        {
+            double attack = attackTrackBar.Value / 100f * duration;
+            double decay = decayTrackBar.Value / 100f * duration;
+            double sustain = sustainTrackBar.Value;
+            double release = releaseTrackBar.Value / 100f * duration;
+            if (attack + decay + release > duration)
+            {
+                MessageBox.Show(this, "Invalid envelope!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                adsrApplyCheckBox.Checked = false;
+                return false;
+            }
+            envelope = new Envelope(attack, decay, sustain, release);
+            return true;
+        }
+
         private void addButton_Click(object sender, EventArgs e)
         {
-            OscillatorForm oscillatorForm = new();
+            using OscillatorForm oscillatorForm = new();
             if (oscillatorForm.ShowDialog(this) == DialogResult.OK)
             {
                 ListViewItem listViewItem = new(new String[] { oscillatorForm.Oscillator.Waveform.ToString(), oscillatorForm.Oscillator.Frequency.ToString(), oscillatorForm.Oscillator.Amplitude.ToString(), oscillatorForm.Oscillator.Phase.ToString(), oscillatorForm.Oscillator.Ratio.ToString() });
@@ -478,7 +502,7 @@ namespace BasicSynthesizer
                 return;
 
             ListViewItem selectedItem = oscillatorsListView.SelectedItems[0];
-            OscillatorForm oscillatorForm = new((Oscillator)selectedItem.Tag);
+            using OscillatorForm oscillatorForm = new((Oscillator)selectedItem.Tag);
             if (oscillatorForm.ShowDialog(this) == DialogResult.OK)
             {
                 selectedItem.SubItems[0].Text = oscillatorForm.Oscillator.Waveform.ToString();
@@ -529,12 +553,15 @@ namespace BasicSynthesizer
 
         private void playButton_Click(object sender, EventArgs e)
         {
-            if (Program.mainForm == null || timeDomainData == null)
+            var form = Program.mainForm;
+            if (form == null || timeDomainData == null)
                 return;
 
             try
             {
-                AudioOutputDevice audioOutputDevice = new(Program.mainForm.Handle, samplingRate, 1);
+                audioOutputDevice?.Stop();
+                audioOutputDevice?.Dispose();
+                audioOutputDevice = new(form.Handle, samplingRate, 1);
 
                 double[] waveDataPoints = new double[timeDomainData.Count];
                 for (int i = 0; i < waveDataPoints.Length; i++)
@@ -554,6 +581,7 @@ namespace BasicSynthesizer
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
                 MessageBox.Show(this, "Cannot play sound!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -581,18 +609,7 @@ namespace BasicSynthesizer
 
             if (adsrApplyCheckBox.Checked && hasWaveData)
             {
-                double attack = attackTrackBar.Value / 100f * duration;
-                double decay = decayTrackBar.Value / 100f * duration;
-                double sustain = sustainTrackBar.Value;
-                double release = releaseTrackBar.Value / 100f * duration;
-                if (attack + decay + release > duration)
-                {
-                    MessageBox.Show(this, "Invalid envelope!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    adsrApplyCheckBox.Checked = false;
-                    return;
-                }
-
-                envelope = new Envelope(attack, decay, sustain, release);
+                if (!TryApplyEnvelope()) return;
             }
             else
                 envelope = null;
@@ -879,18 +896,7 @@ namespace BasicSynthesizer
 
             if (adsrApplyCheckBox.Checked)
             {
-                double attack = attackTrackBar.Value / 100f * duration;
-                double decay = decayTrackBar.Value / 100f * duration;
-                double sustain = sustainTrackBar.Value;
-                double release = releaseTrackBar.Value / 100f * duration;
-                if (attack + decay + release > duration)
-                {
-                    MessageBox.Show(this, "Invalid envelope!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    adsrApplyCheckBox.Checked = false;
-                    return;
-                }
-
-                envelope = new Envelope(attack, decay, sustain, release);
+                if (!TryApplyEnvelope()) return;
             }
             else
                 envelope = null;
@@ -907,19 +913,7 @@ namespace BasicSynthesizer
 
             if (adsrApplyCheckBox.Checked)
             {
-                double attack = attackTrackBar.Value / 100f * duration;
-                double decay = decayTrackBar.Value / 100f * duration;
-                double sustain = sustainTrackBar.Value;
-                double release = releaseTrackBar.Value / 100f * duration;
-                if (attack + decay + release > duration)
-                {
-                    MessageBox.Show(this, "Invalid envelope!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    adsrApplyCheckBox.Checked = false;
-                    return;
-                }
-
-                envelope = new Envelope(attack, decay, sustain, release);
-
+                if (!TryApplyEnvelope()) return;
                 SoundWaveModified?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -933,19 +927,7 @@ namespace BasicSynthesizer
 
             if (adsrApplyCheckBox.Checked)
             {
-                double attack = attackTrackBar.Value / 100f * duration;
-                double decay = decayTrackBar.Value / 100f * duration;
-                double sustain = sustainTrackBar.Value;
-                double release = releaseTrackBar.Value / 100f * duration;
-                if (attack + decay + release > duration)
-                {
-                    MessageBox.Show(this, "Invalid envelope!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    adsrApplyCheckBox.Checked = false;
-                    return;
-                }
-
-                envelope = new Envelope(attack, decay, sustain, release);
-
+                if (!TryApplyEnvelope()) return;
                 SoundWaveModified?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -959,19 +941,7 @@ namespace BasicSynthesizer
 
             if (adsrApplyCheckBox.Checked)
             {
-                double attack = attackTrackBar.Value / 100f * duration;
-                double decay = decayTrackBar.Value / 100f * duration;
-                double sustain = sustainTrackBar.Value;
-                double release = releaseTrackBar.Value / 100f * duration;
-                if (attack + decay + release > duration)
-                {
-                    MessageBox.Show(this, "Invalid envelope!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    adsrApplyCheckBox.Checked = false;
-                    return;
-                }
-
-                envelope = new Envelope(attack, decay, sustain, release);
-
+                if (!TryApplyEnvelope()) return;
                 SoundWaveModified?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -985,19 +955,7 @@ namespace BasicSynthesizer
 
             if (adsrApplyCheckBox.Checked)
             {
-                double attack = attackTrackBar.Value / 100f * duration;
-                double decay = decayTrackBar.Value / 100f * duration;
-                double sustain = sustainTrackBar.Value;
-                double release = releaseTrackBar.Value / 100f * duration;
-                if (attack + decay + release > duration)
-                {
-                    MessageBox.Show(this, "Invalid envelope!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    adsrApplyCheckBox.Checked = false;
-                    return;
-                }
-
-                envelope = new Envelope(attack, decay, sustain, release);
-
+                if (!TryApplyEnvelope()) return;
                 SoundWaveModified?.Invoke(this, EventArgs.Empty);
             }
         }

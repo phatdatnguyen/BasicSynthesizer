@@ -3,6 +3,7 @@
     public partial class ChooseChannelDialog : Form
     {
         #region Property
+        [System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public string ChannelName { get; set; }
         #endregion
 
