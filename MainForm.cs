@@ -1,5 +1,4 @@
 ﻿using Accord.Audio;
-using Accord.DirectSound;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Legends;
@@ -20,11 +19,11 @@ namespace BasicSynthesizer
         private List<(double, double)>? timeDomainData;
         private List<(double, double)>? modifiedTimeDomainData;
         private List<(double, double[])>? frequencyDomainData;
-        private List<(double, double[])>? modifiedFrequencyDomainData;
         private Filter? filter;
         private LowFrequencyOscillator? lfo;
         private Envelope? envelope;
-        private AudioOutputDevice? audioOutputDevice;
+        private AudioPlayback? audioPlayback;
+        private List<(double, double)>? CurrentWaveData => modifiedTimeDomainData;
         #endregion
 
         #region Events
@@ -32,12 +31,14 @@ namespace BasicSynthesizer
         public event SoundWaveClearedEventHandler? SoundWaveCleared;
         protected void OnSoundWaveCleared(object sender, EventArgs e)
         {
+            StopPlayback();
             hasWaveData = false;
             workingWithOscillators = false;
             workingWithAudio = false;
             bitDepth = 16;
             oscillators = null;
             timeDomainData = null;
+            modifiedTimeDomainData = null;
             frequencyDomainData = null;
             filter = null;
             lfo = null;
@@ -51,41 +52,39 @@ namespace BasicSynthesizer
         protected void OnSoundWaveCreated(object sender, SoundWaveCreatedEventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-
-            hasWaveData = true;
-
-            if (workingWithOscillators)
+            try
             {
-                oscillators = e.Oscillators;
-                if (oscillators != null)
-                    timeDomainData = Oscillator.MixOscillators(oscillators, samplingRate, duration);
-            }
+                if (workingWithOscillators)
+                {
+                    oscillators = e.Oscillators;
+                    timeDomainData = oscillators == null ? null : Oscillator.MixOscillators(oscillators, samplingRate, duration);
+                }
 
-            if (workingWithAudio)
-            {
-                oscillatorsGroupBox.Enabled = false;
-                samplingRateComboBox.Enabled = false;
-                durationNumericUpDown.Enabled = false;
-            }
+                if (timeDomainData == null || timeDomainData.Count == 0)
+                {
+                    SoundWaveCleared?.Invoke(this, EventArgs.Empty);
+                    return;
+                }
 
-            UpdateControls();
+                hasWaveData = true;
+                modifiedTimeDomainData = null;
+                if (workingWithAudio)
+                {
+                    oscillatorsGroupBox.Enabled = false;
+                    samplingRateComboBox.Enabled = false;
+                    durationNumericUpDown.Enabled = false;
+                }
 
-            if (timeDomainData != null)
-                frequencyDomainData = Utils.FastFourierTransform(timeDomainData, samplingRate);
-
-            if (filter != null || lfo != null || envelope != null)
-            {
                 SoundWaveModified?.Invoke(this, EventArgs.Empty);
-                Cursor = Cursors.Default;
-                return;
             }
-
-            if (timeDomainData != null)
-                UpdateTimeDomainChart(timeDomainData);
-            if (frequencyDomainData != null)
-                UpdateFrequencyDomainChart(frequencyDomainData);
-
-            Cursor = Cursors.Default;
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, "Cannot create sound", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
         }
 
         public delegate void SoundWaveModifiedEventHandler(object sender, EventArgs e);
@@ -96,22 +95,42 @@ namespace BasicSynthesizer
                 return;
 
             Cursor = Cursors.WaitCursor;
+            try
+            {
+                List<(double, double)> processed = timeDomainData;
+                if (filter != null)
+                    processed = filter.Apply(processed, samplingRate);
+                if (lfo != null)
+                    processed = lfo.Apply(processed, samplingRate, duration);
+                if (envelope != null)
+                    processed = envelope.Apply(processed, samplingRate, duration);
 
-            modifiedTimeDomainData = timeDomainData;
-
-            if (filter != null)
-                modifiedTimeDomainData = filter.Apply(modifiedTimeDomainData, samplingRate);
-            if (lfo != null)
-                modifiedTimeDomainData = lfo.Apply(modifiedTimeDomainData, samplingRate, duration);
-            if (envelope != null)
-                modifiedTimeDomainData = envelope.Apply(modifiedTimeDomainData, samplingRate, duration);
-
-            UpdateTimeDomainChart(modifiedTimeDomainData);
-
-            modifiedFrequencyDomainData = Utils.FastFourierTransform(modifiedTimeDomainData, samplingRate);
-            UpdateFrequencyDomainChart(modifiedFrequencyDomainData);
-
-            Cursor = Cursors.Default;
+                // Use the same final samples for the plots, playback and export.
+                processed = processed.Select(point => (point.Item1, Math.Clamp(point.Item2, -1.0, 1.0))).ToList();
+                var spectrum = Utils.FastFourierTransform(processed, samplingRate);
+                StopPlayback();
+                modifiedTimeDomainData = processed;
+                frequencyDomainData = spectrum;
+                UpdateTimeDomainChart(processed);
+                UpdateFrequencyDomainChart(spectrum);
+                UpdateControls();
+            }
+            catch (Exception ex)
+            {
+                StopPlayback();
+                modifiedTimeDomainData = null;
+                frequencyDomainData = null;
+                timeDomainPlotView.Model = null;
+                frequencyDomainPlotView.Model = null;
+                playButton.Enabled = false;
+                playToolStripMenuItem.Enabled = false;
+                exportToolStripMenuItem.Enabled = false;
+                MessageBox.Show(this, ex.Message, "Cannot process sound", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
         }
         #endregion
 
@@ -123,6 +142,7 @@ namespace BasicSynthesizer
             SoundWaveCleared += OnSoundWaveCleared;
             SoundWaveCreated += OnSoundWaveCreated;
             SoundWaveModified += OnSoundWaveModified;
+            ResetControls();
         }
         #endregion
 
@@ -134,15 +154,19 @@ namespace BasicSynthesizer
             samplingRateComboBox.Enabled = true;
             samplingRateComboBox.SelectedIndex = 1;
             durationNumericUpDown.Enabled = true;
+            durationNumericUpDown.Minimum = 0.01m;
             durationNumericUpDown.Maximum = 2;
             durationNumericUpDown.Value = 1;
             playButton.Enabled = false;
+            playToolStripMenuItem.Enabled = false;
+            exportToolStripMenuItem.Enabled = false;
             deleteAudioButton.Enabled = false;
             audioInfoLabel.Text = "";
             timeDomainPlotView.Model = null;
             timeDomainPlotView.Enabled = false;
             frequencyDomainPlotView.Model = null;
             frequencyDomainPlotView.Enabled = false;
+            plotComboBox.Enabled = false;
             filterGroupBox.Enabled = false;
             filterApplyCheckBox.Checked = false;
             lfoGroupBox.Enabled = false;
@@ -154,6 +178,8 @@ namespace BasicSynthesizer
         private void UpdateControls()
         {
             playButton.Enabled = true;
+            playToolStripMenuItem.Enabled = true;
+            exportToolStripMenuItem.Enabled = true;
             deleteAudioButton.Enabled = true;
             timeDomainPlotView.Enabled = true;
             frequencyDomainPlotView.Enabled = true;
@@ -203,15 +229,16 @@ namespace BasicSynthesizer
 
             if (lfoApplyCheckBox.Checked && lfo != null)
             {
-                double interval = 1f / samplingRate; // s
-                double[] lfoDataPoints = lfo.GenerateWaveDataPoints(samplingRate, duration);
+                double[] unity = new double[timeDomainDataPoints.Count];
+                Array.Fill(unity, 1.0);
+                double[] lfoDataPoints = lfo.Apply(unity, samplingRate, duration);
 
                 LineSeries lfoLineSeries = new()
                 {
-                    Title = "LFO"
+                    Title = "LFO gain"
                 };
                 for (int i = 0; i < lfoDataPoints.Length; i++)
-                    lfoLineSeries.Points.Add(new DataPoint(i * interval, lfoDataPoints[i]));
+                    lfoLineSeries.Points.Add(new DataPoint(timeDomainDataPoints[i].Item1, lfoDataPoints[i]));
 
                 plotModel.Series.Add(lfoLineSeries);
             }
@@ -319,30 +346,13 @@ namespace BasicSynthesizer
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (timeDomainData == null)
+            if (CurrentWaveData == null || saveAudioFileDialog.ShowDialog(this) != DialogResult.OK)
                 return;
 
             try
             {
-                double[] waveDataPoints = new double[timeDomainData.Count];
-                for (int i = 0; i < waveDataPoints.Length; i++)
-                    waveDataPoints[i] = timeDomainData[i].Item2;
-
-                if (filter != null)
-                    waveDataPoints = filter.Apply(waveDataPoints, samplingRate);
-
-                if (envelope != null)
-                    waveDataPoints = envelope.Apply(waveDataPoints, samplingRate, duration);
-
-                if (lfo != null)
-                    waveDataPoints = lfo.Apply(waveDataPoints, samplingRate, duration);
-
-                Signal signal = Utils.GenerateWaveSignal(waveDataPoints, samplingRate, duration, bitDepth);
-
-                if (saveAudioFileDialog.ShowDialog(this) == DialogResult.OK)
-                {
-                    Utils.ExportWavFile(signal, saveAudioFileDialog.FileName);
-                }
+                using Signal signal = Utils.GenerateWaveSignal(CurrentWaveData.Select(point => point.Item2).ToArray(), samplingRate, duration, bitDepth);
+                Utils.ExportWavFile(signal, saveAudioFileDialog.FileName);
             }
             catch (Exception ex)
             {
@@ -355,89 +365,61 @@ namespace BasicSynthesizer
         {
             if (hasWaveData)
             {
-                if (MessageBox.Show(this, "You are working with some data, loading audio file will override your works. Do you want to continue?", "Import audio", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) != DialogResult.Yes)
+                if (MessageBox.Show(this, "Importing audio will replace the current sound. Do you want to continue?", "Import audio", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) != DialogResult.Yes)
                     return;
             }
 
-            Signal signal;
-
-            if (openAudioFileDialog.ShowDialog(this) == DialogResult.OK)
-            {
-                try
-                {
-                    signal = Utils.LoadWavFile(openAudioFileDialog.FileName);
-
-                    if (signal.SampleRate != 22050 && signal.SampleRate != 44100 && signal.SampleRate != 88200)
-                        throw new Exception();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(this, "Cannot load the selected file!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-            }
-            else
+            if (openAudioFileDialog.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            SoundWaveCleared?.Invoke(this, EventArgs.Empty);
-
-            switch (signal.SampleRate)
+            try
             {
-                case 22050:
-                    samplingRateComboBox.SelectedIndex = 0;
-                    break;
-                case 44100:
-                    samplingRateComboBox.SelectedIndex = 1;
-                    break;
-                case 88200:
-                    samplingRateComboBox.SelectedIndex = 2;
-                    break;
-                default:
-                    break;
-            }
+                using Signal signal = Utils.LoadWavFile(openAudioFileDialog.FileName);
+                if (signal.NumberOfChannels is < 1 or > 2)
+                    throw new NotSupportedException("Please choose a mono or stereo WAV file.");
+                if (signal.NumberOfFrames == 0)
+                    throw new InvalidDataException("The WAV file contains no audio samples.");
 
-            string wavFileChannel = "Mono";
-            if (signal.NumberOfChannels == 2) //stereo
-            {
-                using ChooseChannelDialog chooseChannelDialog = new();
-                if (chooseChannelDialog.ShowDialog(this) == DialogResult.OK)
+                string channel = "Mono";
+                if (signal.NumberOfChannels == 2)
                 {
-                    if (chooseChannelDialog.ChannelName == "Left")
-                        wavFileChannel = "Left";
-                    else
-                        wavFileChannel = "Right";
+                    using ChooseChannelDialog dialog = new();
+                    if (dialog.ShowDialog(this) != DialogResult.OK)
+                        return;
+                    channel = dialog.ChannelName;
                 }
-                else
-                    return;
-            }
-            timeDomainData = Utils.GenerateWaveData(signal, wavFileChannel);
 
-            string format = "bit depth: ";
-            switch (signal.SampleFormat)
+                // Decode before replacing any existing sound; Cancel and malformed files preserve it.
+                var importedData = Utils.GenerateWaveData(signal, channel);
+                SoundWaveCleared?.Invoke(this, EventArgs.Empty);
+                workingWithAudio = true;
+                timeDomainData = importedData;
+                string rate = signal.SampleRate.ToString();
+                if (!samplingRateComboBox.Items.Contains(rate))
+                    samplingRateComboBox.Items.Add(rate);
+                samplingRateComboBox.SelectedItem = rate;
+                bitDepth = signal.SampleFormat switch
+                {
+                    SampleFormat.Format8Bit or SampleFormat.Format8BitUnsigned => 8,
+                    SampleFormat.Format16Bit => 16,
+                    _ => 32
+                };
+
+                durationNumericUpDown.Minimum = 0;
+                decimal importedDuration = (decimal)importedData.Count / signal.SampleRate;
+                durationNumericUpDown.Maximum = importedDuration;
+                durationNumericUpDown.Value = importedDuration;
+                // Frame count is authoritative; Signal.Duration rounds to milliseconds.
+                duration = (double)importedData.Count / signal.SampleRate;
+                UpdateEnvelopeLabels();
+                audioInfoLabel.Text = $"{openAudioFileDialog.SafeFileName}\n{signal.SampleRate} Hz, {bitDepth}-bit PCM export";
+
+                SoundWaveCreated?.Invoke(this, new SoundWaveCreatedEventArgs());
+            }
+            catch (Exception ex)
             {
-                case SampleFormat.Format8Bit:
-                    bitDepth = 8;
-                    format += "8 bit";
-                    break;
-                case SampleFormat.Format16Bit:
-                    bitDepth = 16;
-                    format += "16 bit";
-                    break;
-                case SampleFormat.Format32Bit:
-                    bitDepth = 32;
-                    format += "32 bit";
-                    break;
-                default:
-                    break;
+                MessageBox.Show(this, $"Cannot load the selected file: {ex.Message}", "Import audio", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            workingWithAudio = true;
-
-            durationNumericUpDown.Maximum = (decimal)signal.Duration.TotalSeconds;
-            durationNumericUpDown.Value = (decimal)signal.Duration.TotalSeconds;
-            audioInfoLabel.Text = openAudioFileDialog.SafeFileName + "\n" + format;
-
-            SoundWaveCreated?.Invoke(this, new SoundWaveCreatedEventArgs());
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -456,20 +438,34 @@ namespace BasicSynthesizer
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            audioOutputDevice?.Stop();
-            audioOutputDevice?.Dispose();
-            audioOutputDevice = null;
+            if (!e.Cancel)
+                StopPlayback();
+        }
+
+        private void StopPlayback()
+        {
+            var playback = audioPlayback;
+            audioPlayback = null;
+            try
+            {
+                playback?.Dispose();
+            }
+            catch (Exception ex)
+            {
+                // A disconnected device must not prevent clearing or closing the form.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
         }
 
         private bool TryApplyEnvelope()
         {
-            double attack = attackTrackBar.Value / 100f * duration;
-            double decay = decayTrackBar.Value / 100f * duration;
+            double attack = attackTrackBar.Value / 100.0 * duration;
+            double decay = decayTrackBar.Value / 100.0 * duration;
             double sustain = sustainTrackBar.Value;
-            double release = releaseTrackBar.Value / 100f * duration;
-            if (attack + decay + release > duration)
+            double release = releaseTrackBar.Value / 100.0 * duration;
+            if (attackTrackBar.Value + decayTrackBar.Value + releaseTrackBar.Value > 100)
             {
-                MessageBox.Show(this, "Invalid envelope!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, "Attack, decay and release must total 100% or less of the sound duration.", "Invalid envelope", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 adsrApplyCheckBox.Checked = false;
                 return false;
             }
@@ -489,7 +485,8 @@ namespace BasicSynthesizer
 
                 List<Oscillator> oscillators = new();
                 foreach (ListViewItem item in oscillatorsListView.Items)
-                    oscillators.Add((Oscillator)item.Tag);
+                    if (item.Tag is Oscillator oscillator)
+                        oscillators.Add(oscillator);
 
                 workingWithOscillators = true;
                 SoundWaveCreated?.Invoke(this, new SoundWaveCreatedEventArgs(oscillators));
@@ -502,7 +499,9 @@ namespace BasicSynthesizer
                 return;
 
             ListViewItem selectedItem = oscillatorsListView.SelectedItems[0];
-            using OscillatorForm oscillatorForm = new((Oscillator)selectedItem.Tag);
+            if (selectedItem.Tag is not Oscillator selectedOscillator)
+                return;
+            using OscillatorForm oscillatorForm = new(selectedOscillator);
             if (oscillatorForm.ShowDialog(this) == DialogResult.OK)
             {
                 selectedItem.SubItems[0].Text = oscillatorForm.Oscillator.Waveform.ToString();
@@ -514,7 +513,8 @@ namespace BasicSynthesizer
 
                 List<Oscillator> oscillators = new();
                 foreach (ListViewItem item in oscillatorsListView.Items)
-                    oscillators.Add((Oscillator)item.Tag);
+                    if (item.Tag is Oscillator oscillator)
+                        oscillators.Add(oscillator);
 
                 SoundWaveCreated?.Invoke(this, new SoundWaveCreatedEventArgs(oscillators));
             }
@@ -525,7 +525,7 @@ namespace BasicSynthesizer
             if (oscillatorsListView.SelectedItems.Count == 0)
                 return;
 
-            foreach (ListViewItem selectedItem in oscillatorsListView.SelectedItems)
+            foreach (ListViewItem selectedItem in oscillatorsListView.SelectedItems.Cast<ListViewItem>().ToArray())
                 selectedItem.Remove();
 
             if (oscillatorsListView.Items.Count == 0)
@@ -534,7 +534,8 @@ namespace BasicSynthesizer
             {
                 List<Oscillator> oscillators = new();
                 foreach (ListViewItem item in oscillatorsListView.Items)
-                    oscillators.Add((Oscillator)item.Tag);
+                    if (item.Tag is Oscillator oscillator)
+                        oscillators.Add(oscillator);
 
                 SoundWaveCreated?.Invoke(this, new SoundWaveCreatedEventArgs(oscillators));
             }
@@ -553,36 +554,25 @@ namespace BasicSynthesizer
 
         private void playButton_Click(object sender, EventArgs e)
         {
-            var form = Program.mainForm;
-            if (form == null || timeDomainData == null)
+            if (CurrentWaveData == null)
                 return;
 
             try
             {
-                audioOutputDevice?.Stop();
-                audioOutputDevice?.Dispose();
-                audioOutputDevice = new(form.Handle, samplingRate, 1);
-
-                double[] waveDataPoints = new double[timeDomainData.Count];
-                for (int i = 0; i < waveDataPoints.Length; i++)
-                    waveDataPoints[i] = timeDomainData[i].Item2;
-
-                if (filter != null)
-                    waveDataPoints = filter.Apply(waveDataPoints, samplingRate);
-
-                if (envelope != null)
-                    waveDataPoints = envelope.Apply(waveDataPoints, samplingRate, duration);
-
-                if (lfo != null)
-                    waveDataPoints = lfo.Apply(waveDataPoints, samplingRate, duration);
-
-                Signal signal = Utils.GenerateWaveSignal(waveDataPoints, samplingRate, duration, bitDepth);
-                audioOutputDevice.Play(signal.ToFloat());
+                StopPlayback();
+                audioPlayback = new AudioPlayback(this, samplingRate,
+                    CurrentWaveData.Select(point => (float)point.Item2).ToArray(), message =>
+                    {
+                        StopPlayback();
+                        MessageBox.Show(this, message, "Cannot play sound", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    });
+                audioPlayback.Play();
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex.ToString());
-                MessageBox.Show(this, "Cannot play sound!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                StopPlayback();
+                MessageBox.Show(this, $"Cannot play sound: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -602,20 +592,24 @@ namespace BasicSynthesizer
         private void durationNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             duration = (double)durationNumericUpDown.Value;
-
-            attackValueLabel.Text = Math.Round(attackTrackBar.Value / 100f * duration, 3).ToString() + " s";
-            decayValueLabel.Text = Math.Round(decayTrackBar.Value / 100f * duration, 3).ToString() + " s";
-            releaseValueLabel.Text = Math.Round(releaseTrackBar.Value / 100f * duration, 3).ToString() + " s";
+            UpdateEnvelopeLabels();
 
             if (adsrApplyCheckBox.Checked && hasWaveData)
             {
-                if (!TryApplyEnvelope()) return;
+                TryApplyEnvelope();
             }
             else
                 envelope = null;
 
             if (hasWaveData && workingWithOscillators)
                 SoundWaveCreated?.Invoke(this, new SoundWaveCreatedEventArgs(oscillators));
+        }
+
+        private void UpdateEnvelopeLabels()
+        {
+            attackValueLabel.Text = Math.Round(attackTrackBar.Value / 100.0 * duration, 3) + " s";
+            decayValueLabel.Text = Math.Round(decayTrackBar.Value / 100.0 * duration, 3) + " s";
+            releaseValueLabel.Text = Math.Round(releaseTrackBar.Value / 100.0 * duration, 3) + " s";
         }
 
         private void plotComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -651,7 +645,7 @@ namespace BasicSynthesizer
 
         private void filterModeRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (!hasWaveData)
+            if (!hasWaveData || sender is RadioButton { Checked: false })
                 return;
 
             if (filterApplyCheckBox.Checked)

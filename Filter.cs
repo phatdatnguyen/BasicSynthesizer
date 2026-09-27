@@ -24,97 +24,71 @@
         #region Methods
         public double[] Apply(double[] inputSignal, int samplingRate)
         {
+            ArgumentNullException.ThrowIfNull(inputSignal);
+            (double alpha, double feedbackAmount) = GetCoefficients(samplingRate);
             int numberOfSamples = inputSignal.Length;
-            double interval = 1f / samplingRate;
-            double rc = Convert.ToDouble(1f / (Math.PI * 2 * CutoffFrequency));
-            double alpha = interval / (rc + interval);
-            if (alpha >= 1.0) alpha = 0.9999;
-            double feedbackAmount = (Resonance + Resonance / (1f - alpha)) / 101f;
-
             double[] filteredSignal = new double[numberOfSamples];
-            double[] buffer1 = new double[numberOfSamples];
-            double[] buffer2 = new double[numberOfSamples];
+            double buffer1 = 0;
+            double buffer2 = 0;
 
-            buffer1[0] = alpha * inputSignal[0];
-            buffer2[0] = alpha * buffer1[0];
-            for (int i = 1; i < numberOfSamples; i++)
-            {
-                buffer1[i] = buffer1[i - 1] + alpha * (inputSignal[i] - buffer1[i - 1] + feedbackAmount * (buffer1[i - 1] - buffer2[i - 1]));
-                buffer2[i] = buffer2[i - 1] + alpha * (buffer1[i] - buffer2[i - 1]);
-            }
+            for (int i = 0; i < numberOfSamples; i++)
+                filteredSignal[i] = ProcessSample(inputSignal[i], alpha, feedbackAmount, ref buffer1, ref buffer2);
 
-            switch (Mode)
-            {
-                case FilterMode.LowPass:
-                    for (int i = 0; i < numberOfSamples; i++)
-                        filteredSignal[i] = buffer2[i];
-
-                    return filteredSignal;
-                case FilterMode.HighPass:
-                    for (int i = 0; i < numberOfSamples; i++)
-                        filteredSignal[i] = inputSignal[i] - buffer1[i];
-
-                    return filteredSignal;
-                case FilterMode.BandPass:
-                    for (int i = 0; i < numberOfSamples; i++)
-                        filteredSignal[i] = buffer1[i] - buffer2[i];
-
-                    return filteredSignal;
-                default:
-                    return inputSignal;
-            }
+            return filteredSignal;
         }
 
         public List<(double, double)> Apply(List<(double, double)> inputSignal, int samplingRate)
         {
+            ArgumentNullException.ThrowIfNull(inputSignal);
+            (double alpha, double feedbackAmount) = GetCoefficients(samplingRate);
             int numberOfSamples = inputSignal.Count;
-            double interval = 1f / samplingRate;
-            double rc = Convert.ToDouble(1f / (Math.PI * 2 * CutoffFrequency));
-            double alpha = interval / (rc + interval);
-            if (alpha >= 1.0) alpha = 0.9999;
-            double feedbackAmount = (Resonance + Resonance / (1f - alpha)) / 101f;
-
-            List<(double, double)> filteredSignal = new();
-            double[] buffer1 = new double[numberOfSamples];
-            double[] buffer2 = new double[numberOfSamples];
-
-            buffer1[0] = (alpha * inputSignal[0].Item2);
-            buffer2[0] = alpha * buffer1[0];
-            for (int i = 1; i < numberOfSamples; i++)
-            {
-                buffer1[i] = (buffer1[i - 1] + alpha * (inputSignal[i].Item2 - buffer1[i - 1] + feedbackAmount * (buffer1[i - 1] - buffer2[i - 1])));
-                buffer2[i] = buffer2[i - 1] + alpha * (buffer1[i] - buffer2[i - 1]);
-            }
-
-            switch (Mode)
-            {
-                case FilterMode.LowPass:
-                    for (int i = 0; i < numberOfSamples; i++)
-                        filteredSignal.Add((i * interval, buffer2[i]));
-                    break;
-                case FilterMode.HighPass:
-                    for (int i = 0; i < numberOfSamples; i++)
-                        filteredSignal.Add((i * interval, inputSignal[i].Item2 - buffer1[i]));
-                    break;
-                case FilterMode.BandPass:
-                    for (int i = 0; i < numberOfSamples; i++)
-                        filteredSignal.Add((i * interval, buffer1[i] - buffer2[i]));
-                    break;
-                default:
-                    for (int i = 0; i < numberOfSamples; i++)
-                        filteredSignal.Add((i * interval, inputSignal[i].Item2));
-                    break;
-            }
+            List<(double, double)> filteredSignal = new(numberOfSamples);
+            double buffer1 = 0;
+            double buffer2 = 0;
 
             for (int i = 0; i < numberOfSamples; i++)
             {
-                if (filteredSignal[i].Item2 < -1f)
-                    filteredSignal[i] = (filteredSignal[i].Item1, - 1f);
-                if (filteredSignal[i].Item2 > 1f)
-                    filteredSignal[i] = (filteredSignal[i].Item1, 1f);
+                double sample = ProcessSample(inputSignal[i].Item2, alpha, feedbackAmount, ref buffer1, ref buffer2);
+                filteredSignal.Add((inputSignal[i].Item1, sample));
             }
 
             return filteredSignal;
+        }
+
+        private (double Alpha, double FeedbackAmount) GetCoefficients(int samplingRate)
+        {
+            if (samplingRate <= 0)
+                throw new ArgumentOutOfRangeException(nameof(samplingRate));
+            if (!double.IsFinite(CutoffFrequency) || CutoffFrequency < 0)
+                throw new ArgumentOutOfRangeException(nameof(CutoffFrequency));
+            if (!double.IsFinite(Resonance) || Resonance < 0 || Resonance > 100)
+                throw new ArgumentOutOfRangeException(nameof(Resonance));
+            if (!Enum.IsDefined(Mode))
+                throw new ArgumentOutOfRangeException(nameof(Mode));
+
+            // This form avoids overflowing 2*pi*cutoff and has a defined limit at
+            // zero cutoff. Keep feedback below the self-oscillation threshold.
+            double alpha = CutoffFrequency == 0 ? 0 : 1.0 / (1.0 + samplingRate / CutoffFrequency / (2.0 * Math.PI));
+            alpha = Math.Min(alpha, 0.9999);
+            double resonance = Resonance / 101.0;
+            double feedbackAmount = resonance + resonance / (1.0 - alpha);
+            return (alpha, feedbackAmount);
+        }
+
+        private double ProcessSample(double input, double alpha, double feedbackAmount, ref double buffer1, ref double buffer2)
+        {
+            buffer1 += alpha * (input - buffer1 + feedbackAmount * (buffer1 - buffer2));
+            buffer2 += alpha * (buffer1 - buffer2);
+
+            // Leave headroom intact in both overloads. Clipping belongs at the
+            // final audio output, after the remaining effects have been applied.
+            return Mode switch
+            {
+                FilterMode.LowPass => buffer2,
+                FilterMode.HighPass => input - buffer1,
+                FilterMode.BandPass => buffer1 - buffer2,
+                _ => throw new InvalidOperationException("Unknown filter mode.")
+            };
         }
         #endregion
     }

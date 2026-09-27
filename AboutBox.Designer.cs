@@ -12,9 +12,15 @@
         /// </summary>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing)
             {
-                components.Dispose();
+                components?.Dispose();
+                if (logoPictureBox != null)
+                {
+                    var logo = logoPictureBox.Image;
+                    logoPictureBox.Image = null;
+                    logo?.Dispose();
+                }
             }
             base.Dispose(disposing);
         }
@@ -141,6 +147,7 @@
             // AboutBox
             // 
             AcceptButton = okButton;
+            CancelButton = okButton;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(507, 327);

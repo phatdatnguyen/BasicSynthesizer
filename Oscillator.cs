@@ -20,7 +20,15 @@ namespace BasicSynthesizer
         public double Phase
         {
             get { return phase; }
-            set { if (value == 360) phase = 0; else phase = value; }
+            set
+            {
+                if (!double.IsFinite(value))
+                    throw new ArgumentOutOfRangeException(nameof(value), "Phase must be finite.");
+
+                phase = value % 360;
+                if (phase < 0)
+                    phase += 360;
+            }
         }
         public double Ratio { get; set; }
         #endregion
@@ -39,30 +47,44 @@ namespace BasicSynthesizer
         #region Methods
         public double[] GenerateWaveDataPoints(int samplingRate, double duration)
         {
-            int numberOfSamples = Convert.ToInt32(Math.Floor(duration * samplingRate));
+            return GenerateSamples(samplingRate, GetSampleCount(samplingRate, duration));
+        }
+
+        protected double[] GenerateSamples(int samplingRate, int numberOfSamples)
+        {
+            if (samplingRate <= 0)
+                throw new ArgumentOutOfRangeException(nameof(samplingRate));
+            if (numberOfSamples < 0)
+                throw new ArgumentOutOfRangeException(nameof(numberOfSamples));
+            if (!double.IsFinite(Frequency) || Frequency < 0)
+                throw new ArgumentOutOfRangeException(nameof(Frequency));
+            if (!double.IsFinite(Amplitude) || Amplitude < 0)
+                throw new ArgumentOutOfRangeException(nameof(Amplitude));
+            if (!Enum.IsDefined(Waveform))
+                throw new ArgumentOutOfRangeException(nameof(Waveform));
+
             double[] data = new double[numberOfSamples];
-            double interval = 1f / samplingRate; //s
-            double period = 1f / Frequency;
-            double phaseShift = Phase / 360f / Frequency;
+            // Work in cycles so zero frequency is valid and large frequencies cannot
+            // overflow an intermediate time or phase calculation.
+            double phaseIncrement = (Frequency % samplingRate) / samplingRate;
+            double phaseOffset = Phase / 360.0;
 
             for (int i = 0; i < numberOfSamples; i++)
             {
-                double t = i * interval + phaseShift;
+                double cycle = (i * phaseIncrement + phaseOffset) % 1.0;
                 switch (Waveform)
                 {
                     case OscillatorWaveform.Sine:
-                        data[i] = Convert.ToDouble(Amplitude * Math.Sin(Math.PI * 2f * Frequency * t));
+                        data[i] = Amplitude * Math.Sin(2.0 * Math.PI * cycle);
                         break;
                     case OscillatorWaveform.Square:
-                        data[i] = Convert.ToDouble(Amplitude * Math.Sign(Math.Sin(Math.PI * 2f * Frequency * t)));
+                        data[i] = cycle < 0.5 ? Amplitude : -Amplitude;
                         break;
                     case OscillatorWaveform.Triangle:
-                        data[i] = Convert.ToDouble(Amplitude * 2f * Math.Abs(2f * (t / period - Math.Floor(0.5f + t / period))) - 1f);
+                        data[i] = Amplitude * (4.0 * Math.Abs(cycle - Math.Floor(cycle + 0.5)) - 1.0);
                         break;
                     case OscillatorWaveform.Sawtooth:
-                        data[i] = Convert.ToDouble(Amplitude * 2f * (t / period - Math.Floor(0.5f + t / period)));
-                        break;
-                    default:
+                        data[i] = Amplitude * (2.0 * (cycle - Math.Floor(cycle + 0.5)));
                         break;
                 }
             }
@@ -72,30 +94,57 @@ namespace BasicSynthesizer
 
         public static List<(double, double)> MixOscillators(List<Oscillator> oscillators, int samplingRate, double duration)
         {
-            int numberOfOscillators = oscillators.Count;
-            int numberOfSamples = Convert.ToInt32(Math.Floor(duration * samplingRate));
-            double interval = 1f / samplingRate; //s
-
-            List<double[]> wavesData = new();
+            ArgumentNullException.ThrowIfNull(oscillators);
+            int numberOfSamples = GetSampleCount(samplingRate, duration);
+            double largestWeight = 0;
             foreach (Oscillator oscillator in oscillators)
-                wavesData.Add(oscillator.GenerateWaveDataPoints(samplingRate, duration));
-
-            double[] mixedWaveData = new double[numberOfSamples];
-            List<(double, double)> dataPoints = new();
-            for (int i = 0; i < numberOfSamples; i++)
             {
-                double totalWeight = 0;
-                for (int j = 0; j < numberOfOscillators; j++)
-                {
-                    mixedWaveData[i] += wavesData[j][i] * oscillators[j].Ratio;
-                    totalWeight += oscillators[j].Ratio;
-                }
-                mixedWaveData[i] = mixedWaveData[i] / totalWeight;
-
-                dataPoints.Add(((double)(interval * i), mixedWaveData[i]));
+                if (oscillator is null)
+                    throw new ArgumentException("Oscillators must not contain null entries.", nameof(oscillators));
+                if (!double.IsFinite(oscillator.Ratio) || oscillator.Ratio < 0)
+                    throw new ArgumentOutOfRangeException(nameof(oscillators), "Mix ratios must be finite and non-negative.");
+                largestWeight = Math.Max(largestWeight, oscillator.Ratio);
             }
 
+            double[] mixedWaveData = new double[numberOfSamples];
+            if (largestWeight > 0)
+            {
+                // Scaling the weights first also keeps their sum finite.
+                double totalWeight = 0;
+                foreach (Oscillator oscillator in oscillators)
+                    totalWeight += oscillator.Ratio / largestWeight;
+
+                foreach (Oscillator oscillator in oscillators)
+                {
+                    if (oscillator.Ratio == 0)
+                        continue;
+
+                    double weight = (oscillator.Ratio / largestWeight) / totalWeight;
+                    double[] wave = oscillator.GenerateSamples(samplingRate, numberOfSamples);
+                    for (int i = 0; i < numberOfSamples; i++)
+                        mixedWaveData[i] += wave[i] * weight;
+                }
+            }
+
+            List<(double, double)> dataPoints = new(numberOfSamples);
+            for (int i = 0; i < numberOfSamples; i++)
+                dataPoints.Add(((double)i / samplingRate, mixedWaveData[i]));
+
             return dataPoints;
+        }
+
+        private static int GetSampleCount(int samplingRate, double duration)
+        {
+            if (samplingRate <= 0)
+                throw new ArgumentOutOfRangeException(nameof(samplingRate));
+            if (!double.IsFinite(duration) || duration < 0)
+                throw new ArgumentOutOfRangeException(nameof(duration));
+
+            double sampleCount = Math.Floor(duration * samplingRate);
+            if (!double.IsFinite(sampleCount) || sampleCount > Array.MaxLength)
+                throw new ArgumentOutOfRangeException(nameof(duration), "The requested signal is too long.");
+
+            return (int)sampleCount;
         }
         #endregion
     }

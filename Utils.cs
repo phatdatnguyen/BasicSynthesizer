@@ -1,172 +1,240 @@
 ﻿using Accord.Audio;
 using Accord.Math.Transforms;
+using System.Buffers.Binary;
 using System.Numerics;
+using System.Text;
 
 namespace BasicSynthesizer
 {
     public static class Utils
     {
-        #region Methods
         public static List<(double, double[])> FastFourierTransform(List<(double, double)> timeDomainData, int samplingRate)
         {
+            ArgumentNullException.ThrowIfNull(timeDomainData);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(samplingRate);
             List<(double, double[])> frequencyDomainData = new();
-
             int numberOfSamples = timeDomainData.Count;
-            Complex[] complices = new Complex[numberOfSamples];
-            for (int i = 0; i < numberOfSamples; i++)
-                complices[i] = new Complex(timeDomainData[i].Item2, 0);
-            FourierTransform2.FFT(complices, Accord.Math.FourierTransform.Direction.Forward);
+            if (numberOfSamples == 0)
+                return frequencyDomainData;
 
-            double[] frequencyVector = FourierTransform2.GetFrequencyVector(numberOfSamples, samplingRate);
-            for (int i = 0; i < frequencyVector.Length && frequencyVector[i] <= 4000; i++)
-                frequencyDomainData.Add((frequencyVector[i], new double[] { complices[i].Real, complices[i].Imaginary, complices[i].Magnitude }));
+            Complex[] spectrum = new Complex[numberOfSamples];
+            for (int i = 0; i < numberOfSamples; i++)
+            {
+                if (!double.IsFinite(timeDomainData[i].Item2))
+                    throw new ArgumentException("Audio samples must be finite.", nameof(timeDomainData));
+                spectrum[i] = new Complex(timeDomainData[i].Item2, 0);
+            }
+            FourierTransform2.FFT(spectrum, Accord.Math.FourierTransform.Direction.Forward);
+
+            for (int i = 0; i <= numberOfSamples / 2; i++)
+            {
+                double frequency = (double)i * samplingRate / numberOfSamples;
+                if (frequency > 4000)
+                    break;
+
+                // Single-sided amplitude: DC and Nyquist have no negative-frequency partner.
+                double scale = i == 0 || (numberOfSamples % 2 == 0 && i == numberOfSamples / 2)
+                    ? 1.0 / numberOfSamples : 2.0 / numberOfSamples;
+                Complex value = spectrum[i] * scale;
+                frequencyDomainData.Add((frequency, new[] { value.Magnitude, value.Real, value.Imaginary }));
+            }
 
             return frequencyDomainData;
         }
 
         public static Signal LoadWavFile(string fileName)
         {
-            using FileStream fileStream = File.Open(fileName, FileMode.Open);
-            using BinaryReader binaryReader = new(fileStream);
-            int chunkID = binaryReader.ReadInt32();
-            int fileSize = binaryReader.ReadInt32();
-            int riffType = binaryReader.ReadInt32();
-            int fmtID = binaryReader.ReadInt32();
-            int fmtSize = binaryReader.ReadInt32();
-            int fmtCode = binaryReader.ReadInt16();
-            int channels = binaryReader.ReadInt16();
-            int sampleRate = binaryReader.ReadInt32();
-            int byteRate = binaryReader.ReadInt32();
-            int fmtBlockAlign = binaryReader.ReadInt16();
-            int bitDepth = binaryReader.ReadInt16();
-            if (fmtSize == 18)
+            using FileStream stream = File.OpenRead(fileName);
+            using BinaryReader reader = new(stream, Encoding.ASCII);
+            try
             {
-                int fmtExtraSize = binaryReader.ReadInt16();
-                binaryReader.ReadBytes(fmtExtraSize);
-            }
-            int dataID = binaryReader.ReadInt32();
-            int bytes = binaryReader.ReadInt32();
-            byte[] byteArray = binaryReader.ReadBytes(bytes);
-            int bytesPerSample = bitDepth / 8;
-            int numberOfSamples = bytes / bytesPerSample;
+                if (ReadFourCc(reader) != "RIFF")
+                    throw new InvalidDataException("The file is not a RIFF WAV file.");
+                long riffEnd = 8L + reader.ReadUInt32();
+                if (ReadFourCc(reader) != "WAVE" || riffEnd < 12 || riffEnd > stream.Length)
+                    throw new InvalidDataException("The WAV header is invalid or truncated.");
 
-            SampleFormat sampleFormat = SampleFormat.Format16Bit;
-            switch (bitDepth)
-            {
-                case 8:
-                    sampleFormat = SampleFormat.Format8Bit;
-                    break;
-                case 16:
-                    sampleFormat = SampleFormat.Format16Bit;
-                    break;
-                case 32:
+                ushort formatTag = 0, channels = 0, blockAlign = 0, bitDepth = 0;
+                int sampleRate = 0;
+                bool hasFormat = false;
+                long dataOffset = -1;
+                int dataLength = 0;
+                while (stream.Position < riffEnd)
+                {
+                    if (riffEnd - stream.Position < 8)
+                        throw new InvalidDataException("The WAV chunk header is truncated.");
+                    string chunkId = ReadFourCc(reader);
+                    uint chunkSize = reader.ReadUInt32();
+                    long nextChunk = stream.Position + chunkSize + (chunkSize & 1);
+                    if (nextChunk > riffEnd)
+                        throw new InvalidDataException("The WAV chunk extends beyond the file.");
+
+                    if (chunkId == "fmt ")
+                    {
+                        if (hasFormat || chunkSize < 16)
+                            throw new InvalidDataException("The WAV format chunk is invalid.");
+                        formatTag = reader.ReadUInt16();
+                        channels = reader.ReadUInt16();
+                        uint rate = reader.ReadUInt32();
+                        uint byteRate = reader.ReadUInt32();
+                        blockAlign = reader.ReadUInt16();
+                        bitDepth = reader.ReadUInt16();
+                        if (channels == 0 || rate == 0 || rate > int.MaxValue)
+                            throw new InvalidDataException("The WAV channel count or sample rate is invalid.");
+                        sampleRate = (int)rate;
+
+                        if (formatTag == 0xfffe) // WAVE_FORMAT_EXTENSIBLE
+                        {
+                            if (chunkSize < 40)
+                                throw new InvalidDataException("The extended WAV format is truncated.");
+                            ushort extraSize = reader.ReadUInt16();
+                            ushort validBits = reader.ReadUInt16();
+                            reader.ReadUInt32(); // Speaker positions; sample order is preserved.
+                            Guid subFormat = new(reader.ReadBytes(16));
+                            if (extraSize < 22 || extraSize > chunkSize - 18 || validBits == 0 || validBits > bitDepth)
+                                throw new InvalidDataException("The extended WAV format is invalid.");
+                            if (subFormat == new Guid("00000001-0000-0010-8000-00aa00389b71"))
+                                formatTag = 1;
+                            else if (subFormat == new Guid("00000003-0000-0010-8000-00aa00389b71"))
+                                formatTag = 3;
+                            else
+                                throw new NotSupportedException("The WAV encoding is not supported. Use PCM or IEEE floating-point audio.");
+                        }
+
+                        bool supported = formatTag == 1 && bitDepth is 8 or 16 or 24 or 32
+                            || formatTag == 3 && bitDepth is 32 or 64;
+                        if (!supported)
+                            throw new NotSupportedException("Use 8, 16, 24 or 32-bit PCM, or 32 or 64-bit IEEE floating-point WAV audio.");
+                        if (blockAlign != channels * (bitDepth / 8) || byteRate != (long)sampleRate * blockAlign)
+                            throw new InvalidDataException("The WAV block alignment or byte rate is invalid.");
+                        hasFormat = true;
+                    }
+                    else if (chunkId == "data")
+                    {
+                        if (dataOffset >= 0 || chunkSize > int.MaxValue)
+                            throw new InvalidDataException("The WAV data chunk is duplicated or too large.");
+                        dataOffset = stream.Position;
+                        dataLength = (int)chunkSize;
+                    }
+
+                    // RIFF metadata may occur anywhere, and odd chunk sizes have one padding byte.
+                    stream.Position = nextChunk;
+                }
+
+                if (!hasFormat || dataOffset < 0 || dataLength == 0 || dataLength % blockAlign != 0)
+                    throw new InvalidDataException("The WAV file must contain a format and complete audio frames.");
+
+                stream.Position = dataOffset;
+                byte[] data = reader.ReadBytes(dataLength);
+                if (data.Length != dataLength)
+                    throw new InvalidDataException("The WAV audio data is truncated.");
+
+                SampleFormat sampleFormat;
+                if (formatTag == 3)
+                {
+                    sampleFormat = bitDepth == 32 ? SampleFormat.Format32BitIeeeFloat : SampleFormat.Format64BitIeeeFloat;
+                }
+                else if (bitDepth == 24)
+                {
+                    // Accord has no 24-bit format. Left-align PCM in a signed 32-bit container.
+                    byte[] expanded = new byte[checked(dataLength / 3 * 4)];
+                    for (int source = 0, target = 0; source < data.Length; source += 3, target += 4)
+                    {
+                        expanded[target + 1] = data[source];
+                        expanded[target + 2] = data[source + 1];
+                        expanded[target + 3] = data[source + 2];
+                    }
+                    data = expanded;
                     sampleFormat = SampleFormat.Format32Bit;
-                    break;
-                default:
-                    break;
-            }
+                }
+                else
+                {
+                    sampleFormat = bitDepth switch
+                    {
+                        8 => SampleFormat.Format8BitUnsigned,
+                        16 => SampleFormat.Format16Bit,
+                        _ => SampleFormat.Format32Bit
+                    };
+                }
 
-            return new Signal(byteArray.ToArray(), channels, numberOfSamples / channels, sampleRate, sampleFormat);
+                return new Signal(data, channels, dataLength / blockAlign, sampleRate, sampleFormat);
+            }
+            catch (EndOfStreamException ex)
+            {
+                throw new InvalidDataException("The WAV file is truncated.", ex);
+            }
         }
 
         public static Signal GenerateWaveSignal(double[] waveIntensity, int samplingRate, double duration, byte bitDepth)
         {
-            int numberOfSamples = Convert.ToInt32(Math.Floor(duration * samplingRate));
+            ArgumentNullException.ThrowIfNull(waveIntensity);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(samplingRate);
+            if (!double.IsFinite(duration) || duration <= 0)
+                throw new ArgumentOutOfRangeException(nameof(duration));
+            if (bitDepth is not (8 or 16 or 32))
+                throw new ArgumentOutOfRangeException(nameof(bitDepth), "Use 8, 16 or 32-bit PCM.");
 
-            switch (bitDepth)
+            // The actual frames are authoritative; a rounded duration must not truncate data.
+            byte[] data = new byte[checked(waveIntensity.Length * (bitDepth / 8))];
+            for (int i = 0; i < waveIntensity.Length; i++)
             {
-                case 8:
-                    sbyte[] quantizedSignalData8bit = Quantize8bitSignal(waveIntensity);
-                    byte[] binaryData = new byte[numberOfSamples * sizeof(sbyte)];
-                    Buffer.BlockCopy(quantizedSignalData8bit, 0, binaryData, 0, quantizedSignalData8bit.Length * sizeof(sbyte));
-                    return new Signal(binaryData, 1, numberOfSamples, samplingRate, SampleFormat.Format8Bit);
-                case 16:
-                    short[] quantizedSignalData16bit = Quantize16bitSignal(waveIntensity);
-                    binaryData = new byte[numberOfSamples * sizeof(short)];
-                    Buffer.BlockCopy(quantizedSignalData16bit, 0, binaryData, 0, quantizedSignalData16bit.Length * sizeof(short));
-                    return new Signal(binaryData, 1, numberOfSamples, samplingRate, SampleFormat.Format16Bit);
-                default: //case 32:
-                    int[] quantizedSignalData32bit = Quantize32bitSignal(waveIntensity);
-                    binaryData = new byte[numberOfSamples * sizeof(int)];
-                    Buffer.BlockCopy(quantizedSignalData32bit, 0, binaryData, 0, quantizedSignalData32bit.Length * sizeof(int));
-                    return new Signal(binaryData, 1, numberOfSamples, samplingRate, SampleFormat.Format32Bit);
+                if (!double.IsFinite(waveIntensity[i]))
+                    throw new ArgumentException("Audio samples must be finite.", nameof(waveIntensity));
+                double value = Math.Clamp(waveIntensity[i], -1.0, 1.0);
+                switch (bitDepth)
+                {
+                    case 8:
+                        data[i] = (byte)Math.Clamp(Math.Round(value * 128) + 128, 0, 255);
+                        break;
+                    case 16:
+                        short sample16 = (short)Math.Clamp(Math.Round(value * 32768), short.MinValue, short.MaxValue);
+                        BinaryPrimitives.WriteInt16LittleEndian(data.AsSpan(i * 2, 2), sample16);
+                        break;
+                    case 32:
+                        int sample32 = (int)Math.Clamp(Math.Round(value * 2147483648.0), int.MinValue, int.MaxValue);
+                        BinaryPrimitives.WriteInt32LittleEndian(data.AsSpan(i * 4, 4), sample32);
+                        break;
+                }
             }
-        }
 
-        private static sbyte[] Quantize8bitSignal(double[] signalData)
-        {
-            sbyte[] intensityList = new sbyte[signalData.Length];
-            for (int i = 0; i < signalData.Length; i++)
-                intensityList[i] = Convert.ToSByte(sbyte.MaxValue * Math.Clamp(signalData[i], -1.0, 1.0));
-
-            return intensityList;
-        }
-
-        private static short[] Quantize16bitSignal(double[] signalData)
-        {
-            short[] intensityList = new short[signalData.Length];
-            for (int i = 0; i < signalData.Length; i++)
-                intensityList[i] = Convert.ToInt16(short.MaxValue * Math.Clamp(signalData[i], -1.0, 1.0));
-
-            return intensityList;
-        }
-
-        private static int[] Quantize32bitSignal(double[] signalData)
-        {
-            int[] intensityList = new int[signalData.Length];
-
-            for (int i = 0; i < signalData.Length; i++)
-                intensityList[i] = Convert.ToInt32(int.MaxValue * Math.Clamp(signalData[i], -1.0, 1.0));
-
-            return intensityList;
+            SampleFormat format = bitDepth switch
+            {
+                8 => SampleFormat.Format8BitUnsigned,
+                16 => SampleFormat.Format16Bit,
+                _ => SampleFormat.Format32Bit
+            };
+            return new Signal(data, 1, waveIntensity.Length, samplingRate, format);
         }
 
         public static List<(double, double)> GenerateWaveData(Signal signal, string channel)
         {
-            double[] intensity;
-            double interval = 1f / signal.SampleRate;
-            List<(double, double)> waveDataPoints = new();
-
-            switch (signal.SampleFormat)
+            ArgumentNullException.ThrowIfNull(signal);
+            int channelIndex = channel switch
             {
-                case SampleFormat.Format8Bit:
-                    sbyte[] intensity8bit = new sbyte[signal.NumberOfSamples];
-                    Buffer.BlockCopy((byte[])signal.InnerData, 0, intensity8bit, 0, signal.NumberOfSamples * sizeof(sbyte));
-                    intensity = Array.ConvertAll(intensity8bit, e => e / (double)sbyte.MaxValue);
-                    break;
-                case SampleFormat.Format16Bit:
-                    short[] intensity16bit = new short[signal.NumberOfSamples];
-                    Buffer.BlockCopy((byte[])signal.InnerData, 0, intensity16bit, 0, signal.NumberOfSamples * sizeof(short));
-                    intensity = Array.ConvertAll(intensity16bit, e => e / (double)short.MaxValue);
-                    break;
-                default: // case SampleFormat.Format32Bit:
-                    int[] intensity32bit = new int[signal.NumberOfSamples];
-                    Buffer.BlockCopy((byte[])signal.InnerData, 0, intensity32bit, 0, signal.NumberOfSamples * sizeof(int));
-                    intensity = Array.ConvertAll(intensity32bit, e => e / (double)int.MaxValue);
-                    break;
-            }
-
-            if (channel == "Mono")
+                "Mono" when signal.NumberOfChannels == 1 => 0,
+                "Left" when signal.NumberOfChannels >= 2 => 0,
+                "Right" when signal.NumberOfChannels >= 2 => 1,
+                _ => throw new ArgumentException("Select Mono for mono audio, or Left/Right for stereo audio.", nameof(channel))
+            };
+            byte[] data = GetSignalBytes(signal);
+            List<(double, double)> waveDataPoints = new(signal.NumberOfFrames);
+            for (int frame = 0; frame < signal.NumberOfFrames; frame++)
             {
-                for (int i = 0; i < intensity.Length; i++)
-                    waveDataPoints.Add((interval * i, intensity[i]));
-
-                return waveDataPoints;
-            }
-
-            double[] leftChannel = new double[signal.NumberOfFrames];
-            double[] rightChannel = new double[signal.NumberOfFrames];
-            for (int s = 0, v = 0; s < signal.NumberOfFrames; s++)
-            {
-                leftChannel[s] = intensity[v++];
-                rightChannel[s] = intensity[v++];
-            }
-            for (int i = 0; i < signal.NumberOfFrames; i++)
-            {
-                if (channel == "Left")
-                    waveDataPoints.Add((interval * i, leftChannel[i]));
-                else if (channel == "Right")
-                    waveDataPoints.Add((interval * i, rightChannel[i]));
+                int offset = (frame * signal.NumberOfChannels + channelIndex) * signal.SampleSize;
+                ReadOnlySpan<byte> sample = data.AsSpan(offset, signal.SampleSize);
+                double value = signal.SampleFormat switch
+                {
+                    SampleFormat.Format8BitUnsigned => (sample[0] - 128) / 128.0,
+                    SampleFormat.Format8Bit => unchecked((sbyte)sample[0]) / 128.0,
+                    SampleFormat.Format16Bit => BinaryPrimitives.ReadInt16LittleEndian(sample) / 32768.0,
+                    SampleFormat.Format32Bit => BinaryPrimitives.ReadInt32LittleEndian(sample) / 2147483648.0,
+                    SampleFormat.Format32BitIeeeFloat => BinaryPrimitives.ReadSingleLittleEndian(sample),
+                    SampleFormat.Format64BitIeeeFloat => BinaryPrimitives.ReadDoubleLittleEndian(sample),
+                    _ => throw new NotSupportedException("The audio sample format is not supported.")
+                };
+                if (!double.IsFinite(value))
+                    throw new InvalidDataException("The audio contains non-finite samples.");
+                waveDataPoints.Add(((double)frame / signal.SampleRate, value));
             }
 
             return waveDataPoints;
@@ -174,43 +242,72 @@ namespace BasicSynthesizer
 
         public static void ExportWavFile(Signal signal, string fileName)
         {
-            using MemoryStream memoryStream = new();
-            using BinaryWriter binaryWriter = new(memoryStream, System.Text.Encoding.Default, leaveOpen: true);
-            short bitDepth = 16;
-            switch (signal.SampleFormat)
-            {
-                case SampleFormat.Format8Bit:
-                    bitDepth = 8;
-                    break;
-                case SampleFormat.Format16Bit:
-                    bitDepth = 16;
-                    break;
-                case SampleFormat.Format32Bit:
-                    bitDepth = 32;
-                    break;
-                default:
-                    break;
-            }
-            short blockAlign = (short)(bitDepth / 8);
-            int subChunk2Size = (int)(signal.SampleRate * signal.Duration.TotalSeconds * blockAlign);
-            binaryWriter.Write(new char[] { 'R', 'I', 'F', 'F' });
-            binaryWriter.Write(36 + subChunk2Size);
-            binaryWriter.Write(new char[] { 'W', 'A', 'V', 'E', 'f', 'm', 't', ' ' });
-            binaryWriter.Write(16);
-            binaryWriter.Write((short)1);
-            binaryWriter.Write((short)1);
-            binaryWriter.Write(signal.SampleRate);
-            binaryWriter.Write(signal.SampleRate * blockAlign);
-            binaryWriter.Write(blockAlign);
-            binaryWriter.Write(bitDepth);
-            binaryWriter.Write(new[] { 'd', 'a', 't', 'a' });
-            binaryWriter.Write(subChunk2Size);
-            binaryWriter.Write((byte[])signal.InnerData);
-            memoryStream.Position = 0;
+            ArgumentNullException.ThrowIfNull(signal);
+            if (signal.NumberOfChannels is < 1 or > 2 || signal.SampleRate <= 0)
+                throw new NotSupportedException("WAV export requires mono or stereo audio with a positive sample rate.");
 
-            using FileStream fileStream = new(fileName, FileMode.Create);
-            memoryStream.WriteTo(fileStream);
+            (ushort formatTag, ushort bitDepth) = signal.SampleFormat switch
+            {
+                SampleFormat.Format8Bit or SampleFormat.Format8BitUnsigned => ((ushort)1, (ushort)8),
+                SampleFormat.Format16Bit => ((ushort)1, (ushort)16),
+                SampleFormat.Format32Bit => ((ushort)1, (ushort)32),
+                SampleFormat.Format32BitIeeeFloat => ((ushort)3, (ushort)32),
+                SampleFormat.Format64BitIeeeFloat => ((ushort)3, (ushort)64),
+                _ => throw new NotSupportedException("The audio sample format cannot be exported as WAV.")
+            };
+            byte[] data = GetSignalBytes(signal);
+            if (signal.SampleFormat == SampleFormat.Format8Bit)
+                for (int i = 0; i < data.Length; i++)
+                    data[i] ^= 0x80; // WAV stores 8-bit PCM unsigned, with silence at 128.
+
+            ushort blockAlign = checked((ushort)(signal.NumberOfChannels * bitDepth / 8));
+            uint byteRate = checked((uint)((long)signal.SampleRate * blockAlign));
+            bool floatingPoint = formatTag == 3;
+            int formatSize = floatingPoint ? 18 : 16;
+            int padding = data.Length & 1;
+            uint riffSize = checked((uint)(4L + 8 + formatSize + (floatingPoint ? 12 : 0) + 8 + data.Length + padding));
+            using FileStream stream = new(fileName, FileMode.Create, FileAccess.Write);
+            using BinaryWriter writer = new(stream, Encoding.ASCII);
+            WriteFourCc(writer, "RIFF");
+            writer.Write(riffSize);
+            WriteFourCc(writer, "WAVE");
+            WriteFourCc(writer, "fmt ");
+            writer.Write(formatSize);
+            writer.Write(formatTag);
+            writer.Write((ushort)signal.NumberOfChannels);
+            writer.Write(signal.SampleRate);
+            writer.Write(byteRate);
+            writer.Write(blockAlign);
+            writer.Write(bitDepth);
+            if (floatingPoint)
+            {
+                writer.Write((ushort)0); // WAVEFORMATEX extension size.
+                WriteFourCc(writer, "fact");
+                writer.Write(4);
+                writer.Write(signal.NumberOfFrames);
+            }
+            WriteFourCc(writer, "data");
+            writer.Write(data.Length);
+            writer.Write(data);
+            if (padding != 0)
+                writer.Write((byte)0);
         }
-        #endregion
+
+        private static byte[] GetSignalBytes(Signal signal)
+        {
+            byte[] data = new byte[signal.NumberOfBytes];
+            Buffer.BlockCopy(signal.InnerData, 0, data, 0, data.Length);
+            return data;
+        }
+
+        private static string ReadFourCc(BinaryReader reader)
+        {
+            byte[] bytes = reader.ReadBytes(4);
+            if (bytes.Length != 4)
+                throw new EndOfStreamException();
+            return Encoding.ASCII.GetString(bytes);
+        }
+
+        private static void WriteFourCc(BinaryWriter writer, string value) => writer.Write(Encoding.ASCII.GetBytes(value));
     }
 }
